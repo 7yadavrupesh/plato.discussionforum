@@ -323,7 +323,7 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="treeview"><a href="#"> <i class="fa fa-group"></i>
+					<li class="treeview"><a href="listTopic.html"> <i class="fa fa-group"></i>
 							<span>Discussion Forum</span> <i class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">
 							<li><a href="#"><i class="fa fa-plus"></i> Add <i class="fa fa-angle-left pull-right"></i></a>
@@ -381,8 +381,7 @@
 										<form:select class="form-control" path="assignedToUserid"
 											items="${usersList}" />
 										<form:label path="topicId">Select Topic</form:label>
-										<form:select class="form-control" path="topicId"
-											items="${topics}" />
+										<form:select class="form-control" path="topicId" items="${topics}" />
 									</div>
 									<div class="box-footer">
 										<button type="submit" onclick="submitForm"
