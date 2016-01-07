@@ -155,7 +155,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	public List<DfThread> df_d_getAllUnApprovedThreadList() {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
-		cri.add(Restrictions.eq("approved", false));
+		cri.add(Restrictions.and(Restrictions.eq("approved", false),Restrictions.eq("deletedFlag", false)));
 		return cri.list();
 	}
 
@@ -198,11 +198,9 @@ public class DfThreadDaoImpl implements DfThreadDao{
 		List<DfThread> threadList =  cri.list();
 
 		if(threadList.isEmpty()){
-		
 			return null;
 		}
 		else{
-		
 			return threadList;
 		}
 	}

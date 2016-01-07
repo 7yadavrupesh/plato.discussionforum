@@ -9,7 +9,7 @@
 (9) in insert new thread (select>> select topic)
 10 add Tag (ask veena)
 11 after adding anything give message
-12 add delete thread button at approve thead page
+(12) add delete thread button at approve thead page
 13 edit in reply
 14 when created new thread add file option (multiple)
 15 reply add file multiple

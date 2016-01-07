@@ -386,8 +386,8 @@
 												</c:forEach>
 												<td><c:out value="${thread.createdTime}" /></td>
 												<td><c:out value="${thread.modifiedTime}" /></td>
-												<td><a
-													href="saveApproveThread.html?thread_id=${thread.threadId}"><span class="fa fa-check"></span></a>
+												<td><a	href="saveApproveThread.html?thread_id=${thread.threadId}"><span class="fa fa-check" title="approve"></span></a>&nbsp;&nbsp;
+												<a	href="deleteThread.html?thread_id=${thread.threadId}&frmAprThrd=1"><span class="fa fa-remove" title="delete"></span></a>
 												</td>
 											</tr>
 										</c:forEach>

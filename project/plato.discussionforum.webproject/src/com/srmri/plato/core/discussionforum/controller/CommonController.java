@@ -276,9 +276,12 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/deleteThread", method = RequestMethod.GET)
-	public String deleteThread(Model model, @RequestParam Long thread_id) {
+	public String deleteThread(Model model, @RequestParam Long thread_id,@RequestParam(value="frmAprThrd",required=false) int flag) {
 		threadService.df_s_deleteThread(thread_id);
 		DfThread thread = threadService.df_s_getThread(thread_id);
+		if(flag == 1)
+			return "redirect:approveThread.html";
+		else
 		return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
 	}
 
