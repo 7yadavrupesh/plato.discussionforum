@@ -367,10 +367,10 @@
 								<table id="example1" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th>Topic Title</th>
-											<th>Created Time</th>
+											<th>Title</th>
+											<th>Created At</th>
 											<th>Created User Id</th>
-											<th>Edit OR Delete</th>
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -384,18 +384,18 @@
 												<td><c:choose>
 														<c:when test="${moderatorAllowMap[topic.topicId] == true }">
 															<a href="editTopic.html?topic_id=${topic.topicId}"><span
-																class="fa fa-edit" title="edit"></span></a>
+																class="fa fa-edit" title="edit"></span></a> &nbsp;&nbsp;
 															<a href="deleteTopic.html?topic_id=${topic.topicId}"><span
 																class="fa fa-remove" title="delete"></span></a>
 														</c:when>
 														<c:when test="${topic.createdUserid == loginUserId }">
 															<a href="editTopic.html?topic_id=${topic.topicId}"><span
-																class="fa fa-edit" title="edit"></span></a>
+																class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
 															<a href="deleteTopic.html?topic_id=${topic.topicId}"><span
 																class="fa fa-remove" title="delete"></span></a>
 														</c:when>
 														<c:otherwise>
-																<span class="fa fa-edit" title="edit"></span>
+																<span class="fa fa-edit" title="edit"></span>&nbsp;&nbsp;
 																<span class="fa fa-remove" title="delete"></span>
 														</c:otherwise>
 													</c:choose>
@@ -405,10 +405,10 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<th>Topic Title</th>
-											<th>Created Time</th>
+											<th>Title</th>
+											<th>Created At</th>
 											<th>Created User Id</th>
-											<th>Edit OR Delete</th>
+											<th>Action</th>
 										</tr>
 									</tfoot>
 								</table>

@@ -182,9 +182,7 @@ public class CommonController {
 				}
 			}
 		}
-		System.out.println("moderatorAllowMap "+moderatorAllowMap.size());
-		System.out.println("finalThredList"+finalThredList.size());
-		System.out.println("topics"+topics.size());
+
 		model.addAttribute("moderatorAllowMap", moderatorAllowMap);
 		model.addAttribute("threads",  finalThredList);
 		model.addAttribute("topics",topics);
@@ -368,6 +366,15 @@ public class CommonController {
 
 	/******************************************* Thread Reply *************************************************/
 
+	@RequestMapping(value = "/editThreadReply", method = RequestMethod.GET)
+	public String editReply(Model model, @RequestParam Long reply_id, @RequestParam Long thread_id) {
+		DfThreadReply reply = threadReplyService.df_s_getThreadReply(reply_id);
+		System.out.println(reply.getReplyText());
+		System.out.println(reply.getReplyId());
+		model.addAttribute("threadReply",reply);
+		return "editThreadReply";
+	}
+	
 	@RequestMapping(value = "/deleteThreadReply", method = RequestMethod.GET)
 	public String deleteThreadReply(Model model, @RequestParam Long reply_id, @RequestParam Long thread_id) {
 		Map<Long,String> topics = new HashMap<Long,String>();
@@ -387,7 +394,9 @@ public class CommonController {
 
 		DfAttachedFile fileToSaveInDB = new DfAttachedFile();
 		File serverFile = null;
-		Long UploadedFileId;
+		Long UploadedFileId = 0L;
+		
+		if(file !=null)
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
@@ -414,12 +423,13 @@ public class CommonController {
 			} catch (Exception e) {
 				return "You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage();
 			}
-		} else {
-			UploadedFileId = 0L;
-		}		
+		}	
 		
+		if(newThreadReply.getFileId() == null || newThreadReply.getFileId() == null){
+			newThreadReply.setFileId(UploadedFileId);
+		}
+		System.out.println("this is reply Id"+ newThreadReply.getReplyId());
 		newThreadReply.setDeleteFlag(false);
-		newThreadReply.setFileId(UploadedFileId);
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(loginUserId);
 		newThreadReply.setThreadId(newThreadReply.getThreadId());

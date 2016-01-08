@@ -33,6 +33,19 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  <style>
+  
+  .table {
+	table-layout:fixed;
+}
+
+.table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+</style>
+
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 
@@ -355,22 +368,22 @@
 								<table id="example1" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th class="col-md-3">Thread Title</th>
-											<th class="col-md-5">Thread Description</th>
-											<th class="col-md-1">Topic Title</th>
-											<th class="col-md-1">Created Time</th>
-											<th class="col-md-1">Modified Time</th>
-											<th class="col-md-1">Edit Delete</th>
+											<th>Title</th>
+											<th>Description</th>
+											<th>Topic</th>
+											<th>Created At</th>
+											<th>Modified At</th>
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${threads}" var="thread">
-											<tr>
-												<td><a
+											<tr >
+												<td><a title="${thread.threadTitle}"
 													href="viewThread.html?thread_id=${thread.threadId}"> <c:out
 															value="${thread.threadTitle}" />
 												</a></td>
-												<td><c:out value="${thread.description}" /></td>
+												<td title="${thread.description}"><c:out  value="${thread.description}" /></td>
 												<c:forEach items="${topics}" var="topic">
 													<c:if test="${topic.key == thread.topicId}">
 														<td><c:out value="${topic.value}" /></td>
@@ -382,13 +395,13 @@
 														<c:when
 															test="${moderatorAllowMap[thread.threadId] == true }">
 															<a href="editThread.html?thread_id=${thread.threadId}"><span
-																class="fa fa-edit" title="edit"></span></a>
+																class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
 															<a href="deleteThread.html?thread_id=${thread.threadId}"><span
 																class="fa fa-remove" title="delete"></span></a>
 														</c:when>
 														<c:otherwise>
-															<span class="fa fa-edit"></span>
-															<span class="fa fa-remove"></span>
+															<span class="fa fa-edit" title="edit"></span>&nbsp;&nbsp;
+															<span class="fa fa-remove" title="delete"></span>
 														</c:otherwise>
 													</c:choose></td>
 													</tr>
@@ -396,12 +409,12 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<th>Thread Title</th>
-											<th>Thread Description</th>
-											<th>Topic Title</th>
-											<th>Created Time</th>
-											<th>Modified Time</th>
-											<th>Edit Delete</th>
+											<th>Title</th>
+											<th>Description</th>
+											<th>Topic</th>
+											<th>Created At</th>
+											<th>Modified At</th>
+											<th>Action</th>
 										</tr>
 									</tfoot>
 								</table>

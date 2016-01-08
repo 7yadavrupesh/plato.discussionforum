@@ -5,34 +5,45 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Data Tables</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.5 -->
-        <script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="./resources/plugins/datatables/dataTables.bootstrap.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+      <!-- jQuery 2.1.4 -->
+    <script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
+    folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="./resources/dist/css/skins/_all-skins.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="./resources/plugins/iCheck/flat/blue.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="./resources/plugins/morris/morris.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="./resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="./resources/plugins/datepicker/datepicker3.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="./resources/plugins/daterangepicker/daterangepicker-bs3.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="./resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+        <![endif]-->
+      </head>
       <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
 
@@ -310,8 +321,7 @@
               </form>
               <!-- /.search form -->
               <!-- sidebar menu: : style can be found in sidebar.less -->
-
-				<ul class="sidebar-menu">
+  <ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
 					<li class="treeview"><a href="#"> <i class="fa fa-group"></i>
 							<span>Discussion Forum</span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -335,7 +345,8 @@
 						</ul>
 					</li>
 				</ul>
-			</section>
+  
+            </section>
             <!-- /.sidebar -->
           </aside>
 
@@ -344,157 +355,42 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
               <h1>
-                Discussion Forum
-                <small>Discuss this question</small>
+                Edit Thread
+                <small>Edit this thread</small>
               </h1>
               <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Discussion Forum</li>
+                <li class="active">Edit Thread</li>
               </ol>
             </section>
 
-            <!-- Main content -->
+			<!-- Main content -->
 			<section class="content">
-				<!-- Small boxes (Stat box) -->
-				<div class="box box-solid">
-					<!-- <div class="box-header with-border"> -->
-					<!-- <i class="fa fa-text-width"></i> -->
-					<h2>
-						<c:out value="Q. ${thread.threadTitle}" />
-					</h2>
-					<!-- </div> -->
-					<!-- /.box-header -->
-					<div class="box-body">
-						<blockquote>
-							<p>
-								<c:out value="${thread.description}" />
-							</p>
-							<small> <c:out value="${thread.createdTime}" /> <cite
-								title="Source Title">By <c:out
-										value="${thread.createdUserid}" /></cite>
-							</small>
-						</blockquote>
-						<c:choose>
-							<c:when test="${checkSubscribe == false}">
-								<a class="btn btn-primary pull-right"
-									href="subscribeThread.html?thread_id=${thread.threadId}">Subscribe</a>
-							</c:when>
-							<c:otherwise>
-								<a class="btn btn-primary pull-right"
-									href="unSubscribeThread.html?thread_id=${thread.threadId}">UnSubscribe</a>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					<!-- /.box-body -->
-
-				</div>
-
-
-				<div class="detailBox">
-					<div class="box-footer box-comments">
-
-						<c:choose>
-							<c:when test="${!empty threadReplys}">
-								<c:forEach items="${threadReplys}" var="threadReply">
-									<div class="box-comment">
-										<img alt="user image"
-											src="./resources/dist/img/user3-128x128.jpg"
-											class="img-circle img-sm">
-
-
-										<div class="comment-text">
-											<span class="username"> Maria Gonzales <span
-												class="text-muted pull-right"> <c:out
-														value="By ${threadReply.submittedUserid}" /> <c:out
-														value=" Date: ${threadReply.submittedTime}" />
-											</span>
-											</span> </br>
-											<!-- /.username -->
-											<c:out value="${threadReply.replyText}" />
-
-											<c:if
-												test="${loginUserId == threadReply.submittedUserid  || loginUserId == topicUserId}">
-												</br>
-												</br>
-												<a
-													href="deleteThreadReply.html?reply_id=${threadReply.replyId}&thread_id=${threadReply.threadId}"><span
-													class="fa fa-remove" title="delete comment"></span></a>&nbsp;&nbsp;
-													<a
-														href="editThreadReply.html?reply_id=${threadReply.replyId}&thread_id=${threadReply.threadId}"><span
-														class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
-												<c:if test="${threadReply.fileId != 0 }">
-													<a
-														href="downloadFile.html?file_id=${threadReply.fileId}&thread_id=${threadReply.threadId}"><span
-														class="fa fa-download" title="download attached file"></span></a>
-													
-												</c:if>
-
-											</c:if>
-
-										</div>
-									</div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<c:out value="No comments, be first to add comment"></c:out>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-
-				<br>
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">Add Comment</h3>
+								<h3 class="box-title">Add Thread</h3>
 							</div>
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form method="POST" action="saveThreadReply.html"
-								enctype="multipart/form-data">
+							<form method="POST" action="saveThreadReply.html" class="form">
 								<div class="box-body">
 									<div class="form-group">
-										<input name="threadId" type="hidden"
-											value="${thread.threadId }">
+										<label for="description">Reply:</label> 
+										<input
+											class="form-control" name="replyText"
+											value="${threadReply.replyText}" />
+											<input name="replyId"
+											value="${threadReply.replyId}" type="hidden" />
+											<input name="threadId"
+											value="${threadReply.threadId}" type="hidden" />
 									</div>
-									<div class="form-group">
-										<label for="exampleInputPassword1">Comment</label>
-										<textarea class="form-control" placeholder="Comment"
-											name="replyText" rows="6" cols=""
-											value="${newThreadReply.replyText}"></textarea>
+									<div class="box-footer">
+										<button type="submit" class="btn btn-primary">Save</button>
 									</div>
-									<div class="form-group">
-										<label for="file">File input</label> <input type="file"
-											name="file">
-									</div>
-								</div>
-								<!-- /.box-body -->
-
-								<div class="box-footer">
-									<button class="btn btn-primary" type="submit">Submit</button>
 								</div>
 							</form>
 						</div>
 					</div>
-					<%-- 				<form method="POST" action="saveThreadReply.html" enctype="multipart/form-data">
-					<div class="form-group">
-						<input class="form-control" name="threadId" value="${thread.threadId}" type="hidden" /> <label
-							for="addcomment">Add Comment:</label>
-						<textarea class="form-control" name="replyText" rows="" cols="" value="${newThreadReply.replyText}"></textarea>
-							</br>
-						<div class="form-group">
-							<label>File to upload:</label></br>
-							<!-- <span
-								class="btn btn-default btn-file">Browse --> 
-								<input	type="file" name="file">
-							<!-- </span> -->
-						</div>
-					</div>
-					<div class="form-group">
-						<button class="btn btn-primary">Add Comment</button>
-					</div>
-				</form> --%>
 				</div>
 			</section>
 			<!-- /.content -->

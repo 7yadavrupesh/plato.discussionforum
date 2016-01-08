@@ -45,6 +45,7 @@ public class DfThreadReplyDaoImpl implements DfThreadReplyDao{
 	public void df_d_insertNewReply(DfThreadReply threadReply) {
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().saveOrUpdate(threadReply);
+		sessionFactory.getCurrentSession().flush();
 	}
 
 	/*

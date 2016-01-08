@@ -94,4 +94,10 @@ public class DfThreadReplyServiceImpl implements DfThreadReplyService{
 		// TODO Auto-generated method stub
 		threadReplyDmo.df_d_deleteThreadReply(replyId);
 	}
+
+	@Override
+	public DfThreadReply df_s_getThreadReply(Long replyId) {
+		// TODO Auto-generated method stub
+		return threadReplyDmo.df_d_getReplyDetail(replyId);
+	}
 }

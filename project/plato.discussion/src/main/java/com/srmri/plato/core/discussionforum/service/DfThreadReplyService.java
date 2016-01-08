@@ -46,4 +46,5 @@ public interface DfThreadReplyService {
 	List<DfThreadReply> df_s_getThreadReplyList(Long threadId);
 	
 	void df_s_deleteThreadReply(Long replyId);
+	DfThreadReply df_s_getThreadReply(Long replyId);
 }
