@@ -367,7 +367,7 @@
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
-					<div class="col-md-6">
+					<div>
 						<div class="box box-primary">
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Thread</h3>
@@ -376,9 +376,9 @@
 								<div class="box-body">
 									<div class="form-group">
 										<label for="description">Reply:</label> 
-										<input
+										<textarea
 											class="form-control" name="replyText"
-											value="${threadReply.replyText}" />
+											 >${threadReply.replyText}</textarea>
 											<input name="replyId"
 											value="${threadReply.replyId}" type="hidden" />
 											<input name="threadId"

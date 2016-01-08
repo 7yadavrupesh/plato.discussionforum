@@ -369,8 +369,6 @@ public class CommonController {
 	@RequestMapping(value = "/editThreadReply", method = RequestMethod.GET)
 	public String editReply(Model model, @RequestParam Long reply_id, @RequestParam Long thread_id) {
 		DfThreadReply reply = threadReplyService.df_s_getThreadReply(reply_id);
-		System.out.println(reply.getReplyText());
-		System.out.println(reply.getReplyId());
 		model.addAttribute("threadReply",reply);
 		return "editThreadReply";
 	}
