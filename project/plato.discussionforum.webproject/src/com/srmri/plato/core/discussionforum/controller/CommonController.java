@@ -65,7 +65,7 @@ public class CommonController {
 	public String index(Model model){
 		return "index";
 	}
-	
+
 	@RequestMapping(value = "/listTopic", method = RequestMethod.GET)
 	public String topicList(Model model){
 
@@ -243,16 +243,16 @@ public class CommonController {
 
 	@RequestMapping(value = "/viewThread", method = RequestMethod.GET)
 	public String viewThread(Model model, @RequestParam Long thread_id) {
-		
+
 		List<DfThreadReply> threadReplysList = threadReplyService.df_s_getThreadReplyList(thread_id);
 		//List<DfThreadReply> threadReplysListWithFileDetails = new ArrayList<DfThreadReply>();
-		
+
 		Map<DfThreadReply,Map<Long,String>> finalThreadReplyList = new HashMap<DfThreadReply,Map<Long,String>>();
-		
+
 		if(!threadReplysList.isEmpty()){
 			for(DfThreadReply reply: threadReplysList){
 				List<Long> attachedFilesList  = threadReplyFileMapService.df_s_getFileList(reply.getReplyId());
-				
+
 				if(attachedFilesList.isEmpty())
 				{
 					finalThreadReplyList.put(reply, null);
@@ -263,13 +263,13 @@ public class CommonController {
 						String filePath = attachedFileService.df_s_getAttachedFile(attachedFileId).getFileLocation();
 						File file = new File(filePath);
 						if(file.exists())
-						fileList.put(attachedFileId,file.getName());
+							fileList.put(attachedFileId,file.getName());
 					}
 					finalThreadReplyList.put(reply, fileList);
 				}
 			}
 		}
-		
+
 		model.addAttribute("thread",  threadService.df_s_getThread(thread_id));
 		model.addAttribute("threadReplys",finalThreadReplyList);
 		model.addAttribute("newThreadReply", new DfThreadReply());
@@ -292,7 +292,7 @@ public class CommonController {
 		if(flag == 1)
 			return "redirect:approveThread.html";
 		else
-		return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
+			return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
 	}
 
 	@RequestMapping(value = "/saveApproveThread", method = RequestMethod.GET)
@@ -384,7 +384,7 @@ public class CommonController {
 		model.addAttribute("threadReply",reply);
 		return "editThreadReply";
 	}
-	
+
 	@RequestMapping(value = "/deleteThreadReply", method = RequestMethod.GET)
 	public String deleteThreadReply(Model model, @RequestParam Long reply_id, @RequestParam Long thread_id) {
 		Map<Long,String> topics = new HashMap<Long,String>();
@@ -394,64 +394,63 @@ public class CommonController {
 		}
 		return "redirect:viewThread.html?thread_id="+thread_id;
 	}	
-/*	public ServletContext setServletContext(ServletContext servletContext) {
+	/*	public ServletContext setServletContext(ServletContext servletContext) {
 		return  servletContext;
 
 	}*/
 	@RequestMapping(value = "/saveThreadReply", method = RequestMethod.POST)
 	public String saveThreadReply(Model model,@ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
-			BindingResult result1, @RequestParam(value = "file", required=false) MultipartFile file) {
-
-		DfAttachedFile fileToSaveInDB = new DfAttachedFile();
-		File serverFile = null;
-		Long UploadedFileId = 0L;
+			BindingResult result1, @RequestParam(value = "file", required=false) List<MultipartFile> files) {
 		
-		if(file !=null)
-		if (!file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
-
-				// Creating the directory to store file
-				String rootPath = System.getProperty("catalina.home");
-				File dir = new File(rootPath + File.separator + "tmpFiles");
-				if (!dir.exists())
-					dir.mkdirs();
-				
-				// Create the file on server
-				serverFile = new File(dir.getAbsolutePath()
-						+ File.separator + file.getOriginalFilename());
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
-				fileToSaveInDB.setFileLocation(serverFile.getAbsolutePath());
-				fileToSaveInDB.setFileName(file.getOriginalFilename());
-				fileToSaveInDB.setFileSize(file.getSize());
-				UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
-				
-				System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
-
-			} catch (Exception e) {
-				return "You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage();
-			}
-		}	
-		
-		if(newThreadReply.getFileId() == null || newThreadReply.getFileId() == null){
-			newThreadReply.setFileId(UploadedFileId);
-		}
-
 		newThreadReply.setDeleteFlag(false);
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(loginUserId);
 		newThreadReply.setThreadId(newThreadReply.getThreadId());
 		threadReplyService.df_s_addThreadReply(newThreadReply);
-		threadReplyFileMapService.df_s_setThreadReplyFileMapList( newThreadReply.getReplyId(), UploadedFileId );
-		List<DfThreadReply> trl =  threadReplyService.df_s_getThreadReplyList(newThreadReply.getThreadId());
 		
+		
+		File serverFile = null;
+		Long UploadedFileId = 0L;
+System.out.println(files.get(0).getOriginalFilename());
+System.out.println(files.get(1).getOriginalFilename());
+		if(files !=null){
+			for(MultipartFile file : files){
+				if (!file.isEmpty()) {
+					try {
+						byte[] bytes = file.getBytes();
+
+						// Creating the directory to store file
+						String rootPath = System.getProperty("catalina.home");
+						File dir = new File(rootPath + File.separator + "tmpFiles");
+						if (!dir.exists())
+							dir.mkdirs();
+
+						// Create the file on server
+						serverFile = new File(dir.getAbsolutePath()	+ File.separator + file.getOriginalFilename());
+						BufferedOutputStream stream = new BufferedOutputStream(	new FileOutputStream(serverFile));
+						stream.write(bytes);
+						stream.close();
+						DfAttachedFile fileToSaveInDB = new DfAttachedFile();
+						fileToSaveInDB.setFileLocation(serverFile.getAbsolutePath());
+						fileToSaveInDB.setFileName(file.getOriginalFilename());
+						fileToSaveInDB.setFileSize(file.getSize());
+						UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
+
+						threadReplyFileMapService.df_s_setThreadReplyFileMapList( newThreadReply.getReplyId(), UploadedFileId );
+						System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
+
+					} catch (Exception e) {
+						return "You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage();
+					}
+				}	
+			}
+		}
+
+		List<DfThreadReply> trl =  threadReplyService.df_s_getThreadReplyList(newThreadReply.getThreadId());
 		model.addAttribute("thread",  threadService.df_s_getThread(newThreadReply.getThreadId()));
 		model.addAttribute("threadReplys",trl);
 		model.addAttribute("newThreadReply", new DfThreadReply());		
-		
+
 		return "redirect:viewThread.html?thread_id="+newThreadReply.getThreadId();
 	}
 

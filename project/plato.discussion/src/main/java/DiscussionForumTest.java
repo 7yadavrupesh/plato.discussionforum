@@ -29,7 +29,6 @@ public class DiscussionForumTest {
 		newThreadReply.setReplyText("this is reply text");
 		newThreadReply.setThreadId(73L);
 		newThreadReply.setDeleteFlag(false);
-		newThreadReply.setFileId(12L);
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(11L);
 		

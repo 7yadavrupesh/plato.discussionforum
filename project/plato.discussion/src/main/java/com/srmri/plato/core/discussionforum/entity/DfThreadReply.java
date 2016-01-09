@@ -51,9 +51,6 @@ public class DfThreadReply implements Serializable{
 	@Column(name = "thread_id")
 	private Long threadId;
 	
-	@Column(name = "file_id")
-	private Long fileId;
-	
 	@Column(name = "reply_text")
 	private String replyText;
 	
@@ -110,18 +107,6 @@ public class DfThreadReply implements Serializable{
 	 */
 	public void setThreadId(Long threadId) {
 		this.threadId = threadId;
-	}
-	/**
-	 * @return the fileId
-	 */
-	public Long getFileId() {
-		return fileId;
-	}
-	/**
-	 * @param fileId the fileId to set
-	 */
-	public void setFileId(Long fileId) {
-		this.fileId = fileId;
 	}
 	/**
 	 * @return the replyText

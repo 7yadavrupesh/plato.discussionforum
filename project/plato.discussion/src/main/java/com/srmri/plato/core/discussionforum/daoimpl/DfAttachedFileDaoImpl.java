@@ -45,6 +45,7 @@ public class DfAttachedFileDaoImpl implements DfAttachedFileDao{
 	public Long df_d_addAttachedFile(DfAttachedFile attachedFile) {
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().saveOrUpdate(attachedFile);
+		sessionFactory.getCurrentSession().flush();
 		return attachedFile.getFileId();
 	}
 

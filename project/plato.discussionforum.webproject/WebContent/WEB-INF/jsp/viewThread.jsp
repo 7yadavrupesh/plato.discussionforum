@@ -477,6 +477,8 @@
 									<div class="form-group">
 										<label for="file">File input</label> <input type="file"
 											name="file">
+											<label for="file">File input</label> <input type="file"
+											name="file">
 									</div>
 								</div>
 								<!-- /.box-body -->
@@ -487,24 +489,6 @@
 							</form>
 						</div>
 					</div>
-					<%-- 				<form method="POST" action="saveThreadReply.html" enctype="multipart/form-data">
-					<div class="form-group">
-						<input class="form-control" name="threadId" value="${thread.threadId}" type="hidden" /> <label
-							for="addcomment">Add Comment:</label>
-						<textarea class="form-control" name="replyText" rows="" cols="" value="${newThreadReply.replyText}"></textarea>
-							</br>
-						<div class="form-group">
-							<label>File to upload:</label></br>
-							<!-- <span
-								class="btn btn-default btn-file">Browse --> 
-								<input	type="file" name="file">
-							<!-- </span> -->
-						</div>
-					</div>
-					<div class="form-group">
-						<button class="btn btn-primary">Add Comment</button>
-					</div>
-				</form> --%>
 				</div>
 			</section>
 			<!-- /.content -->
