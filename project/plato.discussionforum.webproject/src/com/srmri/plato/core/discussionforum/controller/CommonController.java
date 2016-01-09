@@ -28,9 +28,12 @@ import com.srmri.plato.core.discussionforum.entity.DfAttachedFile;
 import com.srmri.plato.core.discussionforum.entity.DfModeratorAssigned;
 import com.srmri.plato.core.discussionforum.entity.DfThread;
 import com.srmri.plato.core.discussionforum.entity.DfThreadReply;
+import com.srmri.plato.core.discussionforum.entity.DfThreadReplyFileMap;
 import com.srmri.plato.core.discussionforum.entity.DfTopic;
 import com.srmri.plato.core.discussionforum.service.DfAttachedFileService;
 import com.srmri.plato.core.discussionforum.service.DfModeratorAssignedService;
+import com.srmri.plato.core.discussionforum.service.DfThreadFileMapService;
+import com.srmri.plato.core.discussionforum.service.DfThreadReplyFileMapService;
 import com.srmri.plato.core.discussionforum.service.DfThreadReplyService;
 import com.srmri.plato.core.discussionforum.service.DfThreadService;
 import com.srmri.plato.core.discussionforum.service.DfThreadSubscriptionService;
@@ -53,6 +56,10 @@ public class CommonController {
 	private DfModeratorAssignedService moderatorAssignedService;
 	@Autowired
 	private DfAttachedFileService attachedFileService;
+	@Autowired
+	private DfThreadFileMapService threadFileMapService;
+	@Autowired
+	private DfThreadReplyFileMapService threadReplyFileMapService;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(Model model){
@@ -238,28 +245,33 @@ public class CommonController {
 	public String viewThread(Model model, @RequestParam Long thread_id) {
 		
 		List<DfThreadReply> threadReplysList = threadReplyService.df_s_getThreadReplyList(thread_id);
-		List<DfThreadReply> threadReplysListWithFileDetails = new ArrayList<DfThreadReply>();
+		//List<DfThreadReply> threadReplysListWithFileDetails = new ArrayList<DfThreadReply>();
+		
+		Map<DfThreadReply,Map<Long,String>> finalThreadReplyList = new HashMap<DfThreadReply,Map<Long,String>>();
 		
 		if(!threadReplysList.isEmpty()){
 			for(DfThreadReply reply: threadReplysList){
-				DfAttachedFile attachedFile  = attachedFileService.df_s_getAttachedFile(reply.getFileId());
-				if(attachedFile.getFileId() == null){
-					reply.setFileId(0L);
-					threadReplysListWithFileDetails.add(reply);
+				List<Long> attachedFilesList  = threadReplyFileMapService.df_s_getFileList(reply.getReplyId());
+				
+				if(attachedFilesList.isEmpty())
+				{
+					finalThreadReplyList.put(reply, null);
 					continue;
-				}
-				File file = new File(attachedFile.getFileLocation());
-				if(!file.exists()){
-					reply.setFileId(0L);
-					threadReplysListWithFileDetails.add(reply);
-				}
-				else{
-					threadReplysListWithFileDetails.add(reply);
+				}else{
+					Map<Long,String> fileList = new HashMap<Long,String>();
+					for(Long attachedFileId: attachedFilesList){
+						String filePath = attachedFileService.df_s_getAttachedFile(attachedFileId).getFileLocation();
+						File file = new File(filePath);
+						if(file.exists())
+						fileList.put(attachedFileId,file.getName());
+					}
+					finalThreadReplyList.put(reply, fileList);
 				}
 			}
 		}
+		
 		model.addAttribute("thread",  threadService.df_s_getThread(thread_id));
-		model.addAttribute("threadReplys",threadReplysListWithFileDetails);
+		model.addAttribute("threadReplys",finalThreadReplyList);
 		model.addAttribute("newThreadReply", new DfThreadReply());
 		model.addAttribute("loginUserId",loginUserId);
 		model.addAttribute("topicUserId",topicService.df_s_getTopic(threadService.df_s_getThread(thread_id).getTopicId()).getCreatedUserid());
@@ -416,6 +428,7 @@ public class CommonController {
 				fileToSaveInDB.setFileName(file.getOriginalFilename());
 				fileToSaveInDB.setFileSize(file.getSize());
 				UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
+				
 				System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
 
 			} catch (Exception e) {
@@ -426,16 +439,19 @@ public class CommonController {
 		if(newThreadReply.getFileId() == null || newThreadReply.getFileId() == null){
 			newThreadReply.setFileId(UploadedFileId);
 		}
-		System.out.println("this is reply Id"+ newThreadReply.getReplyId());
+
 		newThreadReply.setDeleteFlag(false);
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(loginUserId);
 		newThreadReply.setThreadId(newThreadReply.getThreadId());
-		threadReplyService.df_s_addThreadReply(newThreadReply);		
-		model.addAttribute("thread",  threadService.df_s_getThread(newThreadReply.getThreadId()));
+		threadReplyService.df_s_addThreadReply(newThreadReply);
+		threadReplyFileMapService.df_s_setThreadReplyFileMapList( newThreadReply.getReplyId(), UploadedFileId );
 		List<DfThreadReply> trl =  threadReplyService.df_s_getThreadReplyList(newThreadReply.getThreadId());
+		
+		model.addAttribute("thread",  threadService.df_s_getThread(newThreadReply.getThreadId()));
 		model.addAttribute("threadReplys",trl);
 		model.addAttribute("newThreadReply", new DfThreadReply());		
+		
 		return "redirect:viewThread.html?thread_id="+newThreadReply.getThreadId();
 	}
 
