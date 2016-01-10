@@ -474,11 +474,10 @@
 											name="replyText" rows="6" cols=""
 											value="${newThreadReply.replyText}"></textarea>
 									</div>
-									<div class="form-group">
-										<label for="file">File input</label> <input type="file"
-											name="file" size=50 multiple/>
-											<label for="file">File input</label> <input type="file"
-											name="file" size=50 multiple>
+									<div id="fileUpload" class="form-group">
+									
+										<label for="file">File input</label> <input type="file" name="file" size=50 multiple/>
+										<label for="file">File input</label> <input type="file"	name="file" size=50 multiple/>
 									</div>
 								</div>
 								<!-- /.box-body -->
