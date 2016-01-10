@@ -388,7 +388,7 @@
 											type="hidden" />
 									</div>
 									<div class="box-footer">
-										<button type="submit" class="btn btn-primary">Save</button>
+										<button name="edit" value='<c:out value="${sourcePage }">${sourcePage }</c:out>' type="submit" class="btn btn-primary">Save</button>
 									</div>
 								</div>
 							</form>

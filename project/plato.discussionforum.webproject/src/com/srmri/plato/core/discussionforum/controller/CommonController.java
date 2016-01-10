@@ -42,7 +42,7 @@ import com.srmri.plato.core.discussionforum.service.DfTopicService;
 @Controller
 public class CommonController {
 
-	static Long loginUserId = 10L;	
+	static Long loginUserId = 11L;	
 
 	@Autowired
 	private DfTopicService topicService;
@@ -228,7 +228,8 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/saveEditThread", method = RequestMethod.GET)
-	public String saveEditThread(@ModelAttribute("command") DfThread thread, BindingResult result) {	
+	public String saveEditThread(@ModelAttribute("command") DfThread thread, BindingResult result,HttpServletRequest request) {	
+		
 		System.out.println(thread.getThreadTitle()+thread.getThreadId());
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
 		thread.setCreatedTime(threadService.df_s_getThread(thread.getThreadId()).getCreatedTime());
@@ -238,7 +239,14 @@ public class CommonController {
 		thread.setDeletedFlag(false);
 		thread.setApproved(true);
 		threadService.df_s_addThread(thread);
-		return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
+		
+		String sourcePage = request.getParameter("edit");
+		if(sourcePage == "approveThread")
+			return "redirect:approveThread.html";
+		if(sourcePage == "viewThread")
+			return "redirect:viewThread.html?thread_id="+thread.getThreadId();
+		else
+			return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
 	}
 
 	@RequestMapping(value = "/viewThread", method = RequestMethod.GET)
@@ -248,6 +256,26 @@ public class CommonController {
 		//List<DfThreadReply> threadReplysListWithFileDetails = new ArrayList<DfThreadReply>();
 
 		Map<DfThreadReply,Map<Long,String>> finalThreadReplyList = new HashMap<DfThreadReply,Map<Long,String>>();
+		DfThread thread = threadService.df_s_getThread(thread_id);
+		Boolean threadEditAllowed = false;
+		List<Long> assignedModeratorList = moderatorAssignedService.df_s_getModeratorList(thread.getTopicId());
+
+		if(loginUserId == thread.getCreatedUserid()){
+			threadEditAllowed =  true;
+		}
+		else if(loginUserId == topicService.df_s_getTopic(thread.getTopicId()).getCreatedUserid())
+		{
+			threadEditAllowed =  true;
+		}
+		else{
+			if(!assignedModeratorList.isEmpty()){
+				for(Long moderator:assignedModeratorList){
+					if(moderator == loginUserId){
+						threadEditAllowed =  true;
+					}
+				}
+			}
+		}
 
 		if(!threadReplysList.isEmpty()){
 			for(DfThreadReply reply: threadReplysList){
@@ -270,6 +298,7 @@ public class CommonController {
 			}
 		}
 
+		model.addAttribute("threadEditAllowed", threadEditAllowed);
 		model.addAttribute("thread",  threadService.df_s_getThread(thread_id));
 		model.addAttribute("threadReplys",finalThreadReplyList);
 		model.addAttribute("newThreadReply", new DfThreadReply());
@@ -280,19 +309,21 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/editThread", method = RequestMethod.GET)
-	public String editThread(Model model, @RequestParam Long thread_id) {
+	public String editThread(Model model, @RequestParam Long thread_id,HttpServletRequest request) {
 		model.addAttribute("thread",threadService.df_s_getThread(thread_id));
 		return "editThread";
 	}
 
 	@RequestMapping(value = "/deleteThread", method = RequestMethod.GET)
-	public String deleteThread(Model model, @RequestParam Long thread_id,@RequestParam(value="frmAprThrd",required=false) int flag) {
+	public String deleteThread(Model model, @RequestParam Long thread_id,@RequestParam(value="frmAprThr") int flag) {
+				
+		Long topic_id = threadService.df_s_getThread(thread_id).getTopicId();
 		threadService.df_s_deleteThread(thread_id);
-		DfThread thread = threadService.df_s_getThread(thread_id);
+		
 		if(flag == 1)
 			return "redirect:approveThread.html";
 		else
-			return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
+			return "redirect:listThreadTopic.html?topic_id="+topic_id;
 	}
 
 	@RequestMapping(value = "/saveApproveThread", method = RequestMethod.GET)
@@ -381,7 +412,14 @@ public class CommonController {
 	@RequestMapping(value = "/editThreadReply", method = RequestMethod.GET)
 	public String editReply(Model model, @RequestParam Long reply_id, @RequestParam Long thread_id) {
 		DfThreadReply reply = threadReplyService.df_s_getThreadReply(reply_id);
+		Map<Long,String> finalFileList = new HashMap<Long,String>();
+		List<DfThreadReplyFileMap> fileList = threadReplyFileMapService.df_s_getThreadReplyFileMapList(reply_id);
+
+		for(DfThreadReplyFileMap file : fileList){
+			finalFileList.put(file.getFileId(), attachedFileService.df_s_getAttachedFile(file.getFileId()).getFileName());
+		}
 		model.addAttribute("threadReply",reply);
+		model.addAttribute("fileList", finalFileList);
 		return "editThreadReply";
 	}
 
@@ -394,21 +432,82 @@ public class CommonController {
 		}
 		return "redirect:viewThread.html?thread_id="+thread_id;
 	}	
-	/*	public ServletContext setServletContext(ServletContext servletContext) {
-		return  servletContext;
 
-	}*/
-	@RequestMapping(value = "/saveThreadReply", method = RequestMethod.POST)
-	public String saveThreadReply(Model model,@ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
-			BindingResult result1, @RequestParam(value = "file", required=false) List<MultipartFile> files) {
-		
+	@RequestMapping(value = "/saveEditThreadReply", method = RequestMethod.POST)
+	public String saveEditThreadReply(Model model,@ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
+			BindingResult result1, @RequestParam(value = "file", required=false) List<MultipartFile> files,@RequestParam(value="checkBoxFile", required=false) List<Long> checkBox) {
+
 		newThreadReply.setDeleteFlag(false);
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(loginUserId);
 		newThreadReply.setThreadId(newThreadReply.getThreadId());
 		threadReplyService.df_s_addThreadReply(newThreadReply);
-		
-		
+
+		// Delete Files Start
+		if(checkBox != null)
+		{
+			for(Long c:checkBox){
+				System.out.println(c);
+				attachedFileService.df_s_removeAttachedFile(c);
+			}
+		}
+		// Delete Files Start		
+
+		File serverFile = null;
+		Long UploadedFileId = 0L;
+
+		if(files !=null){
+			for(MultipartFile file : files){
+				if (!file.isEmpty()) {
+					try {
+						byte[] bytes = file.getBytes();
+						// Creating the directory to store file
+						String rootPath = System.getProperty("catalina.home");
+						File dir = new File(rootPath + File.separator + "tmpFiles");
+						if (!dir.exists())
+							dir.mkdirs();
+
+						// Create the file on server
+						serverFile = new File(dir.getAbsolutePath()	+ File.separator + file.getOriginalFilename());
+						BufferedOutputStream stream = new BufferedOutputStream(	new FileOutputStream(serverFile));
+						stream.write(bytes);
+						stream.close();
+						DfAttachedFile fileToSaveInDB = new DfAttachedFile();
+						fileToSaveInDB.setFileLocation(serverFile.getAbsolutePath());
+						fileToSaveInDB.setFileName(file.getOriginalFilename());
+						fileToSaveInDB.setFileSize(file.getSize());
+						UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
+
+						threadReplyFileMapService.df_s_setThreadReplyFileMapList( newThreadReply.getReplyId(), UploadedFileId );
+						System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
+
+					} catch (Exception e) {
+						return "You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage();
+					}
+				}	
+			}
+		}
+
+		List<DfThreadReply> trl =  threadReplyService.df_s_getThreadReplyList(newThreadReply.getThreadId());
+		model.addAttribute("thread",  threadService.df_s_getThread(newThreadReply.getThreadId()));
+		model.addAttribute("threadReplys",trl);
+		model.addAttribute("newThreadReply", new DfThreadReply());		
+
+		return "redirect:viewThread.html?thread_id="+newThreadReply.getThreadId();
+	}
+
+
+	@RequestMapping(value = "/saveThreadReply", method = RequestMethod.POST)
+	public String saveThreadReply(Model model,@ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
+			BindingResult result1, @RequestParam(value = "file", required=false) List<MultipartFile> files) {
+
+		newThreadReply.setDeleteFlag(false);
+		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
+		newThreadReply.setSubmittedUserid(loginUserId);
+		newThreadReply.setThreadId(newThreadReply.getThreadId());
+		threadReplyService.df_s_addThreadReply(newThreadReply);
+
+
 		File serverFile = null;
 		Long UploadedFileId = 0L;
 

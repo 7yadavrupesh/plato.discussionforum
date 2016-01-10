@@ -33,4 +33,6 @@ public interface DfAttachedFileDao {
 	void df_d_removeAttachedFile(Long fileId);
 
 	DfAttachedFile df_d_getAttachedFile(Long fileId);
+
+	void df_d_removeAttachedFile(DfAttachedFile file);
 }

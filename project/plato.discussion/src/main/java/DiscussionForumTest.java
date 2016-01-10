@@ -1,6 +1,9 @@
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.srmri.plato.core.discussionforum.entity.DfAttachedFile;
 import com.srmri.plato.core.discussionforum.entity.DfThreadReply;
+import com.srmri.plato.core.discussionforum.service.DfAttachedFileService;
 import com.srmri.plato.core.discussionforum.service.DfThreadReplyService;
 
 public class DiscussionForumTest {
@@ -15,7 +18,7 @@ public class DiscussionForumTest {
 		discussionForumTest(topicService);*/
 
 		//DfTopicService topicService = 	(DfTopicService) ctx.getBean("topicService");
-		DfThreadReplyService threadReplyService = 	(DfThreadReplyService)ctx.getBean("threadReplyService");
+		DfAttachedFileService threadReplyService = 	(DfAttachedFileService)ctx.getBean("attachedFileService");
 		discussionForumTest(threadReplyService);
 		System.out.println("done");
 	}
@@ -23,7 +26,7 @@ public class DiscussionForumTest {
 	/*
 	 * Test function for testing role level data services
 	 */
-	public static void discussionForumTest(DfThreadReplyService threadReplyService){
+	public static void discussionForumTest(DfAttachedFileService threadReplyService){
 
 		DfThreadReply newThreadReply = new DfThreadReply();
 		newThreadReply.setReplyText("this is reply text");
@@ -32,7 +35,7 @@ public class DiscussionForumTest {
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(11L);
 		
-		threadReplyService.df_s_addThreadReply(newThreadReply);
+		threadReplyService.df_s_removeAttachedFile(90L);
 
 /*		// Rupesh Impl
 //		DfTopic topic = new DfTopic();

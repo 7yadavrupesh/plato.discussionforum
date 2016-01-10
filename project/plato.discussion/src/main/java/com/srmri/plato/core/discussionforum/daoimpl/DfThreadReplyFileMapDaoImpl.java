@@ -69,4 +69,20 @@ public class DfThreadReplyFileMapDaoImpl implements DfThreadReplyFileMapDao {
 			return objList.get(0);
 	}
 
+	@Override
+	public void df_d_removeThreadReplyFileMap(Long fileId) {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadReplyFileMap.class);
+		cri.add(Restrictions.eq("fileId", fileId));
+		List<DfThreadReplyFileMap> objList = cri.list();
+		if(objList.isEmpty())
+			return ;
+		else
+		{
+			sessionFactory.getCurrentSession().delete(objList.get(0));
+			sessionFactory.getCurrentSession().flush();
+		}
+		sessionFactory.getCurrentSession().flush();
+	}
+
 }

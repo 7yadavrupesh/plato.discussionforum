@@ -26,6 +26,8 @@ import org.springframework.stereotype.Repository;
 
 import com.srmri.plato.core.discussionforum.dao.DfAttachedFileDao;
 import com.srmri.plato.core.discussionforum.entity.DfAttachedFile;
+import com.srmri.plato.core.discussionforum.entity.DfThreadReplyFileMap;
+import com.srmri.plato.core.discussionforum.service.DfThreadReplyFileMapService;
 
 @Repository("dfAttachedFileDao")
 public class DfAttachedFileDaoImpl implements DfAttachedFileDao{
@@ -33,7 +35,8 @@ public class DfAttachedFileDaoImpl implements DfAttachedFileDao{
 	public DfAttachedFileDaoImpl() {
 		// TODO Auto-generated constructor stub
 	}
-	
+	@Autowired
+	private DfThreadReplyFileMapService threadReplyFileMapService;
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -55,12 +58,24 @@ public class DfAttachedFileDaoImpl implements DfAttachedFileDao{
 	 */
 	@Override
 	public void df_d_removeAttachedFile(Long fileId) {
+		
 		// TODO Auto-generated method stub
+		threadReplyFileMapService.df_s_removeThreadReplyFileMapList(fileId);
 		DfAttachedFile attachedFile = new DfAttachedFile();
 		attachedFile.setFileId(fileId);
 		sessionFactory.getCurrentSession().delete(attachedFile);
+		sessionFactory.getCurrentSession().flush();
 	}
-
+	
+	@Override
+	public void df_d_removeAttachedFile(DfAttachedFile file){
+		
+		// TODO Auto-generated method stub
+		threadReplyFileMapService.df_s_removeThreadReplyFileMapList(file.getFileId());
+		sessionFactory.getCurrentSession().delete(file);
+		sessionFactory.getCurrentSession().flush();
+	}
+	
 	@Override
 	public DfAttachedFile df_d_getAttachedFile(Long fileId) {
 		// TODO Auto-generated method stub

@@ -50,7 +50,13 @@ public class DfAttachedFileServiceImpl implements DfAttachedFileService{
 		// TODO Auto-generated method stub
 		attachedFileDao.df_d_removeAttachedFile(fileId);
 	}
-
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Override
+	public void df_s_removeAttachedFile(DfAttachedFile file) {
+		// TODO Auto-generated method stub
+		attachedFileDao.df_d_removeAttachedFile(file);
+	}
 	@Override
 	public DfAttachedFile df_s_getAttachedFile(Long fileId) {
 		// TODO Auto-generated method stub

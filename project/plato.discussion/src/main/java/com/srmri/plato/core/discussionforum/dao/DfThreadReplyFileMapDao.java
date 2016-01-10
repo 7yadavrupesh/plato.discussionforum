@@ -17,4 +17,5 @@ public interface DfThreadReplyFileMapDao {
 	List<Long> df_d_getFileList(Long threadReplyId);
 	void df_d_removeThreadReplyFileMap(DfThreadReplyFileMap trfm);
 	DfThreadReplyFileMap df_d_getThreadReplyFileMap(Long fileId);
+	void df_d_removeThreadReplyFileMap(Long fileId);
 }

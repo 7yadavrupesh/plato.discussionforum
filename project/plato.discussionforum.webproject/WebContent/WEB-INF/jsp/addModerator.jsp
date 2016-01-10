@@ -46,7 +46,7 @@
 <!-- bootstrap wysihtml5 - text editor -->
 <link rel="stylesheet"
 	href="./resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+<link href="./resources/custom/select2/css/select2.css" rel="stylesheet" />
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -378,10 +378,10 @@
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="assignedToUserid">Select User</form:label>
-										<form:select class="form-control" path="assignedToUserid"
+										<form:select class="js-example-basic-single form-control" path="assignedToUserid"
 											items="${usersList}" />
 										<form:label path="topicId">Select Topic</form:label>
-										<form:select class="form-control" path="topicId" items="${topics}" />
+										<form:select class="js-example-basic-single form-control" path="topicId" items="${topics}" />
 									</div>
 									<div class="box-footer">
 										<button type="submit" onclick="submitForm"
@@ -580,6 +580,8 @@
     <script src="./resources/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="./resources/dist/js/demo.js"></script>
+    <script src="./resources/custom/select2/js/select2.min.js"></script>
+    <script src="./resources/custom/js/custom.js"></script>
     <!-- page script -->
     <script>
       $(function () {

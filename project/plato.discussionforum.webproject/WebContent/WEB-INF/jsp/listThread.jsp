@@ -396,7 +396,7 @@
 															test="${moderatorAllowMap[thread.threadId] == true }">
 															<a href="editThread.html?thread_id=${thread.threadId}"><span
 																class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
-															<a href="deleteThread.html?thread_id=${thread.threadId}"><span
+															<a href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
 																class="fa fa-remove" title="delete"></span></a>
 														</c:when>
 														<c:otherwise>

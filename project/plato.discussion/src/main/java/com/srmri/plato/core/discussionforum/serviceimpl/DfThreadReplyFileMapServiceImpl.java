@@ -60,4 +60,11 @@ public class DfThreadReplyFileMapServiceImpl implements DfThreadReplyFileMapServ
 		threadReplyFileMapDao.df_d_addThreadReplyFileMap(obj);
 	}
 
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void df_s_removeThreadReplyFileMapList(Long fileId) {
+		// TODO Auto-generated method stub
+		threadReplyFileMapDao.df_d_removeThreadReplyFileMap(fileId);
+	}
+
 }

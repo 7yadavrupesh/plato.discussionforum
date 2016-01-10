@@ -11,4 +11,5 @@ public interface DfThreadReplyFileMapService {
 	void df_s_removeThreadReplyFileMapList(DfThreadReplyFileMap trfm);
 	DfThreadReplyFileMap df_s_getThreadReplyFileMap(Long fileId);
 	void df_s_setThreadReplyFileMapList(Long replyId, Long uploadedFileId);
+	void df_s_removeThreadReplyFileMapList(Long fileId);
 }

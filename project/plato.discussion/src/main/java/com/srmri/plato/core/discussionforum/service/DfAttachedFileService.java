@@ -25,4 +25,6 @@ public interface DfAttachedFileService {
 	void df_s_removeAttachedFile(Long fileId);
 	
 	DfAttachedFile df_s_getAttachedFile(Long fileId);
+
+	void df_s_removeAttachedFile(DfAttachedFile file);
 }

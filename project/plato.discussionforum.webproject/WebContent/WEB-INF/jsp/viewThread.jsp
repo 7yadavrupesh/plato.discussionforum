@@ -358,12 +358,12 @@
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->
-				<div class="box box-solid">
+				<div class="box box-primary direct-chat direct-chat-primary">
 					<!-- <div class="box-header with-border"> -->
 					<!-- <i class="fa fa-text-width"></i> -->
-					<h2>
+					<h3 class="box-title">
 						<c:out value="Q. ${thread.threadTitle}" />
-					</h2>
+					</h3>
 					<!-- </div> -->
 					<!-- /.box-header -->
 					<div class="box-body">
@@ -376,16 +376,33 @@
 										value="${thread.createdUserid}" /></cite>
 							</small>
 						</blockquote>
+
 						<c:choose>
-							<c:when test="${checkSubscribe == false}">
-								<a class="btn btn-primary pull-right"
-									href="subscribeThread.html?thread_id=${thread.threadId}">Subscribe</a>
+							<c:when test="${threadEditAllowed == true }">
+								<div id="editThread" class="pull-right">
+									<a name="edit" value="viewThread"   href="editThread.html?thread_id=${thread.threadId}"><span
+										class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp; <a
+										  href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
+										class="fa fa-remove" title="delete"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+								</div>
 							</c:when>
 							<c:otherwise>
-								<a class="btn btn-primary pull-right"
-									href="unSubscribeThread.html?thread_id=${thread.threadId}">UnSubscribe</a>
+								<div id="editThread" class="pull-right">
+									<span class="fa fa-edit" title="edit"></span>&nbsp;&nbsp; <span
+										class="fa fa-remove" title="delete"></span>&nbsp;&nbsp;
+								</div>
 							</c:otherwise>
 						</c:choose>
+						<div class="pull-right">
+							<c:choose>
+								<c:when test="${checkSubscribe == false}">
+									<a href="subscribeThread.html?thread_id=${thread.threadId}">Subscribe</a>&nbsp;&nbsp;
+							</c:when>
+								<c:otherwise>
+									<a href="unSubscribeThread.html?thread_id=${thread.threadId}">UnSubscribe</a>&nbsp;&nbsp;
+							</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 					<!-- /.box-body -->
 
@@ -417,29 +434,25 @@
 												test="${loginUserId == threadReply.key.submittedUserid  || loginUserId == topicUserId}">
 												<br>
 												<br>
-												<div class="pull-right">
-												<a
-													href="deleteThreadReply.html?reply_id=${threadReply.key.replyId}&thread_id=${threadReply.key.threadId}"><span
-													class="fa fa-remove" title="delete comment"></span></a>&nbsp;&nbsp;
-													<a
-													href="editThreadReply.html?reply_id=${threadReply.key.replyId}&thread_id=${threadReply.key.threadId}"><span
-													class="fa fa-edit" title="edit"></span></a>
-													</div>
-												<%-- <c:if test="${threadReply.key.fileId != 0 }">
-													<a
-														href="downloadFile.html?file_id=${threadReply.key.fileId}&thread_id=${threadReply.key.threadId}"><span
-														class="fa fa-download" title="download attached file"></span></a>
-												</c:if> --%>
 												<c:if test="${threadReply.value !=null}">
 													<p class="small">Files To Download</p>
 													<c:forEach items="${threadReply.value}" var="fileList">
 														<a
 															href="downloadFile.html?file_id=${fileList.key}&thread_id=${threadReply.key.threadId}">${fileList.value }&nbsp;&nbsp;<span
 															class="fa fa-download" title="download attached file"></span></a>
-															<br>
+														<br>
 													</c:forEach>
-													
+
 												</c:if>
+												<div class="pull-right">
+													<a
+														href="deleteThreadReply.html?reply_id=${threadReply.key.replyId}&thread_id=${threadReply.key.threadId}"><span
+														class="fa fa-remove" title="delete comment"></span></a>&nbsp;&nbsp;
+													<a
+														href="editThreadReply.html?reply_id=${threadReply.key.replyId}&thread_id=${threadReply.key.threadId}"><span
+														class="fa fa-edit" title="edit"></span></a>
+												</div>
+
 											</c:if>
 										</div>
 									</div>
@@ -462,7 +475,7 @@
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form method="POST" action="saveThreadReply.html"
-								enctype="multipart/form-data">
+								accept-charset=utf-8 enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
 										<input name="threadId" type="hidden"
@@ -475,13 +488,12 @@
 											value="${newThreadReply.replyText}"></textarea>
 									</div>
 									<div id="fileUpload" class="form-group">
-									
-										<label for="file">File input</label> <input type="file" name="file" size=50 multiple/>
-										<label for="file">File input</label> <input type="file"	name="file" size=50 multiple/>
+										<label for="file">Select Files</label> <input type="file"
+											name="file" size=50 multiple />
 									</div>
+									<a id="addMoreFiles" class="btn btn-default btn-xs">Add More Files</a>
 								</div>
 								<!-- /.box-body -->
-
 								<div class="box-footer">
 									<button class="btn btn-primary" type="submit">Submit</button>
 								</div>
@@ -677,6 +689,7 @@
 	<script src="./resources/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="./resources/dist/js/demo.js"></script>
+	<script src="./resources/custom/js/custom.js"></script>
 	<!-- page script -->
 	<script>
 		$(function() {

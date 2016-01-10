@@ -46,7 +46,7 @@
 <!-- bootstrap wysihtml5 - text editor -->
 <link rel="stylesheet"
 	href="./resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+<link href="./resources/custom/select2/css/select2.css" rel="stylesheet" />
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -378,7 +378,7 @@
 								<div class="box-body">
 									<div class="form-group">
 									<form:label path="topics">Topic</form:label>
-										<form:select path="topics" class="form-control" name="topicId">
+										<form:select path="topics" class=" js-example-basic-single form-control" name="topicId">
 											<form:option value="NONE" label="--- Select Topic ---" />
 											<form:options items="${topics}" />
 										</form:select>
@@ -591,6 +591,9 @@
     <script src="./resources/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="./resources/dist/js/demo.js"></script>
+    <script src="./resources/custom/select2/js/select2.min.js"></script>
+    <script src="./resources/custom/js/custom.js"></script>
+<script src="path/to/select2.min.js"></script>
     <!-- page script -->
     <script>
       $(function () {
