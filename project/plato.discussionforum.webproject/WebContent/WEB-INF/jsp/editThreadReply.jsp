@@ -425,7 +425,7 @@
 										<div class="col-md-6">
 											<div class="box box-primary">
 												<div class="box-header with-border">
-													<h3 class="box-title">Select Files For Delete</h3>
+													<h3 class="box-title">Upload New Files</h3>
 												</div>
 												
 												<div id="fileUpload" class="form-group">

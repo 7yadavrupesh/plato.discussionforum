@@ -10,4 +10,5 @@ public interface DfThreadFileMapService {
 	List<DfThreadFileMap> df_s_getTheadFileMapList(Long threadId);
 	List<Long> df_s_getFileList(Long threadId);
 	DfThreadFileMap df_s_getThreadFileMap(Long fileId);
+	void df_s_addThreadFileMap(Long threadId, Long uploadedFileId);
 }

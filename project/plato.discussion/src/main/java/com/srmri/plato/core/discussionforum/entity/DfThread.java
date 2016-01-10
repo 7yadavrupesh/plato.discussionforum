@@ -60,9 +60,6 @@ public class DfThread implements Serializable{
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "file_id")
-	private Long fileId;
-	
 	@Column(name = "approved")
 	private Boolean approved;
 	
@@ -74,7 +71,7 @@ public class DfThread implements Serializable{
 	}
 	
 	public DfThread(Long createdUserId, Timestamp createdTime, Timestamp modifiedTime, Long topicId,
-			String title, String description, Long fileId, boolean approved, boolean deletedFlag) {
+			String title, String description, boolean approved, boolean deletedFlag) {
 		
 		this.createdUserid = createdUserId;
 		this.createdTime = createdTime;
@@ -82,7 +79,6 @@ public class DfThread implements Serializable{
 		this.topicId = topicId;
 		this.threadTitle = title;
 		this.description = description;
-		this.fileId = fileId;
 		this.approved = approved;
 		this.deletedFlag = deletedFlag;
 		// TODO Auto-generated constructor stub
@@ -170,18 +166,6 @@ public class DfThread implements Serializable{
 	 */
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	/**
-	 * @return the fileId
-	 */
-	public Long getFileId() {
-		return fileId;
-	}
-	/**
-	 * @param fileId the fileId to set
-	 */
-	public void setFileId(Long fileId) {
-		this.fileId = fileId;
 	}
 	/**
 	 * @return the approved

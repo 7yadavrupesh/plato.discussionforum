@@ -50,4 +50,10 @@ public class DfThreadFileMapServiceImpl implements DfThreadFileMapService{
 		// TODO Auto-generated method stub
 		return threadFileMapDao.df_d_getThreadFileMap(fileId);
 	}
+
+	@Override
+	public void df_s_addThreadFileMap(Long threadId, Long uploadedFileId) {
+		// TODO Auto-generated method stub
+		threadFileMapDao.df_d_addThreadFileMap(threadId,uploadedFileId);
+	}
 }

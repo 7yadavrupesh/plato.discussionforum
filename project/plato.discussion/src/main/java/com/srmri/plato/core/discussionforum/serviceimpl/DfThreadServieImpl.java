@@ -60,7 +60,7 @@ public class DfThreadServieImpl implements DfThreadService{
 		//uploadedFileId = fileDao.df_d_addAttachedFile(file);
 		
 		DfThread thread = new DfThread(createdUserId, createdTime, modifiedTime, topicId,
-				title, description, 12L, approved, deletedFlag);
+				title, description, approved, deletedFlag);
 		
 		threadDao.df_d_addThread(thread);
 		return false;

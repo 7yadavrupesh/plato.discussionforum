@@ -27,4 +27,5 @@ public interface DfThreadFileMapDao {
 	List<DfThreadFileMap> df_d_getTheadFileMapList(Long threadId);
 	List<Long> df_d_getFileList(Long threadId);
 	DfThreadFileMap df_d_getThreadFileMap(Long fileId );
+	void df_d_addThreadFileMap(Long threadId, Long uploadedFileId);
 }

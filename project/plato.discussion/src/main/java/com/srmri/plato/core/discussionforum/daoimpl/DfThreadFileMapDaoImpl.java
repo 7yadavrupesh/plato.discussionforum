@@ -25,11 +25,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.srmri.plato.core.discussionforum.dao.DfAttachedFileDao;
 import com.srmri.plato.core.discussionforum.dao.DfThreadFileMapDao;
-import com.srmri.plato.core.discussionforum.entity.DfAttachedFile;
 import com.srmri.plato.core.discussionforum.entity.DfThreadFileMap;
 import com.srmri.plato.core.discussionforum.entity.DfThreadReplyFileMap;
+import com.srmri.plato.core.discussionforum.service.DfAttachedFileService;
 
 @Repository("dfThreadFileMapDao")
 public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
@@ -38,6 +37,8 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Autowired
+	private DfAttachedFileService attachedFileService;
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -51,7 +52,9 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 	@Override
 	public void df_d_removeThreadFileMap(DfThreadFileMap threadFileMap) {
 		// TODO Auto-generated method stub
+		attachedFileService.df_s_removeAttachedFile(threadFileMap.getFileId());
 		sessionFactory.getCurrentSession().delete(threadFileMap);
+		sessionFactory.getCurrentSession().flush();
 	}
 
 	@Override
@@ -67,13 +70,14 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadFileMap.class);
 		cri.add(Restrictions.eq("threadId", threadId));
-		List<DfThreadReplyFileMap> objList = cri.list();
+		System.out.println(cri.list().size());
+		List<DfThreadFileMap> objList = cri.list();
 
 		List<Long> fileIdList = new ArrayList<Long>();
 		
 		if(!objList.isEmpty() || objList != null )
 		{
-			for(DfThreadReplyFileMap obj: objList){
+			for(DfThreadFileMap obj: objList){
 				fileIdList.add(obj.getFileId());
 			}
 		}
@@ -89,5 +93,15 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 			return null;
 		else
 			return (DfThreadFileMap) cri.list().get(0);
+	}
+
+	@Override
+	public void df_d_addThreadFileMap(Long threadId, Long uploadedFileId) {
+		// TODO Auto-generated method stub
+		DfThreadFileMap obj = new DfThreadFileMap();
+		obj.setFileId(uploadedFileId);
+		obj.setThreadId(threadId);
+		sessionFactory.getCurrentSession().saveOrUpdate(obj);
+		sessionFactory.getCurrentSession().flush();
 	}
 }

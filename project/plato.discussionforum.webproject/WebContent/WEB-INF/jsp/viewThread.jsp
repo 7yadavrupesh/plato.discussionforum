@@ -376,13 +376,23 @@
 										value="${thread.createdUserid}" /></cite>
 							</small>
 						</blockquote>
-
+						<c:if test="${not empty finalThreadFileListMap}">
+						<div class="box-body">
+							<h6 class="text-aqua">attached files</h6>
+							<c:forEach items="${finalThreadFileListMap}" var="file">
+								<a href="downloadFile.html?file_id=${file.key}&thread_id=${thread.threadId}">${file.value }&nbsp;&nbsp; 
+									<span class="fa fa-download" title="download attached file"></span></a>
+								<br>
+							</c:forEach>
+							</div>
+						</c:if>
 						<c:choose>
 							<c:when test="${threadEditAllowed == true }">
 								<div id="editThread" class="pull-right">
-									<a name="edit" value="viewThread"   href="editThread.html?thread_id=${thread.threadId}"><span
+									<a name="edit" value="viewThread"
+										href="editThread.html?thread_id=${thread.threadId}"><span
 										class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp; <a
-										  href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
+										href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
 										class="fa fa-remove" title="delete"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;
 								</div>
 							</c:when>
@@ -405,13 +415,9 @@
 						</div>
 					</div>
 					<!-- /.box-body -->
-
 				</div>
-
-
 				<div class="detailBox">
 					<div class="box-footer box-comments">
-
 						<c:choose>
 							<c:when test="${!empty threadReplys}">
 								<c:forEach items="${threadReplys}" var="threadReply">
@@ -419,8 +425,6 @@
 										<img alt="user image"
 											src="./resources/dist/img/user3-128x128.jpg"
 											class="img-circle img-sm">
-
-
 										<div class="comment-text">
 											<span class="username"> Maria Gonzales <span
 												class="text-muted pull-right"> <c:out
@@ -491,7 +495,8 @@
 										<label for="file">Select Files</label> <input type="file"
 											name="file" size=50 multiple />
 									</div>
-									<a id="addMoreFiles" class="btn btn-default btn-xs">Add More Files</a>
+									<a id="addMoreFiles" class="btn btn-default btn-xs">Add
+										More Files</a>
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">

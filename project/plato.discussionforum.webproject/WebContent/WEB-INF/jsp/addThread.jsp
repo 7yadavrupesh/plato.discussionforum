@@ -373,8 +373,8 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Thread</h3>
 							</div>
-							<form name="addThread" method="GET" action="saveAddThread.html"
-								role="form">
+							<form name="addThread" method="POST" action="saveAddThread.html"
+								role="form" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
 									<form:label path="topics">Topic</form:label>
@@ -395,6 +395,11 @@
 										<textarea class="form-control" name="description" rows="5"
 											value="${thread.description}"></textarea>
 									</div>
+									<div id="fileUpload" class="form-group">
+										<label for="file">Select Files</label> <input type="file"
+											name="file" size=50 multiple />
+									</div>
+									<a id="addMoreFiles" class="btn btn-default btn-xs">Add More Files</a>
 									<div class="box-footer">
 										<button type="submit" onclick="submitForm"
 											class="btn btn-primary">Add Thread</button>
