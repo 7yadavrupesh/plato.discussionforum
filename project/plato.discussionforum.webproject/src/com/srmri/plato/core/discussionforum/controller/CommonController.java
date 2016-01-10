@@ -411,8 +411,7 @@ public class CommonController {
 		
 		File serverFile = null;
 		Long UploadedFileId = 0L;
-System.out.println(files.get(0).getOriginalFilename());
-System.out.println(files.get(1).getOriginalFilename());
+
 		if(files !=null){
 			for(MultipartFile file : files){
 				if (!file.isEmpty()) {

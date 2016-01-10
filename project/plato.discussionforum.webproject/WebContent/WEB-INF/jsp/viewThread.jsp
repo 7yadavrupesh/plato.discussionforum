@@ -476,9 +476,9 @@
 									</div>
 									<div class="form-group">
 										<label for="file">File input</label> <input type="file"
-											name="file">
+											name="file" size=50 multiple/>
 											<label for="file">File input</label> <input type="file"
-											name="file">
+											name="file" size=50 multiple>
 									</div>
 								</div>
 								<!-- /.box-body -->
