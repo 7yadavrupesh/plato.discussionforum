@@ -14,20 +14,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.srmri.plato.core.discussionforum.entity.DfAttachedFile;
 import com.srmri.plato.core.discussionforum.entity.DfModeratorAssigned;
 import com.srmri.plato.core.discussionforum.entity.DfThread;
-import com.srmri.plato.core.discussionforum.entity.DfThreadFileMap;
+
 import com.srmri.plato.core.discussionforum.entity.DfThreadReply;
 import com.srmri.plato.core.discussionforum.entity.DfThreadReplyFileMap;
 import com.srmri.plato.core.discussionforum.entity.DfTopic;
@@ -39,6 +43,7 @@ import com.srmri.plato.core.discussionforum.service.DfThreadReplyService;
 import com.srmri.plato.core.discussionforum.service.DfThreadService;
 import com.srmri.plato.core.discussionforum.service.DfThreadSubscriptionService;
 import com.srmri.plato.core.discussionforum.service.DfTopicService;
+import com.srmri.plato.core.discussionforum.validator.TopicFormValidator;
 
 @Controller
 public class CommonController {
@@ -55,6 +60,13 @@ public class CommonController {
 				return true;
 		}
 		return false;
+	}
+	
+	@Autowired
+	private TopicFormValidator topicFormValidator;	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(topicFormValidator);
 	}
 	
 	@Autowired
@@ -118,21 +130,23 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/addTopic", method = RequestMethod.GET)
-	public ModelAndView addTopic(@ModelAttribute("topic") DfTopic topic, BindingResult result) {	         
+	public String addTopic(@ModelAttribute("topic") DfTopic topic, BindingResult result) {	         
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("topic",  topic);
-		return new ModelAndView("addTopic", model);
+		return"addTopic";
 	}
 
 	@RequestMapping(value = "/saveTopic", method = RequestMethod.POST)
-	public String saveTopic(@ModelAttribute("command") DfTopic topic, BindingResult result) {	
+	public String saveTopic(@Validated @ModelAttribute("topic")  DfTopic topic, BindingResult result) {	
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
-		if(topic.getTopicTitle().isEmpty())
-			return "addTopic";
+		
 		topic.setCreatedTime(curTime);
 		topic.setCreatedUserid(loginUserId);
 		topic.setDeletedFlag(false);
 		topicService.df_s_insertTopic(topic);
+		if(result.hasErrors()){
+			return"addTopic";
+		}
 		return "redirect:listTopic.html";
 	}
 

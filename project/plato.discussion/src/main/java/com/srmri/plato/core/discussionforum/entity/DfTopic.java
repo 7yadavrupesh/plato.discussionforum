@@ -16,7 +16,6 @@
 
 package com.srmri.plato.core.discussionforum.entity;
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 import java.sql.Timestamp;
 
@@ -38,7 +38,7 @@ public class DfTopic implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="df_topic_seq")
 	@Column(name = "topic_id")
 	private Long topicId;
-
+	
 	@Column(name = "topic_title")
 	private String topicTitle;
 	

@@ -40,6 +40,18 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+  <style>
+  
+  .table {
+	table-layout:fixed;
+}
+
+.table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+</style>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 
