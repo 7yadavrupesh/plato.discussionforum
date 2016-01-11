@@ -378,10 +378,18 @@
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="assignedToUserid">Select User</form:label>
-										<form:select class="js-example-basic-single form-control" path="assignedToUserid"
-											items="${usersList}" />
+									<%-- 	<form:select class="js-example-basic-single form-control" path="assignedToUserid"
+											items="${usersList}" /> --%>
+											<form:select path="assignedToUserid" class=" js-example-basic-single form-control">
+											<form:option value="NONE" label="--- Select Topic ---" />
+											<form:options items="${usersList}" />
+										</form:select>
 										<form:label path="topicId">Select Topic</form:label>
-										<form:select class="js-example-basic-single form-control" path="topicId" items="${topics}" />
+										<%-- <form:select class="js-example-basic-single form-control" path="topicId" items="${topics}" /> --%>
+										<form:select path="topicId" class=" js-example-basic-single form-control">
+											<form:option value="NONE" label="--- Select Topic ---" />
+											<form:options items="${topics}" />
+										</form:select>
 									</div>
 									<div class="box-footer">
 										<button type="submit" onclick="submitForm"

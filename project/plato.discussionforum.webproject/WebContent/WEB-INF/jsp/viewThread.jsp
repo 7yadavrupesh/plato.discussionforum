@@ -32,7 +32,7 @@
          folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
 	href="./resources/dist/css/skins/_all-skins.min.css">
-
+<link href="./resources/custom/select2/css/select2.css" rel="stylesheet" />
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -377,21 +377,25 @@
 							</small>
 						</blockquote>
 						<c:if test="${not empty finalThreadFileListMap}">
-						<div class="box-body">
-							<h6 class="text-aqua">attached files</h6>
-							<c:forEach items="${finalThreadFileListMap}" var="file">
-								<a href="downloadFile.html?file_id=${file.key}&thread_id=${thread.threadId}">${file.value }&nbsp;&nbsp; 
-									<span class="fa fa-download" title="download attached file"></span></a>
-								<br>
-							</c:forEach>
+							<div class="box-body">
+								<div style="margin-left: 15px;">
+									<h6 class="small">Attached files</h6>
+									<c:forEach items="${finalThreadFileListMap}" var="file">
+										<a
+											href="downloadFile.html?file_id=${file.key}&thread_id=${thread.threadId}">${file.value }&nbsp;&nbsp;
+											<span class="fa fa-download" title="download attached file"></span>
+										</a>
+										<br>
+									</c:forEach>
+								</div>
 							</div>
 						</c:if>
 						<c:choose>
 							<c:when test="${threadEditAllowed == true }">
 								<div id="editThread" class="pull-right">
-									<a name="edit" value="viewThread"
-										href="editThread.html?thread_id=${thread.threadId}"><span
+									<a href="editThread.html?thread_id=${thread.threadId}"><span
 										class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp; <a
+										onclick="return confirm_delete(this);"
 										href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
 										class="fa fa-remove" title="delete"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;
 								</div>
@@ -435,10 +439,10 @@
 											<!-- /.username -->
 											<c:out value="${threadReply.key.replyText}" />
 											<c:if
-												test="${loginUserId == threadReply.key.submittedUserid  || loginUserId == topicUserId}">
+												test="${loginUserId == threadReply.key.submittedUserid  || loginUserId == topicUserId || admin == true}">
 												<br>
 												<br>
-												<c:if test="${threadReply.value !=null}">
+												<c:if test="${not empty threadReply.value}">
 													<p class="small">Files To Download</p>
 													<c:forEach items="${threadReply.value}" var="fileList">
 														<a
@@ -446,10 +450,9 @@
 															class="fa fa-download" title="download attached file"></span></a>
 														<br>
 													</c:forEach>
-
 												</c:if>
 												<div class="pull-right">
-													<a
+													<a onclick="return confirm_delete(this);"
 														href="deleteThreadReply.html?reply_id=${threadReply.key.replyId}&thread_id=${threadReply.key.threadId}"><span
 														class="fa fa-remove" title="delete comment"></span></a>&nbsp;&nbsp;
 													<a
@@ -694,6 +697,7 @@
 	<script src="./resources/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="./resources/dist/js/demo.js"></script>
+	<script src="./resources/custom/select2/js/select2.min.js"></script>
 	<script src="./resources/custom/js/custom.js"></script>
 	<!-- page script -->
 	<script>

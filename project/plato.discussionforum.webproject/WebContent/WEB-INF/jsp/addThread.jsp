@@ -391,7 +391,6 @@
 									</div>
 									<div class="form-group">
 										<label for="description">Thread Description</label>
-										<%-- 	<input type="text"				class="form-control" name="description"				value="${thread.description}" /> --%>
 										<textarea class="form-control" name="description" rows="5"
 											value="${thread.description}"></textarea>
 									</div>
@@ -596,9 +595,8 @@
     <script src="./resources/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="./resources/dist/js/demo.js"></script>
-    <script src="./resources/custom/select2/js/select2.min.js"></script>
     <script src="./resources/custom/js/custom.js"></script>
-<script src="path/to/select2.min.js"></script>
+	<script src="./resources/custom/select2/js/select2.min.js"></script>
     <!-- page script -->
     <script>
       $(function () {
@@ -612,6 +610,9 @@
           "autoWidth": false
         });
       });
+      $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+    	    $("#success-alert").alert('close');
+    	});
     </script>
 </body>
 </html>

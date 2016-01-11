@@ -43,8 +43,20 @@ import com.srmri.plato.core.discussionforum.service.DfTopicService;
 @Controller
 public class CommonController {
 
-	static Long loginUserId = 10L;	
-
+	static Long loginUserId = 100L;	
+	static List<Long> admin = new ArrayList<Long>();
+	public CommonController(){
+		admin.add(100L);
+		admin.add(200L);
+	}
+	Boolean checkAdmin(Long userId){
+		for(Long id : admin){
+			if(id ==userId)
+				return true;
+		}
+		return false;
+	}
+	
 	@Autowired
 	private DfTopicService topicService;
 	@Autowired
@@ -72,23 +84,33 @@ public class CommonController {
 
 		List<DfTopic> allTopicList = topicService.df_s_getAllTopicList();
 		Map<Long, Boolean> moderatorAllowMap = new HashMap<Long,Boolean>();
-		for(DfTopic topic: allTopicList){
-			List<Long> assignedModeratorList = moderatorAssignedService.df_s_getModeratorList(topic.getTopicId());
-			if(!assignedModeratorList.isEmpty()){
-				for(Long moderator:assignedModeratorList){
-					if(moderator == loginUserId){
-						System.out.println("getting moderators");
-						moderatorAllowMap.put(topic.getTopicId(), true);
-					}
-					else
-						moderatorAllowMap.put(topic.getTopicId(), false);
-				}
-			}
-			else{
-				moderatorAllowMap.put(topic.getTopicId(), false);
+
+		if(checkAdmin(loginUserId)){
+			for(DfTopic topic: allTopicList){
+				moderatorAllowMap.put(topic.getTopicId(), true);
 			}
 		}
-
+		else{
+			for(DfTopic topic: allTopicList){
+				List<Long> assignedModeratorList = moderatorAssignedService.df_s_getModeratorList(topic.getTopicId());
+				if(!assignedModeratorList.isEmpty()){
+					for(Long moderator:assignedModeratorList){
+						if(moderator == loginUserId){
+							System.out.println("getting moderators");
+							moderatorAllowMap.put(topic.getTopicId(), true);
+						}
+						else
+							moderatorAllowMap.put(topic.getTopicId(), false);
+					}
+				}
+				else if(checkAdmin(loginUserId)){
+					moderatorAllowMap.put(topic.getTopicId(), true);
+				}
+				else{
+					moderatorAllowMap.put(topic.getTopicId(), false);
+				}
+			}
+		}
 		model.addAttribute("moderatorAllowMap", moderatorAllowMap);
 		model.addAttribute("topics",  allTopicList);
 		model.addAttribute("loginUserId",  loginUserId);
@@ -140,10 +162,17 @@ public class CommonController {
 		List<DfModeratorAssigned> moderatorAssignedFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
 		List<DfTopic> deletedTopicsList = new ArrayList<DfTopic>();
 
-		for(DfModeratorAssigned moderator: moderatorAssignedFor){
+		if(checkAdmin(loginUserId)){
 			for(DfTopic deletedTopic: allDeletedTopicList){
-				if(moderator.getTopicId() == deletedTopic.getTopicId() || deletedTopic.getCreatedUserid() == loginUserId){
-					deletedTopicsList.add(deletedTopic);
+				deletedTopicsList.add(deletedTopic);
+			}
+		}else{
+
+			for(DfModeratorAssigned moderator: moderatorAssignedFor){
+				for(DfTopic deletedTopic: allDeletedTopicList){
+					if(moderator.getTopicId() == deletedTopic.getTopicId() || deletedTopic.getCreatedUserid() == loginUserId){
+						deletedTopicsList.add(deletedTopic);
+					}
 				}
 			}
 		}
@@ -167,7 +196,10 @@ public class CommonController {
 		if(!finalThredList.isEmpty()){
 			for(DfThread thread : finalThredList){
 
-				if(loginUserId == thread.getCreatedUserid()){
+				if(checkAdmin(loginUserId)){
+					moderatorAllowMap.put(thread.getThreadId(), true);
+				}
+				else if(loginUserId == thread.getCreatedUserid()){
 					moderatorAllowMap.put(thread.getThreadId(), true);
 				}
 				else if(loginUserId == topicService.df_s_getTopic(topic_id).getCreatedUserid())
@@ -210,9 +242,6 @@ public class CommonController {
 
 		model.addAttribute("threads",  threadService.df_s_getThreadList());
 		model.addAttribute("topics", topics);
-
-
-
 		return "addThread";
 	}
 
@@ -238,7 +267,10 @@ public class CommonController {
 						byte[] bytes = file.getBytes();
 						// Creating the directory to store file
 						String rootPath = System.getProperty("catalina.home");
-						File dir = new File(rootPath + File.separator + "tmpFiles");
+						// storePath Format: /plato/discussion_forum/thread/<threadId>/<loginUserId> 
+						String storePath = File.separator + "plato"+File.separator+"discussion_forum"+File.separator+"thread"+File.separator+thread.getThreadId()+
+								File.separator+loginUserId;
+						File dir = new File(rootPath + storePath);
 						if (!dir.exists())
 							dir.mkdirs();
 
@@ -262,11 +294,6 @@ public class CommonController {
 				}	
 			}
 		}
-
-
-
-
-
 		return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
 	}
 
@@ -283,7 +310,10 @@ public class CommonController {
 						byte[] bytes = file.getBytes();
 						// Creating the directory to store file
 						String rootPath = System.getProperty("catalina.home");
-						File dir = new File(rootPath + File.separator + "tmpFiles");
+						// storePath Format: /plato/discussion_forum/thread/<threadId>/<loginUserId> 
+						String storePath = File.separator + "plato"+File.separator+"discussion_forum"+File.separator+"thread"+File.separator+thread.getThreadId()+
+								File.separator+loginUserId;
+						File dir = new File(rootPath + storePath);
 						if (!dir.exists())
 							dir.mkdirs();
 
@@ -350,7 +380,11 @@ public class CommonController {
 		Boolean threadEditAllowed = false;
 		List<Long> assignedModeratorList = moderatorAssignedService.df_s_getModeratorList(thread.getTopicId());
 
-		if(loginUserId == thread.getCreatedUserid()){
+		// Role check Start
+		if(checkAdmin(loginUserId)){
+			threadEditAllowed =  true;
+		}
+		else if(loginUserId == thread.getCreatedUserid()){
 			threadEditAllowed =  true;
 		}
 		else if(loginUserId == topicService.df_s_getTopic(thread.getTopicId()).getCreatedUserid())
@@ -367,6 +401,13 @@ public class CommonController {
 			}
 		}
 
+		if(checkAdmin(loginUserId)){
+			model.addAttribute("admin", true);
+		}
+		else
+			model.addAttribute("admin", false);
+		// Role check End
+
 		if(!threadReplysList.isEmpty()){
 			for(DfThreadReply reply: threadReplysList){
 				List<Long> attachedFilesList  = threadReplyFileMapService.df_s_getFileList(reply.getReplyId());
@@ -380,11 +421,12 @@ public class CommonController {
 					for(Long attachedFileId: attachedFilesList){
 						String filePath = attachedFileService.df_s_getAttachedFile(attachedFileId).getFileLocation();
 						File file = new File(filePath);
-						if(file.exists())
+						if(file.exists()){
 							fileList.put(attachedFileId,file.getName());
+						}
 					}
 					finalThreadReplyList.put(reply, fileList);
-				}
+				}				
 			}
 		}
 
@@ -408,7 +450,7 @@ public class CommonController {
 				String filePath = attachedFileService.df_s_getAttachedFile(fileId).getFileLocation();
 				File file = new File(filePath);
 				if(file.exists())
-				finalFileListMap.put(fileId, attachedFileService.df_s_getAttachedFile(fileId).getFileName());
+					finalFileListMap.put(fileId, attachedFileService.df_s_getAttachedFile(fileId).getFileName());
 			}
 		}
 		model.addAttribute("finalFileListMap",finalFileListMap);
@@ -446,15 +488,24 @@ public class CommonController {
 		List<DfTopic> topicList = topicService.df_s_getTopicList(loginUserId);
 		List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
 
-		if(!moderatorFor.isEmpty()){
-			for(DfModeratorAssigned moderator: moderatorFor){
-				topicList.add(topicService.df_s_getTopic(moderator.getTopicId()));
+		// if admin give all threads for approval
+		// else check user is moderator for that threads topic?
+		if(checkAdmin(loginUserId)){
+			for(DfThread thread:threadListForApproval){
+				finalApprovalList.add(thread);	
 			}
-		}
-		for(DfThread thread:threadListForApproval){
-			for(DfTopic top: topicList){
-				if(top.getTopicId() == thread.getTopicId())
-					finalApprovalList.add(thread);	
+		}else{
+
+			if(!moderatorFor.isEmpty()){
+				for(DfModeratorAssigned moderator: moderatorFor){
+					topicList.add(topicService.df_s_getTopic(moderator.getTopicId()));
+				}
+			}
+			for(DfThread thread:threadListForApproval){
+				for(DfTopic top: topicList){
+					if(top.getTopicId() == thread.getTopicId())
+						finalApprovalList.add(thread);	
+				}
 			}
 		}
 		model.addAttribute("topics",topics);
@@ -480,8 +531,8 @@ public class CommonController {
 	@RequestMapping(value = "/deletedThreadList", method = RequestMethod.GET)
 	public String deletedThreadList(Model model) {
 		Map<Long,String> topics = new HashMap<Long,String>();
-
-		for(DfTopic topic: topicService.df_s_getAllTopicList()){
+		List<DfTopic> allDeletedNonDeletedTopicList = topicService.df_s_getAllDeletedNonDeletedTopicList();
+		for(DfTopic topic: allDeletedNonDeletedTopicList ){
 			topics.put(topic.getTopicId(), topic.getTopicTitle());
 		}
 
@@ -490,17 +541,25 @@ public class CommonController {
 		List<DfTopic> topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);
 		List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
 
-		if(!moderatorFor.isEmpty()){
-			for(DfModeratorAssigned moderator: moderatorFor){
-				topicListUserActAsModerator.add(topicService.df_s_getTopic(moderator.getTopicId()));
+		// if admin give all threads for approval
+		// else check user is moderator for that threads topic?
+		if(checkAdmin(loginUserId)){
+			for(DfThread thread:allDeletedThreadList){
+				finalDeletedThreadList.add(thread);
 			}
-		}
+		}else{
+			if(!moderatorFor.isEmpty()){
+				for(DfModeratorAssigned moderator: moderatorFor){
+					topicListUserActAsModerator.add(topicService.df_s_getTopic(moderator.getTopicId()));
+				}
+			}
 
-		for(DfThread thread:allDeletedThreadList){
-			for(DfTopic top: topicListUserActAsModerator){
-				if(top.getTopicId() == thread.getTopicId() || thread.getCreatedUserid() == loginUserId){
-					finalDeletedThreadList.add(thread);
-					break;
+			for(DfThread thread:allDeletedThreadList){
+				for(DfTopic top: topicListUserActAsModerator){
+					if(top.getTopicId() == thread.getTopicId() || thread.getCreatedUserid() == loginUserId){
+						finalDeletedThreadList.add(thread);
+						break;
+					}
 				}
 			}
 		}
@@ -521,7 +580,7 @@ public class CommonController {
 			String filePath = attachedFileService.df_s_getAttachedFile(fileObj.getFileId()).getFileLocation();
 			File file = new File(filePath);
 			if(file.exists())
-			finalFileList.put(fileObj.getFileId(), attachedFileService.df_s_getAttachedFile(fileObj.getFileId()).getFileName());
+				finalFileList.put(fileObj.getFileId(), attachedFileService.df_s_getAttachedFile(fileObj.getFileId()).getFileName());
 		}
 		model.addAttribute("threadReply",reply);
 		model.addAttribute("fileList", finalFileList);
@@ -568,7 +627,10 @@ public class CommonController {
 						byte[] bytes = file.getBytes();
 						// Creating the directory to store file
 						String rootPath = System.getProperty("catalina.home");
-						File dir = new File(rootPath + File.separator + "tmpFiles");
+						// storePath Format: /plato/discussion_forum/thread_reply/<threadReplyId>/<loginUserId> 
+						String storePath = File.separator + "plato"+File.separator+"discussion_forum"+File.separator+"thread_reply"+
+						File.separator+newThreadReply.getReplyId()+File.separator+loginUserId;
+						File dir = new File(rootPath + storePath);
 						if (!dir.exists())
 							dir.mkdirs();
 
@@ -624,7 +686,10 @@ public class CommonController {
 
 						// Creating the directory to store file
 						String rootPath = System.getProperty("catalina.home");
-						File dir = new File(rootPath + File.separator + "tmpFiles");
+						// storePath Format: /plato/discussion_forum/thread_reply/<threadReplyId>/<loginUserId> 
+						String storePath = File.separator + "plato"+File.separator+"discussion_forum"+File.separator+"thread_reply"+
+						File.separator+newThreadReply.getReplyId()+File.separator+loginUserId;
+						File dir = new File(rootPath + storePath);
 						if (!dir.exists())
 							dir.mkdirs();
 

@@ -64,4 +64,6 @@ public interface DfTopicDao {
 	List<DfTopic> df_d_getTopicUserActModerator(Long userId);
 	List<DfTopic> df_d_getTopicList(Long userId);
 	List<DfTopic> df_d_getAllDeletedTopic();
+
+	List<DfTopic> getAllDeletedNonDeletedTopicList();
 }

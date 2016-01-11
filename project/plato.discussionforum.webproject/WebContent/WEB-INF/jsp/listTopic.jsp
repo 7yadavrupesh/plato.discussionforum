@@ -385,13 +385,13 @@
 														<c:when test="${moderatorAllowMap[topic.topicId] == true }">
 															<a href="editTopic.html?topic_id=${topic.topicId}"><span
 																class="fa fa-edit" title="edit"></span></a> &nbsp;&nbsp;
-															<a href="deleteTopic.html?topic_id=${topic.topicId}"><span
+															<a onclick="return confirm_delete(this);" href="deleteTopic.html?topic_id=${topic.topicId}"><span
 																class="fa fa-remove" title="delete"></span></a>
 														</c:when>
 														<c:when test="${topic.createdUserid == loginUserId }">
 															<a href="editTopic.html?topic_id=${topic.topicId}"><span
 																class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
-															<a href="deleteTopic.html?topic_id=${topic.topicId}"><span
+															<a onclick="return confirm_delete(this);" href="deleteTopic.html?topic_id=${topic.topicId}"><span
 																class="fa fa-remove" title="delete"></span></a>
 														</c:when>
 														<c:otherwise>
@@ -609,6 +609,7 @@
     <script src="./resources/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="./resources/dist/js/demo.js"></script>
+    <script src="./resources/custom/js/custom.js"></script>
     <!-- page script -->
     <script>
       $(function () {

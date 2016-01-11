@@ -6,10 +6,11 @@ $(document).ready(function() {
     });
     
     $(".js-example-basic-single").select2();
-    
+/*    function confirm_alert(node) {
+        return confirm("Please click on OK to continue.");
+    }  */  
 });
 
-$(document).ready(function() {
-
-});
-		
+function confirm_delete(node) {
+    return confirm("Are you sure for delete");
+}

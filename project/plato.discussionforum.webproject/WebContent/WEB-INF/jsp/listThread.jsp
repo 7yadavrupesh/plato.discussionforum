@@ -396,7 +396,7 @@
 															test="${moderatorAllowMap[thread.threadId] == true }">
 															<a href="editThread.html?thread_id=${thread.threadId}"><span
 																class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
-															<a href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
+															<a onclick="return confirm_delete(this);" href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
 																class="fa fa-remove" title="delete"></span></a>
 														</c:when>
 														<c:otherwise>
@@ -615,6 +615,7 @@
     <script src="./resources/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="./resources/dist/js/demo.js"></script>
+    <script src="./resources/custom/js/custom.js"></script>
     <!-- page script -->
     <script>
       $(function () {

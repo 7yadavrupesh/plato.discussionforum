@@ -1,23 +1,19 @@
 SMALL ISSUE
 
-1 Admin layer
 10 add Tag (ask veena)
 11 after adding anything give message
-19 all edit(cancel) and delete should have approval message
-23 help for moderator assign page
 
 BIG ISSUE
 
-14 when created new thread add file option (multiple)
-16 file relative path add to database
 21 page referesh only content part
 25 side bar expending issue
 
 
-done: 17/26
+done: 24/28
 
 DONE: 
 
+(1) Admin layer
 (2) form thread title and description should be in same td.
 (3) after opening any topic one button should be there for creating thread
 (4) tooltip should be there for all controlls
@@ -28,10 +24,16 @@ DONE:
 (9) in insert new thread (select>> select topic)
 (12) add delete thread button at approve thead page
 (13) edit in reply
+(14) when created new thread add file option (multiple)
 (15) reply add file multiple
+(16) file relative path add to database
 (17) download should contain filename and put delete comment button on right side(pull-right)
 (18) viewthread page should contain edit and delete button.
+(19) all edit(cancel) and delete should have approval message
 (20) auto subscribe for own thread
 (22) add moderator page (go to pic)
+(23) help for moderator assign page
 (24) add topic on topic list page and add thread on thread list page
 (26) list thread topic remove static column width
+(27) give file upload option to edit thread
+(28) give file upload option to edit thread reply

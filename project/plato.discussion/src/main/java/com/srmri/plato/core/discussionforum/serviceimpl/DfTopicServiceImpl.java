@@ -169,4 +169,10 @@ public class DfTopicServiceImpl implements DfTopicService{
 		// TODO Auto-generated method stub
 		return topicDao.df_d_getAllDeletedTopic();
 	}
+
+	@Override
+	public List<DfTopic> df_s_getAllDeletedNonDeletedTopicList() {
+		// TODO Auto-generated method stub
+		return topicDao.getAllDeletedNonDeletedTopicList();
+	}
 }

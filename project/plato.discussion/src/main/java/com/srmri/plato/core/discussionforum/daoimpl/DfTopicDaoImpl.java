@@ -130,5 +130,12 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("deletedFlag", true));
 		return cri.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DfTopic> getAllDeletedNonDeletedTopicList() {
+		// TODO Auto-generated method stub
+		return sessionFactory.getCurrentSession().createCriteria(DfTopic.class).list();
 	}	
 }

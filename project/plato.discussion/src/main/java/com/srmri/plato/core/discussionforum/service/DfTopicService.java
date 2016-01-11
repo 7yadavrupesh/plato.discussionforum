@@ -47,4 +47,5 @@ public interface DfTopicService {
 	List<DfTopic> df_s_getDeletedTopic(Long userId);
 	List<DfTopic> df_s_getTopicList(Long userId);
 	List<DfTopic> df_s_getAllDeletedTopic();
+	List<DfTopic> df_s_getAllDeletedNonDeletedTopicList();
 }
