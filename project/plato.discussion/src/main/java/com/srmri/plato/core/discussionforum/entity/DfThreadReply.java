@@ -25,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.sql.Timestamp;
 
@@ -53,6 +54,7 @@ public class DfThreadReply implements Serializable{
 	private Long threadId;
 	
 	@NotNull(message="Reply can not be empty")
+	@Size(min=5,max=1500, message="reply must contain 5 characters")
 	@Column(name = "reply_text")
 	private String replyText;
 	

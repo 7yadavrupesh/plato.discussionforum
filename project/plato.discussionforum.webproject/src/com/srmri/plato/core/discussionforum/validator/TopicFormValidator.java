@@ -16,6 +16,8 @@
  
 package com.srmri.plato.core.discussionforum.validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -25,7 +27,12 @@ import com.srmri.plato.core.discussionforum.entity.DfTopic;
 
 @Component
 public class TopicFormValidator implements Validator{
-
+//	@Autowired
+//	@Qualifier("emailValidator")
+//	EmailValidator emailValidator;
+//	
+//	@Autowired
+//	UserService userService;
 	/* (non-Javadoc)
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */

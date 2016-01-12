@@ -377,15 +377,17 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Edit Reply</h3>
 							</div>
-							<form method="POST" action="editThreadReply.html"
+							<form:form method="POST" action="editThreadReply.html" modelAttribute="threadReply"
 								class="form" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
-										<label for="description">Reply:</label>
-										<textarea class="form-control" name="replyText">${threadReply.replyText}</textarea>
-										<input name="replyId" value="${threadReply.replyId}"
+										<form:label path="replyText" for="replyText">Reply:</form:label>
+										<form:textarea path="replyText" class="form-control" name="replyText" value="${threadReply.replyText}"></form:textarea>
+										<form:errors path="replyText" cssClass="error" />
+										<form:input path="replyId" name="replyId" value="${threadReply.replyId}"
 											type="hidden" /> <input name="threadId"
 											value="${threadReply.threadId}" type="hidden" />
+											
 									</div>
 									<c:if test="${not empty fileList }">
 										<div class="row">
@@ -441,7 +443,7 @@
 										<button type="submit" class="btn btn-primary">Save</button>
 									</div>
 								</div>
-							</form>
+							</form:form>
 						</div>
 					</div>
 				</div>

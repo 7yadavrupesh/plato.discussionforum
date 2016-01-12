@@ -55,7 +55,7 @@ public class DfModeratorAssigned implements Serializable {
 	@Column(name = "assigned_time")
 	private Timestamp assignedTime;
 	
-	@NotNull(message="please select assigned by user")
+	//@NotNull(message="please select assigned by user")
 	@Column(name = "assigned_by_userid")
 	private Long assignedByUserid;
 

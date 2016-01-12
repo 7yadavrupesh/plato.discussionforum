@@ -377,17 +377,19 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Thread</h3>
 							</div>
-							<form method="POST" action="editThread.html" class="form" enctype="multipart/form-data">
+							<form:form method="POST" modelAttribute="thread" action="editThread.html" class="form" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
-										<label for="threadTitle">Thread Title:</label> <input
-											class="form-control" name="threadTitle"
+										<form:label path="threadTitle" >Thread Title:</form:label> <form:input
+											class="form-control" path="threadTitle"
 											value="${thread.threadTitle}" />
+											<form:errors path="threadTitle" cssClass="error" />
 									</div>
 									<div class="form-group">
-										<label for="threadTitle">Thread Description:</label>
-										<textarea class="form-control" name="description" rows=""
-											cols="">${thread.description }</textarea>
+										<form:label path="description" for="description">Thread Description:</form:label>
+										<form:textarea path="description" class="form-control" name="description" rows=""
+											cols="" value="${thread.description }"></form:textarea>
+										<form:errors path="description" cssClass="error" />
 										<input name="topicId" value="${thread.topicId }" type="hidden" />
 										<input name="threadId" value="${thread.threadId }"
 											type="hidden" />
@@ -447,7 +449,7 @@
 											type="submit" class="btn btn-primary">Save</button>
 									</div>
 								</div>
-							</form>
+							</form:form>
 						</div>
 					</div>
 				</div>

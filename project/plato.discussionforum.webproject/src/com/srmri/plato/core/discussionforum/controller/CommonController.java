@@ -62,14 +62,14 @@ public class CommonController {
 		}
 		return false;
 	}
-	
-//	@Autowired
-//	private TopicFormValidator topicFormValidator;	
-//	@InitBinder
-//	protected void initBinder(WebDataBinder binder) {
-//		binder.setValidator(topicFormValidator);
-//	}
-//	
+
+	//	@Autowired
+	//	private TopicFormValidator topicFormValidator;	
+	//	@InitBinder
+	//	protected void initBinder(WebDataBinder binder) {
+	//		binder.setValidator(topicFormValidator);
+	//	}
+	//	
 	@Autowired
 	private DfTopicService topicService;
 	@Autowired
@@ -138,17 +138,18 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/addTopic", method = RequestMethod.POST)
-	public String saveTopic(@Validated @ModelAttribute("topic")  DfTopic topic, BindingResult result) {
+	public String saveTopic(@Validated @ModelAttribute("topic")  DfTopic topic, BindingResult result,Model model) {
 		if(result.hasErrors()){
+			model.addAttribute("topic", topic);
 			return"addTopic";
 		}
-		
+
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
 		topic.setCreatedTime(curTime);
 		topic.setCreatedUserid(loginUserId);
 		topic.setDeletedFlag(false);
 		topicService.df_s_insertTopic(topic);
-		
+
 		return "redirect:listTopic.html";
 	}
 
@@ -157,7 +158,23 @@ public class CommonController {
 		model.addAttribute("topic",topicService.df_s_getTopic(topic_id));
 		return "editTopic";
 	}
+	
+	@RequestMapping(value = "/editTopic", method = RequestMethod.POST)
+	public String saveEditTopic(@Validated @ModelAttribute("topic")  DfTopic topic, BindingResult result,Model model) {
+		if(result.hasErrors()){
+			model.addAttribute("topic", topic);
+			return"editTopic";
+		}
 
+		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
+		topic.setCreatedTime(curTime);
+		topic.setCreatedUserid(loginUserId);
+		topic.setDeletedFlag(false);
+		topicService.df_s_insertTopic(topic);
+
+		return "redirect:listTopic.html";
+	}
+	
 	@RequestMapping(value = "/deleteTopic", method = RequestMethod.GET)
 	public String deleteTopic(Model model, @RequestParam Long topic_id) {
 		topicService.df_s_deleteTopic(topic_id);
@@ -249,6 +266,11 @@ public class CommonController {
 	@RequestMapping(value = "/addThread", method = RequestMethod.GET)
 	public String addThread(@ModelAttribute("thread") DfThread thread, Model model) {	    
 
+		model = prepareAddThreadModel(model, thread);
+		return "addThread";
+	}
+
+	Model prepareAddThreadModel(Model model, DfThread thread ){
 		Map<Long,String> topics = new HashMap<Long,String>();
 
 		for(DfTopic topic: topicService.df_s_getAllTopicList()){
@@ -257,22 +279,14 @@ public class CommonController {
 
 		model.addAttribute("thread", thread);
 		model.addAttribute("topics", topics);
-		return "addThread";
+		return model;
 	}
 
 	@RequestMapping(value = "/addThread", method = RequestMethod.POST)
 	public String saveAddThread(@Validated @ModelAttribute("thread") DfThread thread, BindingResult result,@RequestParam(value = "file", required=false) List<MultipartFile> files,Model model) {
-		
+
 		if(result.hasErrors()){
-			Map<Long,String> topics = new HashMap<Long,String>();
-
-			for(DfTopic topic: topicService.df_s_getAllTopicList()){
-				topics.put(topic.getTopicId(), topic.getTopicTitle());
-			}
-
-			model.addAttribute("thread", thread);
-			model.addAttribute("topics", topics);
-			
+			model = prepareAddThreadModel(model, thread);
 			return "addThread";
 		}
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
@@ -324,8 +338,8 @@ public class CommonController {
 		return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
 	}
 
-	Model prepareEditThreadModel(Model model, Long thread_id){
-		List<Long> attachedFileIdList = threadFileMapService.df_s_getFileList(thread_id);
+	Model prepareEditThreadModel(Model model, DfThread thread){
+		List<Long> attachedFileIdList = threadFileMapService.df_s_getFileList(thread.getThreadId());
 		Map<Long, String> finalFileListMap = new HashMap<Long,String>();
 		if(!attachedFileIdList.isEmpty()){
 			for(Long fileId : attachedFileIdList){
@@ -335,22 +349,23 @@ public class CommonController {
 					finalFileListMap.put(fileId, attachedFileService.df_s_getAttachedFile(fileId).getFileName());
 			}
 		}
+
 		model.addAttribute("finalFileListMap",finalFileListMap);
-		model.addAttribute("thread",threadService.df_s_getThread(thread_id));
+		model.addAttribute("thread",thread);
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/editThread", method = RequestMethod.GET)
 	public String editThread(Model model, @RequestParam Long thread_id,HttpServletRequest request) {
-		model = prepareEditThreadModel(model, thread_id);
+		model = prepareEditThreadModel(model, threadService.df_s_getThread(thread_id));
 		return "editThread";
 	}
 
 	@RequestMapping(value = "/editThread", method = RequestMethod.POST)
-	public String saveEditThread(@Validated @ModelAttribute("thread") DfThread thread, BindingResult result,HttpServletRequest request,
+	public String saveEditThread( @ModelAttribute("thread") @Validated DfThread thread, BindingResult result,HttpServletRequest request,
 			@RequestParam(value = "file", required=false) List<MultipartFile> files, Model model) {	
 		if(result.hasErrors()){
-			model = prepareEditThreadModel(model, thread.getThreadId());
+			model = prepareEditThreadModel(model, thread);
 			return "editThread";
 		}
 		File serverFile = null;
@@ -409,10 +424,7 @@ public class CommonController {
 		else
 			return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
 	}
-
-	@RequestMapping(value = "/viewThread", method = RequestMethod.GET)
-	public String viewThread(Model model, @RequestParam Long thread_id) {
-
+	Model prepareViewThread(Model model,DfThreadReply threadReply, Long thread_id){
 		List<Long> threadFileList = threadFileMapService.df_s_getFileList(thread_id);
 		Map<Long,String> finalThreadFileListMap = new HashMap<Long,String>();
 
@@ -486,10 +498,15 @@ public class CommonController {
 		model.addAttribute("threadEditAllowed", threadEditAllowed);
 		model.addAttribute("thread",  threadService.df_s_getThread(thread_id));
 		model.addAttribute("threadReplys",finalThreadReplyList);
-		model.addAttribute("newThreadReply", new DfThreadReply());
+		model.addAttribute("threadReply", threadReply);
 		model.addAttribute("loginUserId",loginUserId);
 		model.addAttribute("topicUserId",topicService.df_s_getTopic(threadService.df_s_getThread(thread_id).getTopicId()).getCreatedUserid());
 		model.addAttribute("checkSubscribe", threadSubscriptionService.df_s_isSubscribed(thread_id,loginUserId));
+		return model;
+	}
+	@RequestMapping(value = "/viewThread", method = RequestMethod.GET)
+	public String viewThread(Model model,@ModelAttribute("threadReply") DfThreadReply threadReply, @RequestParam Long thread_id) {
+		model = prepareViewThread(model,threadReply,thread_id);
 		return "viewThread";
 	}
 
@@ -559,7 +576,6 @@ public class CommonController {
 		System.out.println("topics size"+topics.size());
 		model.addAttribute("topics",topics);
 		model.addAttribute("deletedThreads",threadService.df_s_getDeletedThreadList(loginUserId));
-
 		return "redirect:deletedThreadList.html";
 	}
 
@@ -605,10 +621,10 @@ public class CommonController {
 
 	/******************************************* Thread Reply *************************************************/	
 
-	Model prepareThreadReply(Model model, Long thread_id, Long reply_id){
-		DfThreadReply reply = threadReplyService.df_s_getThreadReply(reply_id);
+	Model prepareThreadReply(Model model, DfThreadReply reply){
+
 		Map<Long,String> finalFileList = new HashMap<Long,String>();
-		List<DfThreadReplyFileMap> fileList = threadReplyFileMapService.df_s_getThreadReplyFileMapList(reply_id);
+		List<DfThreadReplyFileMap> fileList = threadReplyFileMapService.df_s_getThreadReplyFileMapList(reply.getReplyId());
 
 		for(DfThreadReplyFileMap fileObj : fileList){
 			String filePath = attachedFileService.df_s_getAttachedFile(fileObj.getFileId()).getFileLocation();
@@ -616,21 +632,24 @@ public class CommonController {
 			if(file.exists())
 				finalFileList.put(fileObj.getFileId(), attachedFileService.df_s_getAttachedFile(fileObj.getFileId()).getFileName());
 		}
+		model.addAttribute("newThreadReply",reply);
 		model.addAttribute("threadReply",reply);
 		model.addAttribute("fileList", finalFileList);
 		return model;
 	}
 	@RequestMapping(value = "/editThreadReply", method = RequestMethod.GET)
-	public String editReply(Model model, @RequestParam Long reply_id, @RequestParam Long thread_id) {
-		model = prepareThreadReply(model, thread_id,reply_id);
-				return "editThreadReply";
+	public String editReply(Model model, @RequestParam(value = "reply_id", required=false) Long reply_id) {
+		if(reply_id == null)
+			return "redirect:listTopic.html";
+		model = prepareThreadReply(model, threadReplyService.df_s_getThreadReply(reply_id));
+		return "editThreadReply";
 	}
 
 	@RequestMapping(value = "/editThreadReply", method = RequestMethod.POST)
-	public String saveEditThreadReply(Model model, @Validated @ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
+	public String saveEditThreadReply(Model model, @ModelAttribute("threadReply")  @Validated DfThreadReply newThreadReply, 
 			BindingResult result, @RequestParam(value = "file", required=false) List<MultipartFile> files,@RequestParam(value="checkBoxFile", required=false) List<Long> checkBox) {
 		if(result.hasErrors()){
-			model = prepareThreadReply(model, newThreadReply.getThreadId(), newThreadReply.getReplyId());
+			model = prepareThreadReply(model, newThreadReply);
 			return "editThreadReply";
 		}
 		newThreadReply.setDeleteFlag(false);
@@ -661,7 +680,7 @@ public class CommonController {
 						String rootPath = System.getProperty("catalina.home");
 						// storePath Format: /plato/discussion_forum/thread_reply/<threadReplyId>/<loginUserId> 
 						String storePath = File.separator + "plato"+File.separator+"discussion_forum"+File.separator+"thread_reply"+
-						File.separator+newThreadReply.getReplyId()+File.separator+loginUserId;
+								File.separator+newThreadReply.getReplyId()+File.separator+loginUserId;
 						File dir = new File(rootPath + storePath);
 						if (!dir.exists())
 							dir.mkdirs();
@@ -706,18 +725,18 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/addThreadReply", method = RequestMethod.POST)
-	public String saveThreadReply(Model model,@Validated @ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
+	public String saveThreadReply(Model model,@Validated @ModelAttribute("threadReply") DfThreadReply threadReply, 
 			BindingResult result, @RequestParam(value = "file", required=false) List<MultipartFile> files) {
-		
+
 		if(result.hasErrors()){
-			model = prepareThreadReply(model, newThreadReply.getThreadId(), newThreadReply.getReplyId());
-			return "editThreadReply";
+			model = prepareViewThread(model, threadReply, threadReply.getThreadId());
+			return "viewThread";
 		}
-		newThreadReply.setDeleteFlag(false);
-		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
-		newThreadReply.setSubmittedUserid(loginUserId);
-		newThreadReply.setThreadId(newThreadReply.getThreadId());
-		threadReplyService.df_s_addThreadReply(newThreadReply);
+		threadReply.setDeleteFlag(false);
+		threadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
+		threadReply.setSubmittedUserid(loginUserId);
+		threadReply.setThreadId(threadReply.getThreadId());
+		threadReplyService.df_s_addThreadReply(threadReply);
 
 
 		File serverFile = null;
@@ -733,7 +752,7 @@ public class CommonController {
 						String rootPath = System.getProperty("catalina.home");
 						// storePath Format: /plato/discussion_forum/thread_reply/<threadReplyId>/<loginUserId> 
 						String storePath = File.separator + "plato"+File.separator+"discussion_forum"+File.separator+"thread_reply"+
-						File.separator+newThreadReply.getReplyId()+File.separator+loginUserId;
+								File.separator+threadReply.getReplyId()+File.separator+loginUserId;
 						File dir = new File(rootPath + storePath);
 						if (!dir.exists())
 							dir.mkdirs();
@@ -749,7 +768,7 @@ public class CommonController {
 						fileToSaveInDB.setFileSize(file.getSize());
 						UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
 
-						threadReplyFileMapService.df_s_setThreadReplyFileMapList( newThreadReply.getReplyId(), UploadedFileId );
+						threadReplyFileMapService.df_s_setThreadReplyFileMapList( threadReply.getReplyId(), UploadedFileId );
 						System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
 
 					} catch (Exception e) {
@@ -759,12 +778,12 @@ public class CommonController {
 			}
 		}
 
-		List<DfThreadReply> trl =  threadReplyService.df_s_getThreadReplyList(newThreadReply.getThreadId());
-		model.addAttribute("thread",  threadService.df_s_getThread(newThreadReply.getThreadId()));
+		List<DfThreadReply> trl =  threadReplyService.df_s_getThreadReplyList(threadReply.getThreadId());
+		model.addAttribute("thread",  threadService.df_s_getThread(threadReply.getThreadId()));
 		model.addAttribute("threadReplys",trl);
-		model.addAttribute("newThreadReply", new DfThreadReply());		
+		//model.addAttribute("newThreadReply", new DfThreadReply());		
 
-		return "redirect:viewThread.html?thread_id="+newThreadReply.getThreadId();
+		return "redirect:viewThread.html?thread_id="+threadReply.getThreadId();
 	}
 
 	/******************************************* Subscription *************************************************/
@@ -783,7 +802,7 @@ public class CommonController {
 
 	/****************************************** Moderator *****************************************************/
 
-	Model prepareAddModeratorModel(Model model){
+	Model prepareAddModeratorModel(Model model, DfModeratorAssigned moderator){
 		List<DfTopic> topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);
 
 		if(topicListUserActAsModerator.isEmpty()){
@@ -807,33 +826,33 @@ public class CommonController {
 				topicListMap.put(topic.getTopicId(), topic.getTopicTitle());
 			}
 		}
-		model.addAttribute("moderator", new DfModeratorAssigned());
+		model.addAttribute("moderator", moderator);
 		model.addAttribute("usersList",usersListMap);
 		model.addAttribute("topics", topicListMap);
 		return model;
 	}
 	@RequestMapping(value = "/addModerator", method = RequestMethod.GET)
-	public String addModerator(Model model) {	         
-
-		model = prepareAddModeratorModel(model);
+	public String addModerator(Model model) {
+		model = prepareAddModeratorModel(model, new DfModeratorAssigned());
 		return "addModerator";
 	}
 
 	@RequestMapping(value = "/addModerator", method = RequestMethod.POST)
 	public String saveModerator(@Validated @ModelAttribute("moderator") DfModeratorAssigned moderator, BindingResult result,Model model) {	
-		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
-		moderator.setAssignedByUserid(loginUserId);
-		
-		
+
 		if(result.hasErrors()){
-			model = prepareAddModeratorModel(model);
+			model = prepareAddModeratorModel(model, moderator);
 			return "addModerator";
 		}
+		moderator.setAssignedByUserid(loginUserId);
+		System.out.println("assigned by"+ moderator.getAssignedByUserid());
+		System.out.println("assigned to "+ moderator.getAssignedToUserid());
+		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
 		moderator.setAssignedTime(curTime);
 
-//		System.out.println("assigned To"+ moderator.getAssignedToUserid());
-//		System.out.println("Topic Id"+ moderator.getTopicId());
-//		System.out.println("Topic Id"+ moderator.getAssignedTime());
+		//		System.out.println("assigned To"+ moderator.getAssignedToUserid());
+		//		System.out.println("Topic Id"+ moderator.getTopicId());
+		//		System.out.println("Topic Id"+ moderator.getAssignedTime());
 		moderatorAssignedService.df_s_addModerator(moderator);
 		return "redirect:addModerator.html";
 	}

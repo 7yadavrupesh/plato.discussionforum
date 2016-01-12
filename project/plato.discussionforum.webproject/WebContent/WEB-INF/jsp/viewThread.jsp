@@ -465,10 +465,10 @@
 												</c:if>
 												<div class="pull-right">
 													<a onclick="return confirm_delete(this);"
-														href="deleteThreadReply.html?reply_id=${threadReply.key.replyId}&thread_id=${threadReply.key.threadId}"><span
+														href="deleteThreadReply.html?reply_id=${threadReply.key.replyId}"><span
 														class="fa fa-remove" title="delete comment"></span></a>&nbsp;&nbsp;
 													<a
-														href="editThreadReply.html?reply_id=${threadReply.key.replyId}&thread_id=${threadReply.key.threadId}"><span
+														href="editThreadReply.html?reply_id=${threadReply.key.replyId}"><span
 														class="fa fa-edit" title="edit"></span></a>
 												</div>
 
@@ -493,18 +493,18 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form method="POST" action="addThreadReply.html"
-								accept-charset=utf-8 enctype="multipart/form-data">
+							<form:form method="POST" modelAttribute="threadReply" action="addThreadReply.html" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
-										<input name="threadId" type="hidden"
-											value="${thread.threadId }">
+										<form:input path="threadId" name="threadId" type="hidden"
+											value="${thread.threadId }"></form:input>
 									</div>
 									<div class="form-group">
-										<label for="exampleInputPassword1">Comment</label>
-										<textarea class="form-control" placeholder="Comment"
+										<form:label path="replyText" for="replyText">Comment</form:label>
+										<form:textarea path="replyText" class="form-control" placeholder="Comment"
 											name="replyText" rows="6" cols=""
-											value="${newThreadReply.replyText}"></textarea>
+											value="${newThreadReply.replyText}"></form:textarea>
+											<form:errors path="replyText" cssClass="error" />
 									</div>
 									<div id="fileUpload" class="form-group">
 										<label for="file">Select Files</label> <input type="file"
@@ -517,7 +517,7 @@
 								<div class="box-footer">
 									<button class="btn btn-primary" type="submit">Submit</button>
 								</div>
-							</form>
+							</form:form>
 						</div>
 					</div>
 				</div>

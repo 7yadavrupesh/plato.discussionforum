@@ -383,7 +383,6 @@
 											<form:options items="${topics}" />
 										</form:select>
 										<form:errors path="topicId" cssClass="error" />
-										<%-- <form:select path="topics" items="${topics}" /> --%>
 									</div>
 									<div class="form-group">
 										<form:label path="threadTitle" for="threadTitle">Thread Title</form:label> <form:input
@@ -393,7 +392,7 @@
 									</div>
 									<div class="form-group">
 										<form:label path="description" for="description">Thread Description</form:label>
-										<form:textarea path="description" class="form-control" name="description" rows="5"
+										<form:textarea path="description" class="form-control" rows="5"
 											value="${thread.description}"></form:textarea>
 											<form:errors path="description" cssClass="error" />
 									</div>

@@ -372,28 +372,26 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Moderator</h3>
 							</div>
-							<form:form name="addThread" method="Post"
-								action="addModerator.html" modelAttribute="moderator"
-								role="form">
+							<form:form method="Post" name="moderator" action="addModerator.html" modelAttribute="moderator" role="form">
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="assignedToUserid">Select User</form:label>
 											<form:select path="assignedToUserid" class=" js-example-basic-single form-control">
-											<form:option value="NONE" label="--- Select Topic ---" />
+											<form:option value="" label="--- Select Topic ---" />
 											<form:options items="${usersList}" />
-											<form:errors path="assignedToUserid" cssClass="error" />
 										</form:select>
+										<form:errors path="assignedToUserid" cssClass="error" />
+										</div>
+										<div class="form-group">
 										<form:label path="topicId">Select Topic</form:label>
-										<%-- <form:select class="js-example-basic-single form-control" path="topicId" items="${topics}" /> --%>
 										<form:select path="topicId" class=" js-example-basic-single form-control">
-											<form:option value="NONE" label="--- Select Topic ---" />
+											<form:option value="" label="--- Select Topic ---" />
 											<form:options items="${topics}" />
 										</form:select>
 										<form:errors path="topicId" cssClass="error" />
 									</div>
 									<div class="box-footer">
-										<button type="submit" onclick="submitForm"
-											class="btn btn-primary">Add Moderator</button>
+										<button type="submit" class="btn btn-primary">Add Moderator</button>
 									</div>
 								</div>
 							</form:form>

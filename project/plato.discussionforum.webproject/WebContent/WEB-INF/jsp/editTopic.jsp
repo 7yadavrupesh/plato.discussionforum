@@ -372,19 +372,21 @@
 								<h3 class="box-title">Add Thread</h3>
 							</div>
 							<!-- Small boxes (Stat box) -->
-							<form method="POST" action="saveTopic.html" class="form">
+							<form:form method="POST" action="editTopic.html" class="form" modelAttribute="topic">
 								<div class="box-body">
 									<div class="form-group">
-										<label for="topicTitle">Topic Title:</label> <input
-											class="form-control" name="topicTitle"
-											value="${topic.topicTitle}" /> <input name="topicId"
+										<form:label path="topicTitle" for="topicTitle">Topic Title:</form:label> <form:input
+											class="form-control" name="topicTitle" path="topicTitle"
+											value="${topic.topicTitle}" />
+											<form:errors path="topicTitle" cssClass="error" />
+											 <form:input name="topicId" path="topicId"
 											value="${topic.topicId }" type="hidden" />
 									</div>
 									<div class="box-footer">
 										<button type="submit" class="btn btn-default">Save</button>
 									</div>
 								</div>
-							</form>
+							</form:form>
 						</div>
 					</div>
 				</div>
