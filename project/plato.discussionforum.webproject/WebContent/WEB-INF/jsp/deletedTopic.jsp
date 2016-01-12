@@ -380,7 +380,7 @@
 												<td><c:out value="${topic.createdTime}" /></td>
 												<td><c:out value="${topic.createdUserid}" /></td>
 												<td><a
-													href="saveApproveTopic.html?topic_id=${topic.topicId}"><span class="fa fa-check"></span></a>
+													href="saveDeletedTopic.html?topic_id=${topic.topicId}"><span class="fa fa-check"></span></a>
 												</td>
 											</tr>
 										</c:forEach>

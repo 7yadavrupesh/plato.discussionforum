@@ -177,14 +177,14 @@ public class CommonController {
 		return "redirect:listTopic.html";
 	}
 
-	@RequestMapping(value = "/saveApproveTopic", method = RequestMethod.GET)
+	@RequestMapping(value = "/saveDeletedTopic", method = RequestMethod.GET)
 	public String saveApproveTopic(Model model, @RequestParam Long topic_id) {
 		topicService.df_s_approveTopic(topic_id);
 		model.addAttribute("deletedTopics",topicService.df_s_getDeletedTopic(loginUserId));
-		return "redirect:approveTopic.html";
+		return "redirect:deletedTopic.html";
 	}
 
-	@RequestMapping(value = "/approveTopic", method = RequestMethod.GET)
+	@RequestMapping(value = "/deletedTopic", method = RequestMethod.GET)
 	public String approveTopic(Model model) {
 		model.addAttribute("deletedTopics",topicService.df_s_getDeletedTopic(loginUserId));
 		List<DfTopic> allDeletedTopicList = topicService.df_s_getAllDeletedTopic();
@@ -206,7 +206,7 @@ public class CommonController {
 			}
 		}
 		model.addAttribute("deletedTopics",deletedTopicsList);
-		return "approveTopic";
+		return "deletedTopic";
 	}
 	/************************************** THREAD **************************************************/
 
