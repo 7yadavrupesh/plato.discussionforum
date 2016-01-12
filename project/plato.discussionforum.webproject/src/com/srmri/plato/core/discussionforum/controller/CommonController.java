@@ -49,7 +49,7 @@ import com.srmri.plato.core.discussionforum.validator.TopicFormValidator;
 @Controller
 public class CommonController {
 
-	static Long loginUserId = 100L;	
+	static Long loginUserId = 10L;	
 	static List<Long> admin = new ArrayList<Long>();
 	public CommonController(){
 		admin.add(100L);
@@ -605,8 +605,7 @@ public class CommonController {
 
 	/******************************************* Thread Reply *************************************************/	
 
-	@RequestMapping(value = "/editThreadReply", method = RequestMethod.GET)
-	public String editReply(Model model, @RequestParam Long reply_id, @RequestParam Long thread_id) {
+	Model prepareThreadReply(Model model, Long thread_id, Long reply_id){
 		DfThreadReply reply = threadReplyService.df_s_getThreadReply(reply_id);
 		Map<Long,String> finalFileList = new HashMap<Long,String>();
 		List<DfThreadReplyFileMap> fileList = threadReplyFileMapService.df_s_getThreadReplyFileMapList(reply_id);
@@ -619,13 +618,21 @@ public class CommonController {
 		}
 		model.addAttribute("threadReply",reply);
 		model.addAttribute("fileList", finalFileList);
-		return "editThreadReply";
+		return model;
+	}
+	@RequestMapping(value = "/editThreadReply", method = RequestMethod.GET)
+	public String editReply(Model model, @RequestParam Long reply_id, @RequestParam Long thread_id) {
+		model = prepareThreadReply(model, thread_id,reply_id);
+				return "editThreadReply";
 	}
 
 	@RequestMapping(value = "/editThreadReply", method = RequestMethod.POST)
-	public String saveEditThreadReply(Model model,@ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
-			BindingResult result1, @RequestParam(value = "file", required=false) List<MultipartFile> files,@RequestParam(value="checkBoxFile", required=false) List<Long> checkBox) {
-
+	public String saveEditThreadReply(Model model, @Validated @ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
+			BindingResult result, @RequestParam(value = "file", required=false) List<MultipartFile> files,@RequestParam(value="checkBoxFile", required=false) List<Long> checkBox) {
+		if(result.hasErrors()){
+			model = prepareThreadReply(model, newThreadReply.getThreadId(), newThreadReply.getReplyId());
+			return "editThreadReply";
+		}
 		newThreadReply.setDeleteFlag(false);
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(loginUserId);
@@ -699,9 +706,13 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/addThreadReply", method = RequestMethod.POST)
-	public String saveThreadReply(Model model,@ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
-			BindingResult result1, @RequestParam(value = "file", required=false) List<MultipartFile> files) {
-
+	public String saveThreadReply(Model model,@Validated @ModelAttribute("newThreadReply") DfThreadReply newThreadReply, 
+			BindingResult result, @RequestParam(value = "file", required=false) List<MultipartFile> files) {
+		
+		if(result.hasErrors()){
+			model = prepareThreadReply(model, newThreadReply.getThreadId(), newThreadReply.getReplyId());
+			return "editThreadReply";
+		}
 		newThreadReply.setDeleteFlag(false);
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(loginUserId);
@@ -771,16 +782,11 @@ public class CommonController {
 	}
 
 	/****************************************** Moderator *****************************************************/
-	@RequestMapping(value = "/addModerator", method = RequestMethod.GET)
-	public String addModerator(Model model, @ModelAttribute("moderator") DfModeratorAssigned moderator, BindingResult result) {	         
 
+	Model prepareAddModeratorModel(Model model){
 		List<DfTopic> topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);
 
 		if(topicListUserActAsModerator.isEmpty()){
-			return "redirect:notAllowedToAddModerator.html";
-		}
-		else{
-
 			List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
 
 			if(!moderatorFor.isEmpty()){
@@ -801,21 +807,33 @@ public class CommonController {
 				topicListMap.put(topic.getTopicId(), topic.getTopicTitle());
 			}
 		}
-		model.addAttribute("moderator",  moderator);
+		model.addAttribute("moderator", new DfModeratorAssigned());
 		model.addAttribute("usersList",usersListMap);
 		model.addAttribute("topics", topicListMap);
+		return model;
+	}
+	@RequestMapping(value = "/addModerator", method = RequestMethod.GET)
+	public String addModerator(Model model) {	         
+
+		model = prepareAddModeratorModel(model);
 		return "addModerator";
 	}
 
 	@RequestMapping(value = "/addModerator", method = RequestMethod.POST)
-	public String saveModerator(@ModelAttribute("moderator") DfModeratorAssigned moderator, BindingResult result) {	
+	public String saveModerator(@Validated @ModelAttribute("moderator") DfModeratorAssigned moderator, BindingResult result,Model model) {	
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
 		moderator.setAssignedByUserid(loginUserId);
+		
+		
+		if(result.hasErrors()){
+			model = prepareAddModeratorModel(model);
+			return "addModerator";
+		}
 		moderator.setAssignedTime(curTime);
 
-		System.out.println("assigned To"+ moderator.getAssignedToUserid());
-		System.out.println("Topic Id"+ moderator.getTopicId());
-		System.out.println("Topic Id"+ moderator.getAssignedTime());
+//		System.out.println("assigned To"+ moderator.getAssignedToUserid());
+//		System.out.println("Topic Id"+ moderator.getTopicId());
+//		System.out.println("Topic Id"+ moderator.getAssignedTime());
 		moderatorAssignedService.df_s_addModerator(moderator);
 		return "redirect:addModerator.html";
 	}

@@ -119,7 +119,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	public List<DfTopic> df_d_getTopicList(Long userId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
-		cri.add(Restrictions.eq("createdUserid", userId));
+		cri.add(Restrictions.and(Restrictions.eq("createdUserid", userId),Restrictions.eq("deletedFlag", false)));
 		sessionFactory.getCurrentSession().flush();
 		return cri.list();
 	}
