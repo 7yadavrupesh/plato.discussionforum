@@ -5,56 +5,93 @@
 
 <!DOCTYPE html>
 <html>
-<head>
+<!-- <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Add Thread</title>
-<!-- Tell the browser to be responsive to screen width -->
+Tell the browser to be responsive to screen width
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
-<!-- jQuery 2.1.4 -->
+jQuery 2.1.4
 <script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
+Bootstrap 3.3.5
 <link rel="stylesheet"
 	href="./resources/bootstrap/css/bootstrap.min.css">
-<!-- Font Awesome -->
+Font Awesome
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<!-- Ionicons -->
+Ionicons
 <link rel="stylesheet"
 	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- Theme style -->
+Theme style
 <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
-<!-- AdminLTE Skins. Choose a skin from the css/skins
-    folder instead of downloading all of them to reduce the load. -->
+AdminLTE Skins. Choose a skin from the css/skins
+    folder instead of downloading all of them to reduce the load.
 <link rel="stylesheet"
 	href="./resources/dist/css/skins/_all-skins.min.css">
-<!-- iCheck -->
+iCheck
 <link rel="stylesheet" href="./resources/plugins/iCheck/flat/blue.css">
-<!-- Morris chart -->
+Morris chart
 <link rel="stylesheet" href="./resources/plugins/morris/morris.css">
-<!-- jvectormap -->
+jvectormap
 <link rel="stylesheet"
 	href="./resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-<!-- Date Picker -->
+Date Picker
 <link rel="stylesheet"
 	href="./resources/plugins/datepicker/datepicker3.css">
-<!-- Daterange picker -->
+Daterange picker
 <link rel="stylesheet"
 	href="./resources/plugins/daterangepicker/daterangepicker-bs3.css">
-<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet"
+	href="./resources/plugins/select2/select2.min.css">
+bootstrap wysihtml5 - text editor
 <link rel="stylesheet"
 	href="./resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-<link href="./resources/custom/select2/css/select2.css" rel="stylesheet" />
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+WARNING: Respond.js doesn't work if you view the page via file://
+[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <![endif]
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+ -->
+   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Add Thread</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="./resources/plugins/daterangepicker/daterangepicker-bs3.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="./resources/plugins/iCheck/all.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="./resources/plugins/colorpicker/bootstrap-colorpicker.min.css">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="./resources/plugins/timepicker/bootstrap-timepicker.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="./resources/plugins/select2/select2.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="./resources/dist/css/skins/_all-skins.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+ <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 
 		<header class="main-header">
@@ -369,7 +406,7 @@
 					<li class="active">Insert New Thread</li>
 				</ol>
 			</section>
-						<!-- Display alert message -->
+			<!-- Display alert message -->
 			<c:if test="${not empty alertMessage}">
 				<div class="alert alert-${css} alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert"
@@ -387,49 +424,60 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">Add Thread</h3>
-							</div>
-							<form:form name="thread" method="POST" action="addThread.html"
-								role="form" modelAttribute="thread"
-								enctype="multipart/form-data">
-								<div class="box-body">
-									<div class="form-group">
-										<form:label path="topicId">Topic</form:label>
-										<form:select path="topicId"
-											class=" js-example-basic-single form-control" name="topicId">
-											<form:option value="" label="--- Select Topic ---" />
-											<form:options items="${topics}" />
-										</form:select>
-										<form:errors path="topicId" cssClass="text-red" />
-									</div>
-									<div class="form-group">
-										<form:label path="threadTitle" for="threadTitle">Thread Title</form:label>
-										<form:input path="threadTitle" class="form-control"
-											name="threadTitle" value="${thread.threadTitle}"></form:input>
-										<form:errors path="threadTitle" cssClass="text-red" />
-									</div>
-									<div class="form-group">
-										<form:label path="description" for="description">Thread Description</form:label>
-										<form:textarea path="description" class="form-control"
-											rows="5" value="${thread.description}"></form:textarea>
-										<form:errors path="description" cssClass="text-red" />
-									</div>
-									<div id="fileUpload" class="form-group">
-										<label for="file">Select Files</label> <input type="file"
-											name="file" size=50 multiple />
-									</div>
-									<a id="addMoreFiles" class="btn btn-default btn-xs">Add
-										More Files</a>
-									<div class="box-footer">
-										<form:button type="submit" onclick="submitForm"
-											class="btn btn-primary">Add Thread</form:button>
-									</div>
+							<div>
+								<div class="box-header with-border">
+									<h3 class="box-title">Add Thread</h3>
 								</div>
-							</form:form>
+								<form:form name="thread" method="POST" action="addThread.html"
+									role="form" modelAttribute="thread"
+									enctype="multipart/form-data">
+									<div class="box-body">
+										<div class="form-group">
+											<form:label path="topicId">Topic</form:label>
+											<form:select path="topicId" class="form-control select2" style="width: 100%;">
+											<form:option selected="selected" value="" label="--- Select Topic ---" />
+												<form:options items="${topics}" />
+											</form:select>
+											<%-- <form:select 
+												class="form-control select2 select2-hidden-accessible" name="topicId" >
+												<form:option value="" label="--- Select Topic ---" />
+												<form:options items="${topics}" />
+											</form:select> --%>
+											<form:errors path="topicId" cssClass="text-red" />
+										</div>
+										<div class="form-group">
+											<form:label path="threadTitle" for="threadTitle">Thread Title</form:label>
+											<form:input placeholder="Thread Title" path="threadTitle"
+												class="form-control" name="threadTitle"
+												value="${thread.threadTitle}"></form:input>
+											<form:errors path="threadTitle" cssClass="text-red" />
+										</div>
+										<div class="form-group">
+											<form:label path="description" for="description">Thread Description</form:label>
+											<form:textarea placeholder="Thread Description"
+												path="description" class="form-control" rows="5"
+												value="${thread.description}"></form:textarea>
+											<form:errors path="description" cssClass="text-red" />
+										</div>
+										<div class="form-group">
+											<div id="fileUpload" class="col-md-6 form-group">
+												<label for="file">Select Files</label> <input type="file"
+													name="file" class="filestyle" data-buttonText="Find file"
+													size=50 multiple /> <a id="addMoreFiles"
+													class="btn btn-default btn-xs">Add More Files</a>
+
+												<div class="box-footer">
+													<form:button type="submit" onclick="submitForm"
+														class="btn pull-right btn-primary">Add Thread</form:button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form:form>
+							</div>
 						</div>
 					</div>
-				</div>
+					</div>
 			</section>
 			<!-- /.content -->
 		</div>
@@ -561,7 +609,7 @@
 						</div>
 						<!-- /.form-group -->
 
-						<div class="form-group">
+						<div class=" form-group">
 							<label class="control-sidebar-subheading"> Expose author
 								name in posts <input type="checkbox" class="pull-right" checked>
 							</label>
@@ -604,23 +652,35 @@
 	</div>
 	<!-- ./wrapper -->
 
-	<!-- Bootstrap 3.3.5 -->
-	<script src="./resources/bootstrap/js/bootstrap.min.js"></script>
-	<!-- DataTables -->
-	<script src="./resources/plugins/datatables/jquery.dataTables.min.js"></script>
-	<script
-		src="./resources/plugins/datatables/dataTables.bootstrap.min.js"></script>
-	<!-- SlimScroll -->
-	<script src="./resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-	<!-- FastClick -->
-	<script src="./resources/plugins/fastclick/fastclick.min.js"></script>
-	<!-- AdminLTE App -->
-	<script src="./resources/dist/js/app.min.js"></script>
-	<!-- AdminLTE for demo purposes -->
-	<script src="./resources/dist/js/demo.js"></script>
-	<script src="./resources/custom/js/custom.js"></script>
-	<script src="./resources/custom/select2/js/select2.min.js"></script>
-	<!-- page script -->
+	<!-- jQuery 2.1.4 -->
+    <script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="./resources/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Select2 -->
+    <script src="./resources/plugins/select2/select2.full.min.js"></script>
+    <!-- InputMask -->
+    <script src="./resources/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="./resources/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="./resources/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    <!-- date-range-picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <script src="./resources/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap color picker -->
+    <script src="./resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+    <!-- bootstrap time picker -->
+    <script src="./resources/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <!-- SlimScroll 1.3.0 -->
+    <script src="./resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="./resources/plugins/iCheck/icheck.min.js"></script>
+    <!-- FastClick -->
+    <script src="./resources/plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="./resources/dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="./resources/dist/js/demo.js"></script>
+    <!-- Page script -->
+	
 	<script>
 		$(function() {
 			$("#example1").DataTable();
@@ -636,7 +696,8 @@
 		$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
 			$("#success-alert").alert('close');
 		});
-		 $(".js-example-basic-single").select2();
+		$(".select2").select2();
+		
 	</script>
 </body>
 </html>

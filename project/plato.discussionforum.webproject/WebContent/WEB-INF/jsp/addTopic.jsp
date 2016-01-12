@@ -393,7 +393,7 @@
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="topicTitle" for="topicTitle">Topic Title:</form:label>
-										<form:input path="topicTitle" class="form-control"
+										<form:input placeholder="Topic Name" path="topicTitle" class="form-control"
 											name="topicTitle" value="${topic.topicTitle}" />
 										<form:errors path="topicTitle" cssClass="text-red" />
 									</div>
