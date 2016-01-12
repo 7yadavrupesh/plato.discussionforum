@@ -25,6 +25,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="./resources/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="./resources/custom/css/style.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,19 +34,6 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <style>
-  
-  .table {
-	table-layout:fixed;
-}
-
-.table td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  
-</style>
-
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 
@@ -386,11 +374,11 @@
 												<td title="${thread.description}"><c:out  value="${thread.description}" /></td>
 												<c:forEach items="${topics}" var="topic">
 													<c:if test="${topic.key == thread.topicId}">
-														<td><c:out value="${topic.value}" /></td>
+														<td title="${topic.value}"><c:out value="${topic.value}" /></td>
 													</c:if>
 												</c:forEach>
-												<td><c:out value="${thread.createdTime}" /></td>
-												<td><c:out value="${thread.modifiedTime}" /></td>
+												<td title="${thread.createdTime}"><c:out value="${thread.createdTime}" /></td>
+												<td title="${thread.modifiedTime}"><c:out value="${thread.modifiedTime}" /></td>
 												<td><c:choose>
 														<c:when
 															test="${moderatorAllowMap[thread.threadId] == true }">

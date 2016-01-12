@@ -24,6 +24,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.tools.ToolProvider;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
 
@@ -41,7 +47,7 @@ public class DfThread implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="df_thread_seq")
 	@Column(name="thread_id")
 	private Long threadId;
-
+	
 	@Column(name = "created_userid")
 	private Long createdUserid;
 	
@@ -51,12 +57,17 @@ public class DfThread implements Serializable{
 	@Column(name = "modified_time")
 	private Timestamp modifiedTime;
 	
+	@NotNull(message="please select topic")
 	@Column(name = "topic_id")
 	private Long topicId;
 	
+	@NotNull(message = "title can not be empty")
+	@Size(min=5,max=100,message="title should be minimum 5 and maximum 100 characters")
 	@Column(name = "thread_title")
 	private String threadTitle;
 	
+	@NotNull(message = "description can not be empty")
+	@Size(min=10,message="description should be minimum 10 characters")
 	@Column(name = "description")
 	private String description;
 	

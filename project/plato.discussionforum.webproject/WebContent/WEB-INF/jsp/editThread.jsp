@@ -377,7 +377,7 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Thread</h3>
 							</div>
-							<form method="POST" action="saveEditThread.html" class="form" enctype="multipart/form-data">
+							<form method="POST" action="editThread.html" class="form" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
 										<label for="threadTitle">Thread Title:</label> <input

@@ -24,6 +24,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 
@@ -43,15 +44,18 @@ public class DfModeratorAssigned implements Serializable {
 	@Column(name = "moderator_id")
 	private Long moderatorId;
 	
+	@NotNull(message="please select topic")
 	@Column(name = "topic_id")
 	private Long topicId;
 	
+	@NotNull(message="please select user")
 	@Column(name = "assigned_to_userid")
 	private Long assignedToUserid;
 	
 	@Column(name = "assigned_time")
 	private Timestamp assignedTime;
 	
+	@NotNull(message="please select assigned by user")
 	@Column(name = "assigned_by_userid")
 	private Long assignedByUserid;
 

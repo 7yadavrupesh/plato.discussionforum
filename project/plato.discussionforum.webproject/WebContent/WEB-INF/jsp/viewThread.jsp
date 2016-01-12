@@ -493,7 +493,7 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form method="POST" action="saveThreadReply.html"
+							<form method="POST" action="addThreadReply.html"
 								accept-charset=utf-8 enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">

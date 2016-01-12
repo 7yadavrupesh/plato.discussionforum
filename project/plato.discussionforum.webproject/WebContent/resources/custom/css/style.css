@@ -1,0 +1,11 @@
+@CHARSET "ISO-8859-1";
+
+.table {
+	table-layout:fixed;
+}
+
+.table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

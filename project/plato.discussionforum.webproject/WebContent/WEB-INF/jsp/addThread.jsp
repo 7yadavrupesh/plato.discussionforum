@@ -373,38 +373,41 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Thread</h3>
 							</div>
-							<form name="addThread" method="POST" action="saveAddThread.html"
-								role="form" enctype="multipart/form-data">
+							<form:form name="thread" method="POST" action="addThread.html"
+								role="form"  modelAttribute="thread" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
-									<form:label path="topics">Topic</form:label>
-										<form:select path="topics" class=" js-example-basic-single form-control" name="topicId">
-											<form:option value="NONE" label="--- Select Topic ---" />
+									<form:label path="topicId">Topic</form:label>
+										<form:select path="topicId" class=" js-example-basic-single form-control" name="topicId">
+											<form:option value="" label="--- Select Topic ---" />
 											<form:options items="${topics}" />
 										</form:select>
+										<form:errors path="topicId" cssClass="error" />
 										<%-- <form:select path="topics" items="${topics}" /> --%>
 									</div>
 									<div class="form-group">
-										<label for="threadTitle">Thread Title</label> <input
-											class="form-control" name="threadTitle"
-											value="${thread.threadTitle}" />
+										<form:label path="threadTitle" for="threadTitle">Thread Title</form:label> <form:input
+											path = "threadTitle" class="form-control" name="threadTitle"
+											value="${thread.threadTitle}" ></form:input>
+											<form:errors path="threadTitle" cssClass="error" />
 									</div>
 									<div class="form-group">
-										<label for="description">Thread Description</label>
-										<textarea class="form-control" name="description" rows="5"
-											value="${thread.description}"></textarea>
+										<form:label path="description" for="description">Thread Description</form:label>
+										<form:textarea path="description" class="form-control" name="description" rows="5"
+											value="${thread.description}"></form:textarea>
+											<form:errors path="description" cssClass="error" />
 									</div>
 									<div id="fileUpload" class="form-group">
-										<label for="file">Select Files</label> <input type="file"
-											name="file" size=50 multiple />
+										<label  for="file">Select Files</label> 
+										<input type="file" name="file" size=50 multiple/>
 									</div>
 									<a id="addMoreFiles" class="btn btn-default btn-xs">Add More Files</a>
 									<div class="box-footer">
-										<button type="submit" onclick="submitForm"
-											class="btn btn-primary">Add Thread</button>
+										<form:button type="submit" onclick="submitForm"
+											class="btn btn-primary">Add Thread</form:button>
 									</div>
 								</div>
-							</form>
+							</form:form>
 						</div>
 					</div>
 				</div>

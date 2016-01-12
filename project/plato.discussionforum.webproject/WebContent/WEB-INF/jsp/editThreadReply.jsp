@@ -377,7 +377,7 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Edit Reply</h3>
 							</div>
-							<form method="POST" action="saveEditThreadReply.html"
+							<form method="POST" action="editThreadReply.html"
 								class="form" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">

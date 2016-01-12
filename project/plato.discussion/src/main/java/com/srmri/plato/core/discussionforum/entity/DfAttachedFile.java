@@ -24,12 +24,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "discussion_forum.df_attached_files")
 public class DfAttachedFile implements  Serializable{
-
 	
 	/**
 	 * 
@@ -42,9 +41,11 @@ public class DfAttachedFile implements  Serializable{
 	@Column(name = "file_id")
 	private Long fileId;
 	
+	@NotNull(message="file path can not be null")
 	@Column(name = "file_location")
 	private String fileLocation;
 	
+	@NotNull(message="file path can not be null")
 	@Column(name = "file_name")
 	private String fileName;
 	

@@ -373,13 +373,11 @@
 								<h3 class="box-title">Add Moderator</h3>
 							</div>
 							<form:form name="addThread" method="Post"
-								action="saveModerator.html" modelAttribute="moderator"
+								action="addModerator.html" modelAttribute="moderator"
 								role="form">
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="assignedToUserid">Select User</form:label>
-									<%-- 	<form:select class="js-example-basic-single form-control" path="assignedToUserid"
-											items="${usersList}" /> --%>
 											<form:select path="assignedToUserid" class=" js-example-basic-single form-control">
 											<form:option value="NONE" label="--- Select Topic ---" />
 											<form:options items="${usersList}" />

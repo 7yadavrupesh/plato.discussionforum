@@ -19,12 +19,12 @@
 <link rel="stylesheet"
 	href="./resources/bootstrap/css/bootstrap.min.css">
 <!-- Font Awesome -->
-<link rel="stylesheet"
+<!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<!-- Ionicons -->
+Ionicons
 <link rel="stylesheet"
 	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- Theme style -->
+ --><!-- Theme style -->
 <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
@@ -384,7 +384,7 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Topic</h3>
 							</div>
-							<form:form method="POST" action="saveTopic.html" class="form" modelAttribute="topic">
+							<form:form method="POST" action="addTopic.html" class="form" modelAttribute="topic">
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="topicTitle" for="topicTitle">Topic Title:</form:label>

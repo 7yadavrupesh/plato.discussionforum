@@ -23,7 +23,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.sql.Timestamp;
 
@@ -39,6 +40,8 @@ public class DfTopic implements Serializable{
 	@Column(name = "topic_id")
 	private Long topicId;
 	
+	@NotNull(message = "should not be empty")
+	@Size(min=2,max=30, message="provide atleast 2 character")
 	@Column(name = "topic_title")
 	private String topicTitle;
 	

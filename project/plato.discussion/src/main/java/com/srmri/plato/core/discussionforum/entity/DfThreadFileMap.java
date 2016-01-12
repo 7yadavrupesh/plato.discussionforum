@@ -47,7 +47,6 @@ public class DfThreadFileMap implements  Serializable{
 	@Column(name = "thread_id")
 	private Long threadId;
 	
-
 	public DfThreadFileMap() {
 		// TODO Auto-generated constructor stub
 	}
