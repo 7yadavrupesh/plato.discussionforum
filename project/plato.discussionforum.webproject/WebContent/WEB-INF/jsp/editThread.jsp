@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>AdminLTE 2 | Dashboard</title>
+<title>Edit Thread</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -368,7 +368,18 @@
 					<li class="active">Edit Thread</li>
 				</ol>
 			</section>
+									<!-- Display alert message -->
+			<c:if test="${not empty alertMessage}">
+				<div class="alert alert-${css} alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<strong>${alertMessage}</strong>
+				</div>
+			</c:if>
 
+			<!-- -----Display alert message---- -->
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
@@ -383,13 +394,13 @@
 										<form:label path="threadTitle" >Thread Title:</form:label> <form:input
 											class="form-control" path="threadTitle"
 											value="${thread.threadTitle}" />
-											<form:errors path="threadTitle" cssClass="error" />
+											<form:errors path="threadTitle" cssClass="text-red" />
 									</div>
 									<div class="form-group">
 										<form:label path="description" for="description">Thread Description:</form:label>
 										<form:textarea path="description" class="form-control" name="description" rows=""
 											cols="" value="${thread.description }"></form:textarea>
-										<form:errors path="description" cssClass="error" />
+										<form:errors path="description" cssClass="text-red" />
 										<input name="topicId" value="${thread.topicId }" type="hidden" />
 										<input name="threadId" value="${thread.threadId }"
 											type="hidden" />

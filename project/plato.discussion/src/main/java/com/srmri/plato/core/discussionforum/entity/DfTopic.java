@@ -26,6 +26,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -40,8 +43,8 @@ public class DfTopic implements Serializable{
 	@Column(name = "topic_id")
 	private Long topicId;
 	
-	@NotNull(message = "should not be empty")
-	@Size(min=2,max=30, message="provide atleast 2 character")
+	@NotBlank(message = "should not be blank")
+	@Size(min=2,max=30, message="min 2 characters")
 	@Column(name = "topic_title")
 	private String topicTitle;
 	

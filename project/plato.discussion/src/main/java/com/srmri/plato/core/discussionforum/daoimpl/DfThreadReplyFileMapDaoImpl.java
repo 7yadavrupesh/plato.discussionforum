@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.srmri.plato.core.discussionforum.dao.DfAttachedFileDao;
 import com.srmri.plato.core.discussionforum.dao.DfThreadReplyFileMapDao;
 import com.srmri.plato.core.discussionforum.entity.DfThreadReplyFileMap;
 
@@ -17,6 +18,9 @@ public class DfThreadReplyFileMapDaoImpl implements DfThreadReplyFileMapDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	private DfAttachedFileDao attachedFileDao;
 	@Override
 	public void df_d_addThreadReplyFileMap(DfThreadReplyFileMap trfm) {
 		// TODO Auto-generated method stub
@@ -53,8 +57,10 @@ public class DfThreadReplyFileMapDaoImpl implements DfThreadReplyFileMapDao {
 	@Override
 	public void df_d_removeThreadReplyFileMap(DfThreadReplyFileMap trfm) {
 		// TODO Auto-generated method stub
+		Long fileIdForDelete = trfm.getFileId();
 		sessionFactory.getCurrentSession().delete(trfm);
 		sessionFactory.getCurrentSession().flush();
+		attachedFileDao.df_d_removeAttachedFile(fileIdForDelete);
 	}
 
 	@Override
@@ -74,15 +80,18 @@ public class DfThreadReplyFileMapDaoImpl implements DfThreadReplyFileMapDao {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadReplyFileMap.class);
 		cri.add(Restrictions.eq("fileId", fileId));
-		List<DfThreadReplyFileMap> objList = cri.list();
-		if(objList.isEmpty())
+		DfThreadReplyFileMap obj = (DfThreadReplyFileMap) cri.list().get(0);
+		Long fileIdForDelete = obj.getFileId();
+		if(obj == null)
 			return ;
 		else
 		{
-			sessionFactory.getCurrentSession().delete(objList.get(0));
+			sessionFactory.getCurrentSession().delete(obj);
 			sessionFactory.getCurrentSession().flush();
+			attachedFileDao.df_d_removeAttachedFile(fileIdForDelete);
 		}
-		sessionFactory.getCurrentSession().flush();
+		
+		
 	}
 
 }

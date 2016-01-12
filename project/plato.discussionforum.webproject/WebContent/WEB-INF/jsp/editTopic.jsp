@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>Edit Topic</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
       <!-- jQuery 2.1.4 -->
@@ -362,7 +362,18 @@
                 <li class="active">Edit Topic</li>
               </ol>
             </section>
+									<!-- Display alert message -->
+			<c:if test="${not empty alertMessage}">
+				<div class="alert alert-${css} alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<strong>${alertMessage}</strong>
+				</div>
+			</c:if>
 
+			<!-- -----Display alert message---- -->
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
@@ -378,7 +389,7 @@
 										<form:label path="topicTitle" for="topicTitle">Topic Title:</form:label> <form:input
 											class="form-control" name="topicTitle" path="topicTitle"
 											value="${topic.topicTitle}" />
-											<form:errors path="topicTitle" cssClass="error" />
+											<form:errors path="topicTitle" cssClass="text-red" />
 											 <form:input name="topicId" path="topicId"
 											value="${topic.topicId }" type="hidden" />
 									</div>

@@ -26,6 +26,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -43,7 +45,7 @@ public class DfModeratorAssigned implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="df_moderator_assigned_seq")
 	@Column(name = "moderator_id")
 	private Long moderatorId;
-	
+
 	@NotNull(message="please select topic")
 	@Column(name = "topic_id")
 	private Long topicId;

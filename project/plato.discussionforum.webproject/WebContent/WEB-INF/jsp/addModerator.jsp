@@ -8,13 +8,13 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>AdminLTE 2 | Dashboard</title>
+<title>Add Moderator</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
-	    <!-- jQuery 2.1.4 -->
-    <script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- jQuery 2.1.4 -->
+<script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
 <link rel="stylesheet"
 	href="./resources/bootstrap/css/bootstrap.min.css">
@@ -323,30 +323,36 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="treeview"><a href="listTopic.html"> <i class="fa fa-group"></i>
-							<span>Discussion Forum</span> <i class="fa fa-angle-left pull-right"></i></a>
+					<li class="treeview"><a href="listTopic.html"> <i
+							class="fa fa-group"></i> <span>Discussion Forum</span> <i
+							class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-plus"></i> Add <i class="fa fa-angle-left pull-right"></i></a>
+							<li><a href="#"><i class="fa fa-plus"></i> Add <i
+									class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li><a href="addTopic.html"><i class="fa  fa-plus-square-o"></i> Topic</a></li>
-									<li><a href="addThread.html"><i class="fa  fa-plus-square-o"></i> Thread</a></li>
-									<li><a href="addModerator.html"><i class="fa  fa-plus-square-o"></i> Moderator</a></li>
-								</ul>
-							</li>
+									<li><a href="addTopic.html"><i
+											class="fa  fa-plus-square-o"></i> Topic</a></li>
+									<li><a href="addThread.html"><i
+											class="fa  fa-plus-square-o"></i> Thread</a></li>
+									<li><a href="addModerator.html"><i
+											class="fa  fa-plus-square-o"></i> Moderator</a></li>
+								</ul></li>
 						</ul>
-							<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-list"></i> Show <i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+							<li><a href="#"><i class="fa fa-list"></i> Show <i
+									class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i> Topic </a></li>
-									<li><a href="deletedThreadList.html"><i class="fa fa-list-ul"></i> Deleted Threads </a></li>
-									<li><a href="approveThread.html"><i class="fa fa-list-ul"></i> Approve Threads </a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
+									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i>
+											Topic </a></li>
+									<li><a href="deletedThreadList.html"><i
+											class="fa fa-list-ul"></i> Deleted Threads </a></li>
+									<li><a href="approveThread.html"><i
+											class="fa fa-list-ul"></i> Approve Threads </a></li>
+								</ul></li>
+						</ul></li>
 				</ul>
-				
-				</section>
+
+			</section>
 			<!-- /.sidebar -->
 		</aside>
 
@@ -362,7 +368,18 @@
 					<li class="active">Add Moderator</li>
 				</ol>
 			</section>
+			<!-- Display alert message -->
+			<c:if test="${not empty alertMessage}">
+				<div class="alert alert-${css} alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<strong>${alertMessage}</strong>
+				</div>
+			</c:if>
 
+			<!-- --------- -->
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->
@@ -372,26 +389,31 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Moderator</h3>
 							</div>
-							<form:form method="Post" name="moderator" action="addModerator.html" modelAttribute="moderator" role="form">
+							<form:form method="Post" name="moderator"
+								action="addModerator.html" modelAttribute="moderator"
+								role="form">
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="assignedToUserid">Select User</form:label>
-											<form:select path="assignedToUserid" class=" js-example-basic-single form-control">
+										<form:select path="assignedToUserid"
+											class=" js-example-basic-single form-control">
 											<form:option value="" label="--- Select Topic ---" />
 											<form:options items="${usersList}" />
 										</form:select>
-										<form:errors path="assignedToUserid" cssClass="error" />
-										</div>
-										<div class="form-group">
+										<form:errors path="assignedToUserid" class="text-red" />
+									</div>
+									<div class="form-group">
 										<form:label path="topicId">Select Topic</form:label>
-										<form:select path="topicId" class=" js-example-basic-single form-control">
+										<form:select path="topicId"
+											class=" js-example-basic-single form-control">
 											<form:option value="" label="--- Select Topic ---" />
 											<form:options items="${topics}" />
 										</form:select>
-										<form:errors path="topicId" cssClass="error" />
+										<form:errors path="topicId" cssClass="text-red" />
 									</div>
 									<div class="box-footer">
-										<button type="submit" class="btn btn-primary">Add Moderator</button>
+										<button type="submit" class="btn btn-primary">Add
+											Moderator</button>
 									</div>
 								</div>
 							</form:form>
@@ -573,34 +595,35 @@
 	<!-- ./wrapper -->
 
 
-    <!-- Bootstrap 3.3.5 -->
-    <script src="./resources/bootstrap/js/bootstrap.min.js"></script>
-    <!-- DataTables -->
-    <script src="./resources/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="./resources/plugins/datatables/dataTables.bootstrap.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="./resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="./resources/plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="./resources/dist/js/app.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="./resources/dist/js/demo.js"></script>
-    <script src="./resources/custom/select2/js/select2.min.js"></script>
-    <script src="./resources/custom/js/custom.js"></script>
-    <!-- page script -->
-    <script>
-      $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false
-        });
-      });
-    </script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="./resources/bootstrap/js/bootstrap.min.js"></script>
+	<!-- DataTables -->
+	<script src="./resources/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="./resources/plugins/datatables/dataTables.bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="./resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="./resources/plugins/fastclick/fastclick.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="./resources/dist/js/app.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="./resources/dist/js/demo.js"></script>
+	<script src="./resources/custom/select2/js/select2.min.js"></script>
+	<script src="./resources/custom/js/custom.js"></script>
+	<!-- page script -->
+	<script>
+		$(function() {
+			$("#example1").DataTable();
+			$('#example2').DataTable({
+				"paging" : true,
+				"lengthChange" : false,
+				"searching" : false,
+				"ordering" : true,
+				"info" : true,
+				"autoWidth" : false
+			});
+		});
+	</script>
 </body>
 </html>

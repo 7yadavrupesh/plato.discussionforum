@@ -18,7 +18,7 @@ public class DfThreadFileMapServiceImpl implements DfThreadFileMapService{
 
 	@Autowired
 	private DfThreadFileMapDao threadFileMapDao;
-
+	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void df_s_addThreadFileMap(DfThreadFileMap threadFileMap) {
@@ -55,5 +55,13 @@ public class DfThreadFileMapServiceImpl implements DfThreadFileMapService{
 	public void df_s_addThreadFileMap(Long threadId, Long uploadedFileId) {
 		// TODO Auto-generated method stub
 		threadFileMapDao.df_d_addThreadFileMap(threadId,uploadedFileId);
+	}
+	
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Override
+	public void df_s_removeThreadFileMap(Long c) {
+		// TODO Auto-generated method stub
+		threadFileMapDao.df_d_removeThreadFileMap(c);
 	}
 }

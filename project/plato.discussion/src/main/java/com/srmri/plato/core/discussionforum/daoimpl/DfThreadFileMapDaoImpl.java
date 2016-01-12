@@ -52,9 +52,10 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 	@Override
 	public void df_d_removeThreadFileMap(DfThreadFileMap threadFileMap) {
 		// TODO Auto-generated method stub
-		attachedFileService.df_s_removeAttachedFile(threadFileMap.getFileId());
+		Long fileIdForDelete = threadFileMap.getFileId();
 		sessionFactory.getCurrentSession().delete(threadFileMap);
 		sessionFactory.getCurrentSession().flush();
+		attachedFileService.df_s_removeAttachedFile(fileIdForDelete);
 	}
 
 	@Override
@@ -103,5 +104,19 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 		obj.setThreadId(threadId);
 		sessionFactory.getCurrentSession().saveOrUpdate(obj);
 		sessionFactory.getCurrentSession().flush();
+	}
+
+	@Override
+	public void df_d_removeThreadFileMap(Long fileId) {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadFileMap.class);
+		cri.add(Restrictions.eq("fileId", fileId));
+		DfThreadFileMap obj = (DfThreadFileMap) cri.list().get(0);
+		
+		if(obj != null){
+			sessionFactory.getCurrentSession().delete(obj);
+			sessionFactory.getCurrentSession().flush();	
+			attachedFileService.df_s_removeAttachedFile(fileId);
+		}	
 	}
 }

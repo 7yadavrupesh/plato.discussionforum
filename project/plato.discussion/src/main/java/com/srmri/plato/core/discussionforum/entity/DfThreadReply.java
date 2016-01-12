@@ -27,6 +27,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -53,8 +55,8 @@ public class DfThreadReply implements Serializable{
 	@Column(name = "thread_id")
 	private Long threadId;
 	
-	@NotNull(message="Reply can not be empty")
-	@Size(min=5,max=1500, message="reply must contain 5 characters")
+	@NotBlank(message = "should not be blank")
+	@Size(min=5,max=1500, message="minimum 5 characters")
 	@Column(name = "reply_text")
 	private String replyText;
 	

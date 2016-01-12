@@ -51,7 +51,6 @@ public class DfThreadFileMap implements  Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public Long getThreadFileMapId() {
 		return threadFileMapId;
 	}

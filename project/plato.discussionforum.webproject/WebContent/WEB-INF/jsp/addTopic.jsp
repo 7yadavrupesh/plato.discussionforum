@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>AdminLTE 2 | Dashboard</title>
+<title>Add Topic</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -368,7 +368,18 @@
 					<li class="active">Insert New Topic</li>
 				</ol>
 			</section>
+								<!-- Display alert message -->
+			<c:if test="${not empty alertMessage}">
+				<div class="alert alert-${css} alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<strong>${alertMessage}</strong>
+				</div>
+			</c:if>
 
+			<!-- --------- -->
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->
@@ -384,7 +395,7 @@
 										<form:label path="topicTitle" for="topicTitle">Topic Title:</form:label>
 										<form:input path="topicTitle" class="form-control"
 											name="topicTitle" value="${topic.topicTitle}" />
-										<form:errors path="topicTitle" cssClass="error" />
+										<form:errors path="topicTitle" cssClass="text-red" />
 									</div>
 									<button type="submit" class="btn btn-primary">Add</button>
 								</div>

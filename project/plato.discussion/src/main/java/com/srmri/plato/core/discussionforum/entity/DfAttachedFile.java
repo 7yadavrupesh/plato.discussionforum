@@ -41,11 +41,11 @@ public class DfAttachedFile implements  Serializable{
 	@Column(name = "file_id")
 	private Long fileId;
 	
-	@NotNull(message="file path can not be null")
+	@NotNull(message="file path can not be empty")
 	@Column(name = "file_location")
 	private String fileLocation;
 	
-	@NotNull(message="file path can not be null")
+	@NotNull(message="file name can not be empty")
 	@Column(name = "file_name")
 	private String fileName;
 	

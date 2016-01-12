@@ -40,17 +40,16 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-  <style>
-  
-  .table {
-	table-layout:fixed;
+<style>
+.table {
+	table-layout: fixed;
 }
 
 .table td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 </style>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -353,7 +352,30 @@
 			</section>
 			<!-- /.sidebar -->
 		</aside>
-
+		<!--  alert START  -->
+		<c:choose>
+			<c:when test="${alert == 'success'}">
+				<div class="alert alert-success alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true">×</button>
+					<h4>
+						<i class="icon fa fa-check"></i> Success!
+					</h4>
+					Success : Thread Added
+				</div>
+			</c:when>
+			<c:when test="${alert == 'fail'}">
+				<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true">×</button>
+					<h4>
+						<i class="icon fa fa-ban"></i> Failed!
+					</h4>
+					Failed: No Thread Added
+				</div>
+			</c:when>
+		</c:choose>
+		<!--  alert END  -->
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -366,7 +388,18 @@
 					<li class="active">Discussion Forum</li>
 				</ol>
 			</section>
+									<!-- Display alert message -->
+			<c:if test="${not empty alertMessage}">
+				<div class="alert alert-${css} alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<strong>${alertMessage}</strong>
+				</div>
+			</c:if>
 
+			<!-- -----Display alert message---- -->
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->
@@ -493,7 +526,8 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form:form method="POST" modelAttribute="threadReply" action="addThreadReply.html" enctype="multipart/form-data">
+							<form:form method="POST" modelAttribute="threadReply"
+								action="addThreadReply.html" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
 										<form:input path="threadId" name="threadId" type="hidden"
@@ -501,10 +535,10 @@
 									</div>
 									<div class="form-group">
 										<form:label path="replyText" for="replyText">Comment</form:label>
-										<form:textarea path="replyText" class="form-control" placeholder="Comment"
-											name="replyText" rows="6" cols=""
-											value="${newThreadReply.replyText}"></form:textarea>
-											<form:errors path="replyText" cssClass="error" />
+										<form:textarea path="replyText" class="form-control"
+											placeholder="Comment" name="replyText" rows="6" cols=""
+											value="${threadReply.replyText}"></form:textarea>
+										<form:errors path="replyText" class="text-red" />
 									</div>
 									<div id="fileUpload" class="form-group">
 										<label for="file">Select Files</label> <input type="file"

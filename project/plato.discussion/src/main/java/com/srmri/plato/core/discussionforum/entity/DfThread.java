@@ -1,5 +1,5 @@
 /**********************************************************************************
- * File-name - DfThread
+                                               * File-name - DfThread
  * Version - 1.0
  * Author - SRM RI
  ***********************************************************************************
@@ -57,17 +57,17 @@ public class DfThread implements Serializable{
 	@Column(name = "modified_time")
 	private Timestamp modifiedTime;
 	
-	@NotNull(message="please select topic")
+	@NotNull(message = "should not be blank")
 	@Column(name = "topic_id")
 	private Long topicId;
 	
-	@NotNull(message = "title can not be empty")
-	@Size(min=5,max=100,message="title should be minimum 5 and maximum 100 characters")
+	@NotBlank(message = "should not be blank")
+	@Size(min=5,max=100,message="minimum 5 and maximum 100 characters")
 	@Column(name = "thread_title")
 	private String threadTitle;
 	
-	@NotNull(message = "description can not be empty")
-	@Size(min=10,message="description should be minimum 10 characters")
+	@NotBlank(message = "should not be blank")
+	@Size(min=10,message="minimum 10 characters")
 	@Column(name = "description")
 	private String description;
 	
