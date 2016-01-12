@@ -368,7 +368,7 @@
 					<li class="active">Edit Thread</li>
 				</ol>
 			</section>
-									<!-- Display alert message -->
+			<!-- Display alert message -->
 			<c:if test="${not empty alertMessage}">
 				<div class="alert alert-${css} alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert"
@@ -388,63 +388,64 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Thread</h3>
 							</div>
-							<form:form method="POST" modelAttribute="thread" action="editThread.html" class="form" enctype="multipart/form-data">
+							<form:form method="POST" modelAttribute="thread"
+								action="editThread.html" class="form"
+								enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
-										<form:label path="threadTitle" >Thread Title:</form:label> <form:input
-											class="form-control" path="threadTitle"
+										<form:label path="threadTitle">Thread Title:</form:label>
+										<form:input class="form-control" path="threadTitle"
 											value="${thread.threadTitle}" />
-											<form:errors path="threadTitle" cssClass="text-red" />
+										<form:errors path="threadTitle" cssClass="text-red" />
 									</div>
 									<div class="form-group">
 										<form:label path="description" for="description">Thread Description:</form:label>
-										<form:textarea path="description" class="form-control" name="description" rows=""
-											cols="" value="${thread.description }"></form:textarea>
+										<form:textarea path="description" class="form-control"
+											name="description" rows="" cols=""
+											value="${thread.description }"></form:textarea>
 										<form:errors path="description" cssClass="text-red" />
 										<input name="topicId" value="${thread.topicId }" type="hidden" />
 										<input name="threadId" value="${thread.threadId }"
 											type="hidden" />
 									</div>
-									<c:if test="${not empty finalFileListMap}">
-										<div class="col-md-6">
-											<div class="box box-primary">
-												<div class="box-header with-border">
-													<h3 class="box-title">Select Files For Delete</h3>
-												</div>
-												<table class="table table-bordered table-striped ">
-													<thead>
-														<tr>
-															<th>File Name</th>
-															<th>Download</th>
-															<th>Delete?</th>
-														</tr>
-													</thead>
-													<tbody>
-														<c:forEach items="${finalFileListMap }" var="file">
-															<tr>
-																<td>${file.value }</td>
-																<td><a
-																	href="downloadFile.html?file_id=${file.key}&thread_id=${thread.threadId}">
-																		<span class="fa fa-download"
-																		title="download attached file"></span>
-																</a></td>
-																<td><input type="checkbox" name="checkBoxFile"
-																	title="check for delete"
-																	value="${file.key }"></td>
-															</tr>
-														</c:forEach>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</c:if>
 									<div class="row">
+										<c:if test="${not empty finalFileListMap}">
+											<div class="col-md-6">
+												<div class="box box-primary">
+													<div class="box-header with-border">
+														<h3 class="box-title">Select Files For Delete</h3>
+													</div>
+													<table class="table table-bordered table-striped ">
+														<thead>
+															<tr>
+																<th>File Name</th>
+																<th>Download</th>
+																<th>Delete?</th>
+															</tr>
+														</thead>
+														<tbody>
+															<c:forEach items="${finalFileListMap }" var="file">
+																<tr>
+																	<td>${file.value }</td>
+																	<td><a
+																		href="downloadFile.html?file_id=${file.key}&thread_id=${thread.threadId}">
+																			<span class="fa fa-download"
+																			title="download attached file"></span>
+																	</a></td>
+																	<td><input type="checkbox" name="checkBoxFile"
+																		title="check for delete" value="${file.key }"></td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</c:if>
 										<div class="col-md-6">
 											<div class="box box-primary">
 												<div class="box-header with-border">
 													<h3 class="box-title">Upload New Files</h3>
 												</div>
-
 												<div id="fileUpload" class="form-group">
 													<label for="file">Select Files</label> <input type="file"
 														name="file" size=50 multiple />
@@ -454,11 +455,11 @@
 											</div>
 										</div>
 									</div>
-									<div class="box-footer">
-										<button name="edit"
-											value='<c:out value="${sourcePage }">${sourcePage }</c:out>'
-											type="submit" class="btn btn-primary">Save</button>
-									</div>
+								</div>
+								<div class="box-footer">
+									<button name="edit"
+										value='<c:out value="${sourcePage }">${sourcePage }</c:out>'
+										type="submit" class="btn btn-primary">Save</button>
 								</div>
 							</form:form>
 						</div>
@@ -666,7 +667,6 @@
 				"autoWidth" : false
 			});
 		});
-		 $(".js-example-basic-single").select2();
 	</script>
 </body>
 </html>
