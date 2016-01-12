@@ -897,14 +897,18 @@ public class CommonController {
 	/******************************************* Subscription *************************************************/
 
 	@RequestMapping(value = "/subscribeThread", method = RequestMethod.GET)
-	public String subscribeThread(Model model,@RequestParam Long thread_id) {
+	public String subscribeThread(Model model,@RequestParam Long thread_id, RedirectAttributes redirectAttributes) {
 		threadSubscriptionService.df_s_addThreadSubscription(thread_id, loginUserId);
+		redirectAttributes.addFlashAttribute("alertMessage", "Subscription successful");
+		redirectAttributes.addFlashAttribute("css", "success");
 		return "redirect:viewThread.html?thread_id="+thread_id;
 	}
 
 	@RequestMapping(value = "/unSubscribeThread", method = RequestMethod.GET)
-	public String unSubscribeThread(Model model,@RequestParam Long thread_id) {
+	public String unSubscribeThread(Model model,@RequestParam Long thread_id,RedirectAttributes redirectAttributes) {
 		threadSubscriptionService.df_s_removeThreadSubscription(thread_id, loginUserId);
+		redirectAttributes.addFlashAttribute("alertMessage", "UnSubscription successful");
+		redirectAttributes.addFlashAttribute("css", "success");
 		return "redirect:viewThread.html?thread_id="+thread_id;
 	}
 
