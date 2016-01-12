@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import com.srmri.plato.core.discussionforum.entity.DfAttachedFile;
 import com.srmri.plato.core.discussionforum.entity.DfModeratorAssigned;
@@ -384,8 +385,8 @@ public class CommonController {
 			}
 		}
 		// Delete Files Start		
-		
-		
+
+
 		if(files !=null){
 			for(MultipartFile file : files){
 				if (!file.isEmpty()) {
@@ -595,7 +596,9 @@ public class CommonController {
 		model.addAttribute("threadEditAllowed", threadEditAllowed);
 		model.addAttribute("thread",  threadService.df_s_getThread(thread_id));
 		model.addAttribute("threadReplys",finalThreadReplyList);
-		model.addAttribute("threadReply", new DfThreadReply());
+		if(!model.containsAttribute("threadReply")){
+			model.addAttribute("threadReply", new DfThreadReply());
+		}
 		model.addAttribute("loginUserId",loginUserId);
 		model.addAttribute("topicUserId",topicService.df_s_getTopic(threadService.df_s_getThread(thread_id).getTopicId()).getCreatedUserid());
 		model.addAttribute("checkSubscribe", threadSubscriptionService.df_s_isSubscribed(thread_id,loginUserId));
@@ -822,21 +825,19 @@ public class CommonController {
 		return "redirect:viewThread.html?thread_id="+threadId;
 	}
 
-//	@RequestMapping(value = "/addThreadReply", method = RequestMethod.GET)
-//	public String addThreadReply(Model model, @ModelAttribute DfThreadReply threadReply){
-//		model = prepareViewThread(model, threadReply, threadReply.getThreadId());
-//		return "viewThread";
-//	}
+	@RequestMapping(value = "/addThreadReply", method = RequestMethod.GET)
+	public String addThreadReply(Model model, @ModelAttribute("threadReply") DfThreadReply threadReply){
+		model = prepareViewThread(model, threadReply, threadReply.getThreadId());
+		return "viewThread";
+	}
 	@RequestMapping(value = "/addThreadReply", method = RequestMethod.POST)
-	public String saveThreadReply(Model model,@Validated @ModelAttribute DfThreadReply threadReply, 
-			BindingResult result, @RequestParam(value = "file", required=false) List<MultipartFile> files,RedirectAttributes redirectAttributes) {
+	public String saveThreadReply(Model model,@Valid @ModelAttribute("threadReply") DfThreadReply threadReply, 
+			final BindingResult result, @RequestParam(value = "file", required=false) List<MultipartFile> files,RedirectAttributes redirectAttributes) {
 
 		if(result.hasErrors()){
-
-			model = prepareViewThread(model, threadReply, threadReply.getThreadId());
-			model.addAttribute("alertMessage", "Add reply failed!");
-			model.addAttribute("css", "danger");
-			return "viewThread";
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.threadReply", result);
+			redirectAttributes.addFlashAttribute("threadReply", threadReply);
+			return "redirect:viewThread.html?thread_id="+threadReply.getThreadId();
 		}
 		redirectAttributes.addFlashAttribute("alertMessage", "New reply inserted");
 		redirectAttributes.addFlashAttribute("css", "success");
@@ -889,7 +890,7 @@ public class CommonController {
 		model.addAttribute("thread",  threadService.df_s_getThread(threadReply.getThreadId()));
 		model.addAttribute("threadReplys",trl);
 		//model.addAttribute("newThreadReply", new DfThreadReply());		
-		
+
 		return "redirect:viewThread.html?thread_id="+threadReply.getThreadId();
 	}
 
