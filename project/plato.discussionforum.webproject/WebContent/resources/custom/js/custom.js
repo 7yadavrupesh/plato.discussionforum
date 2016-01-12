@@ -5,7 +5,7 @@ $(document).ready(function() {
                 '<label for="file">Select Files</label> <input type="file" name="file" size=50 multiple/>');
     });
     
-    $(".js-example-basic-single").select2();
+   // $(".js-example-basic-single").select2();
 /*    function confirm_alert(node) {
         return confirm("Please click on OK to continue.");
     }  */  

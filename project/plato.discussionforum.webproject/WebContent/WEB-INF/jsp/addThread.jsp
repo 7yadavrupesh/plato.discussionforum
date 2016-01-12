@@ -636,6 +636,7 @@
 		$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
 			$("#success-alert").alert('close');
 		});
+		 $(".js-example-basic-single").select2();
 	</script>
 </body>
 </html>
