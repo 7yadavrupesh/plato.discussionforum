@@ -66,4 +66,8 @@ public interface DfTopicDao {
 	List<DfTopic> df_d_getAllDeletedTopic();
 
 	List<DfTopic> getAllDeletedNonDeletedTopicList();
+
+	List<DfTopic> df_d_getAllUnApprovedTopics();
+
+	void df_d_approveTopic(Long topic_id);
 }

@@ -5,45 +5,34 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Edit Topic</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-      <!-- jQuery 2.1.4 -->
-    <script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-  <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Approve Topic</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+        <script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="./resources/plugins/datatables/dataTables.bootstrap.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
-    folder instead of downloading all of them to reduce the load. -->
+         folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="./resources/dist/css/skins/_all-skins.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="./resources/plugins/iCheck/flat/blue.css">
-    <!-- Morris chart -->
-    <link rel="stylesheet" href="./resources/plugins/morris/morris.css">
-    <!-- jvectormap -->
-    <link rel="stylesheet" href="./resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="./resources/plugins/datepicker/datepicker3.css">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="./resources/plugins/daterangepicker/daterangepicker-bs3.css">
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="./resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-      </head>
+    <![endif]-->
+  </head>
       <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
 
@@ -369,52 +358,62 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
               <h1>
-                Edit Topic
-                <small>Edit this topic</small>
+                Approve Topic
+                <small>approve topic</small>
               </h1>
               <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Edit Topic</li>
+                <li class="active">Approve Topic</li>
               </ol>
             </section>
-									<!-- Display alert message -->
-			<c:if test="${not empty alertMessage}">
-				<div class="alert alert-${css} alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-					<strong>${alertMessage}</strong>
-				</div>
-			</c:if>
 
-			<!-- -----Display alert message---- -->
 			<!-- Main content -->
 			<section class="content">
+				<!-- Small boxes (Stat box) -->
 				<div class="row">
-					<div class="col-md-6">
-						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">Add Thread</h3>
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header">
+								<h1 class="box-title">Topic List</h1>
 							</div>
-							<!-- Small boxes (Stat box) -->
-							<form:form method="POST" action="editTopic.html" class="form" modelAttribute="topic">
-								<div class="box-body">
-									<div class="form-group">
-										<form:label path="topicTitle" for="topicTitle">Topic Title:</form:label> <form:input
-											class="form-control" name="topicTitle" path="topicTitle"
-											value="${topic.topicTitle}" />
-											<form:errors path="topicTitle" cssClass="text-red" />
-											 <form:input name="topicId" path="topicId"
-											value="${topic.topicId }" type="hidden" />
-									</div>
-									<div class="box-footer">
-										<button type="submit" class="btn btn-default">Save</button>
-									</div>
-								</div>
-							</form:form>
+							<!-- /.box-header -->
+							<div class="box-body">
+								<table id="example1" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th>Title</th>
+											<th>Created At</th>
+											<th>Modified At</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${approveTopics}" var="topic">
+											<tr>
+												<td><c:out value="${topic.topicTitle}" /></td>
+												<td><c:out value="${topic.createdTime}" /></td>
+												<td><c:out value="${topic.createdUserid}" /></td>
+												<td><a
+													href="saveApproveTopic.html?topic_id=${topic.topicId}" title="approve"><span class="fa fa-check"></span></a>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th>Title</th>
+											<th>Created At</th>
+											<th>Modified At</th>
+											<th>Action</th>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<!-- /.box-body -->
 						</div>
+						<!-- /.box -->
 					</div>
+					<!-- /.col -->
 				</div>
 			</section>
 			<!-- /.content -->
@@ -592,7 +591,6 @@
       immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-
 
     <!-- Bootstrap 3.3.5 -->
     <script src="./resources/bootstrap/js/bootstrap.min.js"></script>

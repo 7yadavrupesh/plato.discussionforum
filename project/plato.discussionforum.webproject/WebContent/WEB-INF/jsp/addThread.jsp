@@ -332,7 +332,7 @@ WARNING: Respond.js doesn't work if you view the page via file://
 		<!-- Left side column. contains the logo and sidebar -->
 		<aside class="main-sidebar">
 			<!-- sidebar: style can be found in sidebar.less -->
-			<section class="sidebar">
+<section class="sidebar">
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
@@ -360,8 +360,8 @@ WARNING: Respond.js doesn't work if you view the page via file://
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="treeview"><a href="#"> <i class="fa fa-group"></i>
-							<span>Discussion Forum</span> <i
+					<li class="treeview"><a href="listTopic.html"> <i
+							class="fa fa-group"></i> <span>Discussion Forum</span> <i
 							class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">
 							<li><a href="#"><i class="fa fa-plus"></i> Add <i
@@ -381,14 +381,17 @@ WARNING: Respond.js doesn't work if you view the page via file://
 								<ul class="treeview-menu">
 									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i>
 											Topic </a></li>
-									<li><a href="deletedThreadList.html"><i
-											class="fa fa-list-ul"></i> Deleted Threads </a></li>
+									<li><a href="approveTopic.html"><i
+											class="fa fa-list-ul"></i> Approve Topics </a></li>
+									<li><a href="deletedTopic.html"><i
+											class="fa fa-list-ul"></i> Deleted Topics </a></li>
 									<li><a href="approveThread.html"><i
 											class="fa fa-list-ul"></i> Approve Threads </a></li>
+									<li><a href="deletedThreadList.html"><i
+											class="fa fa-list-ul"></i> Deleted Threads </a></li>
 								</ul></li>
 						</ul></li>
 				</ul>
-
 
 			</section>
 			<!-- /.sidebar -->

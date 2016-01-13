@@ -43,9 +43,11 @@ public interface DfTopicService {
 	
 	List<DfTopic> df_s_getAllTopicList();
 	DfTopic df_s_getTopic(Long topicId);
-	void df_s_approveTopic(Long topicId);
 	List<DfTopic> df_s_getDeletedTopic(Long userId);
 	List<DfTopic> df_s_getTopicList(Long userId);
 	List<DfTopic> df_s_getAllDeletedTopic();
 	List<DfTopic> df_s_getAllDeletedNonDeletedTopicList();
+	List<DfTopic> df_s_getAllUnApprovedTopics();
+	void df_s_UndoDeletedTopic(Long topicId);
+	void df_s_approveTopic(Long topic_id);
 }

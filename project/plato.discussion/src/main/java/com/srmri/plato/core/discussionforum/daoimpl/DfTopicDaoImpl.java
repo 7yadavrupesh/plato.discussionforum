@@ -74,6 +74,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	public List<DfTopic> df_d_getAllTopicList(){
 		Criteria cri= sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("deletedFlag", false));
+		cri.add(Restrictions.eq("approvedFlag", true));
 		return cri.list();
 	}
 	
@@ -102,15 +103,12 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DfTopic> df_d_getTopicUserActModerator(Long userId) {
-		System.out.println("df_d_getTopicUserActModerator enter");
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("createdUserid", userId));
 		List<DfTopic> list = cri.list();
 		if(list == null)
 			System.out.println("list is null");
-		System.out.println("moderator size: "+list.size());
-		System.out.println("df_d_getTopicUserActModerator out");
 		return list;
 	}
 
@@ -120,6 +118,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.and(Restrictions.eq("createdUserid", userId),Restrictions.eq("deletedFlag", false)));
+		cri.add(Restrictions.eq("approvedFlag", true));
 		sessionFactory.getCurrentSession().flush();
 		return cri.list();
 	}
@@ -129,6 +128,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("deletedFlag", true));
+		cri.add(Restrictions.eq("approvedFlag", true));
 		return cri.list();
 	}
 
@@ -137,5 +137,21 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	public List<DfTopic> getAllDeletedNonDeletedTopicList() {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createCriteria(DfTopic.class).list();
+	}
+
+	@Override
+	public List<DfTopic> df_d_getAllUnApprovedTopics() {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
+		cri.add(Restrictions.eq("approvedFlag", false));
+		cri.add(Restrictions.eq("deletedFlag", false));
+		return cri.list();
+	}
+
+	@Override
+	public void df_d_approveTopic(Long topic_id) {
+		// TODO Auto-generated method stub
+		DfTopic topic = (DfTopic) sessionFactory.getCurrentSession().load(DfTopic.class, topic_id);
+		topic.setApprovedFlag(true);
 	}	
 }

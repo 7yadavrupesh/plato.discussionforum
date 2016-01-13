@@ -47,7 +47,7 @@ import com.srmri.plato.core.discussionforum.service.DfTopicService;
 @Controller
 public class CommonController {
 
-	static Long loginUserId = 100L;	
+	static Long loginUserId = 1L;	
 	static List<Long> admin = new ArrayList<Long>();
 	public CommonController(){
 		admin.add(100L);
@@ -142,6 +142,7 @@ public class CommonController {
 		topic.setCreatedTime(curTime);
 		topic.setCreatedUserid(loginUserId);
 		topic.setDeletedFlag(false);
+		topic.setApprovedFlag(false);
 		topicService.df_s_insertTopic(topic);
 
 		return "redirect:listTopic.html";
@@ -161,14 +162,11 @@ public class CommonController {
 			model.addAttribute("topic", topic);
 			return"editTopic";
 		}
+		DfTopic oldTopic = topicService.df_s_getTopic(topic.getTopicId());
+		oldTopic.setTopicTitle(topic.getTopicTitle());
+		topicService.df_s_insertTopic(oldTopic);		
 		redirectAttributes.addFlashAttribute("alertMessage", "Topic Updated");
 		redirectAttributes.addFlashAttribute("css", "success");
-		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
-		topic.setCreatedTime(curTime);
-		topic.setCreatedUserid(loginUserId);
-		topic.setDeletedFlag(false);
-		topicService.df_s_insertTopic(topic);
-
 		return "redirect:listTopic.html";
 	}
 
@@ -179,14 +177,14 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/saveDeletedTopic", method = RequestMethod.GET)
-	public String saveApproveTopic(Model model, @RequestParam Long topic_id) {
-		topicService.df_s_approveTopic(topic_id);
+	public String saveDeletedTopic(Model model, @RequestParam Long topic_id) {
+		topicService.df_s_UndoDeletedTopic(topic_id);
 		model.addAttribute("deletedTopics",topicService.df_s_getDeletedTopic(loginUserId));
 		return "redirect:deletedTopic.html";
 	}
 
 	@RequestMapping(value = "/deletedTopic", method = RequestMethod.GET)
-	public String approveTopic(Model model) {
+	public String deletedTopic(Model model) {
 		model.addAttribute("deletedTopics",topicService.df_s_getDeletedTopic(loginUserId));
 		List<DfTopic> allDeletedTopicList = topicService.df_s_getAllDeletedTopic();
 		List<DfModeratorAssigned> moderatorAssignedFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
@@ -208,6 +206,29 @@ public class CommonController {
 		}
 		model.addAttribute("deletedTopics",deletedTopicsList);
 		return "deletedTopic";
+	}
+	
+	@RequestMapping(value = "/approveTopic", method = RequestMethod.GET)
+	public String approveTopic(Model model) {
+		
+		if(checkAdmin(loginUserId)){
+			model.addAttribute("approveTopics",topicService.df_s_getAllUnApprovedTopics());
+		}else{
+			model.addAttribute("approveTopics",null);
+		}
+		return "approveTopic";
+	}
+	
+	@RequestMapping(value = "/saveApproveTopic", method = RequestMethod.GET)
+	public String saveApproveTopic(Model model, @RequestParam Long topic_id) {
+		
+		if(checkAdmin(loginUserId)){
+			topicService.df_s_approveTopic(topic_id);
+			model.addAttribute("approveTopics",topicService.df_s_getAllUnApprovedTopics());
+		}else{
+			model.addAttribute("approveTopics",null);
+		}
+		return "redirect:approveTopic.html";
 	}
 	/************************************** THREAD **************************************************/
 

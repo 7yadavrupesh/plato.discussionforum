@@ -57,6 +57,9 @@ public class DfTopic implements Serializable{
 	@Column(name = "deleted_flag")
 	private Boolean deletedFlag;
 	
+	@Column(name="approved_flag")
+	private Boolean approvedFlag;
+	
 	public DfTopic() {
 		// TODO Auto-generated constructor stub
 	}
@@ -119,5 +122,18 @@ public class DfTopic implements Serializable{
 	 */
 	public void setDeletedFlag(Boolean deletedFlag) {
 		this.deletedFlag = deletedFlag;
+	}
+	
+	/**
+	 * @return the approvedFlag
+	 */
+	public Boolean getApprovedFlag() {
+		return approvedFlag;
+	}
+	/**
+	 * @param set approvedFlag
+	 */
+	public void setApprovedFlag(Boolean approvedFlag) {
+		this.approvedFlag = approvedFlag;
 	}
 }

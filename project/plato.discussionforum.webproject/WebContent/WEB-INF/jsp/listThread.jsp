@@ -5,35 +5,42 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Thread List</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.5 -->
-        <script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="./resources/plugins/datatables/dataTables.bootstrap.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Thread List</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- Bootstrap 3.3.5 -->
+<script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<link rel="stylesheet"
+	href="./resources/bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet"
+	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- DataTables -->
+<link rel="stylesheet"
+	href="./resources/plugins/datatables/dataTables.bootstrap.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="./resources/dist/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="./resources/custom/css/style.css">
+<link rel="stylesheet"
+	href="./resources/dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="./resources/custom/css/style.css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 
@@ -64,7 +71,8 @@
 										<li>
 											<!-- start message --> <a href="#">
 												<div class="pull-left rupesh">
-													<img src="./resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+													<img src="./resources/dist/img/user2-160x160.jpg"
+														class="img-circle" alt="User Image">
 												</div>
 												<h4>
 													Support Team <small><i class="fa fa-clock-o"></i> 5
@@ -76,8 +84,8 @@
 										<!-- end message -->
 										<li><a href="#">
 												<div class="pull-left">
-													<img src="./resources/dist/img/user3-128x128.jpg" class="img-circle"
-														alt="User Image">
+													<img src="./resources/dist/img/user3-128x128.jpg"
+														class="img-circle" alt="User Image">
 												</div>
 												<h4>
 													AdminLTE Design Team <small><i
@@ -87,8 +95,8 @@
 										</a></li>
 										<li><a href="#">
 												<div class="pull-left">
-													<img src="./resources/dist/img/user4-128x128.jpg" class="img-circle"
-														alt="User Image">
+													<img src="./resources/dist/img/user4-128x128.jpg"
+														class="img-circle" alt="User Image">
 												</div>
 												<h4>
 													Developers <small><i class="fa fa-clock-o"></i>
@@ -98,8 +106,8 @@
 										</a></li>
 										<li><a href="#">
 												<div class="pull-left">
-													<img src="./resources/dist/img/user3-128x128.jpg" class="img-circle"
-														alt="User Image">
+													<img src="./resources/dist/img/user3-128x128.jpg"
+														class="img-circle" alt="User Image">
 												</div>
 												<h4>
 													Sales Department <small><i class="fa fa-clock-o"></i>
@@ -109,8 +117,8 @@
 										</a></li>
 										<li><a href="#">
 												<div class="pull-left">
-													<img src="./resources/dist/img/user4-128x128.jpg" class="img-circle"
-														alt="User Image">
+													<img src="./resources/dist/img/user4-128x128.jpg"
+														class="img-circle" alt="User Image">
 												</div>
 												<h4>
 													Reviewers <small><i class="fa fa-clock-o"></i> 2
@@ -278,8 +286,8 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="./resources/dist/img/user2-160x160.jpg" class="img-circle"
-							alt="User Image">
+						<img src="./resources/dist/img/user2-160x160.jpg"
+							class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
 						<p>Alexander Pierce</p>
@@ -300,29 +308,39 @@
 				</form>
 				<!-- /.search form -->
 				<!-- sidebar menu: : style can be found in sidebar.less -->
-	<ul class="sidebar-menu">
+				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="treeview"><a href="#"> <i class="fa fa-group"></i>
-							<span>Discussion Forum</span> <i class="fa fa-angle-left pull-right"></i></a>
+					<li class="treeview"><a href="listTopic.html"> <i
+							class="fa fa-group"></i> <span>Discussion Forum</span> <i
+							class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-plus"></i> Add <i class="fa fa-angle-left pull-right"></i></a>
+							<li><a href="#"><i class="fa fa-plus"></i> Add <i
+									class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li><a href="addTopic.html"><i class="fa  fa-plus-square-o"></i> Topic</a></li>
-									<li><a href="addThread.html"><i class="fa  fa-plus-square-o"></i> Thread</a></li>
-									<li><a href="addModerator.html"><i class="fa  fa-plus-square-o"></i> Moderator</a></li>
-								</ul>
-							</li>
+									<li><a href="addTopic.html"><i
+											class="fa  fa-plus-square-o"></i> Topic</a></li>
+									<li><a href="addThread.html"><i
+											class="fa  fa-plus-square-o"></i> Thread</a></li>
+									<li><a href="addModerator.html"><i
+											class="fa  fa-plus-square-o"></i> Moderator</a></li>
+								</ul></li>
 						</ul>
-							<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-list"></i> Show <i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+							<li><a href="#"><i class="fa fa-list"></i> Show <i
+									class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i> Topic </a></li>
-									<li><a href="deletedThreadList.html"><i class="fa fa-list-ul"></i> Deleted Threads </a></li>
-									<li><a href="approveThread.html"><i class="fa fa-list-ul"></i> Approve Threads </a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
+									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i>
+											Topic </a></li>
+									<li><a href="approveTopic.html"><i
+											class="fa fa-list-ul"></i> Approve Topics </a></li>
+									<li><a href="deletedTopic.html"><i
+											class="fa fa-list-ul"></i> Deleted Topics </a></li>
+									<li><a href="approveThread.html"><i
+											class="fa fa-list-ul"></i> Approve Threads </a></li>
+									<li><a href="deletedThreadList.html"><i
+											class="fa fa-list-ul"></i> Deleted Threads </a></li>
+								</ul></li>
+						</ul></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -340,7 +358,7 @@
 					<li class="active">Thread List</li>
 				</ol>
 			</section>
-									<!-- Display alert message -->
+			<!-- Display alert message -->
 			<c:if test="${not empty alertMessage}">
 				<div class="alert alert-${css} alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert"
@@ -359,8 +377,9 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h1 class="box-title">Thread List</h1> &nbsp;&nbsp;&nbsp;
-								<a href="addThread.html"><button class="btn btn-primary">Add Thread</button></a>
+								<h1 class="box-title">Thread List</h1>
+								&nbsp;&nbsp;&nbsp; <a href="addThread.html"><button
+										class="btn btn-primary">Add Thread</button></a>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
@@ -377,25 +396,30 @@
 									</thead>
 									<tbody>
 										<c:forEach items="${threads}" var="thread">
-											<tr >
+											<tr>
 												<td><a title="${thread.threadTitle}"
 													href="viewThread.html?thread_id=${thread.threadId}"> <c:out
 															value="${thread.threadTitle}" />
 												</a></td>
-												<td title="${thread.description}"><c:out  value="${thread.description}" /></td>
+												<td title="${thread.description}"><c:out
+														value="${thread.description}" /></td>
 												<c:forEach items="${topics}" var="topic">
 													<c:if test="${topic.key == thread.topicId}">
-														<td title="${topic.value}"><c:out value="${topic.value}" /></td>
+														<td title="${topic.value}"><c:out
+																value="${topic.value}" /></td>
 													</c:if>
 												</c:forEach>
-												<td title="${thread.createdTime}"><c:out value="${thread.createdTime}" /></td>
-												<td title="${thread.modifiedTime}"><c:out value="${thread.modifiedTime}" /></td>
+												<td title="${thread.createdTime}"><c:out
+														value="${thread.createdTime}" /></td>
+												<td title="${thread.modifiedTime}"><c:out
+														value="${thread.modifiedTime}" /></td>
 												<td><c:choose>
 														<c:when
 															test="${moderatorAllowMap[thread.threadId] == true }">
 															<a href="editThread.html?thread_id=${thread.threadId}"><span
 																class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
-															<a onclick="return confirm_delete(this);" href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
+															<a onclick="return confirm_delete(this);"
+																href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
 																class="fa fa-remove" title="delete"></span></a>
 														</c:when>
 														<c:otherwise>
@@ -403,7 +427,7 @@
 															<span class="fa fa-remove" title="delete"></span>
 														</c:otherwise>
 													</c:choose></td>
-													</tr>
+											</tr>
 										</c:forEach>
 									</tbody>
 									<tfoot>
@@ -599,35 +623,36 @@
 	</div>
 	<!-- ./wrapper -->
 
-    <!-- jQuery 2.1.4 -->
+	<!-- jQuery 2.1.4 -->
 
-    <!-- Bootstrap 3.3.5 -->
-    <script src="./resources/bootstrap/js/bootstrap.min.js"></script>
-    <!-- DataTables -->
-    <script src="./resources/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="./resources/plugins/datatables/dataTables.bootstrap.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="./resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="./resources/plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="./resources/dist/js/app.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="./resources/dist/js/demo.js"></script>
-    <script src="./resources/custom/js/custom.js"></script>
-    <!-- page script -->
-    <script>
-      $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false
-        });
-      });
-    </script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="./resources/bootstrap/js/bootstrap.min.js"></script>
+	<!-- DataTables -->
+	<script src="./resources/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="./resources/plugins/datatables/dataTables.bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="./resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="./resources/plugins/fastclick/fastclick.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="./resources/dist/js/app.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="./resources/dist/js/demo.js"></script>
+	<script src="./resources/custom/js/custom.js"></script>
+	<!-- page script -->
+	<script>
+		$(function() {
+			$("#example1").DataTable();
+			$('#example2').DataTable({
+				"paging" : true,
+				"lengthChange" : false,
+				"searching" : false,
+				"ordering" : true,
+				"info" : true,
+				"autoWidth" : false
+			});
+		});
+	</script>
 </body>
 </html>

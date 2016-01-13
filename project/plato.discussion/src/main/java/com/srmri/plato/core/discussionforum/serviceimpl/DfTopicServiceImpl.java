@@ -126,20 +126,18 @@ public class DfTopicServiceImpl implements DfTopicService{
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_approveTopic(Long topicId) {
+	public void df_s_UndoDeletedTopic(Long topicId) {
 		// TODO Auto-generated method stub
-		System.out.println("df_s_approveTopic IN");
 		DfTopic topic = topicDao.df_d_getTopic(topicId);
 		topic.setDeletedFlag(false);
 		List<DfThread> threadList = threadDao.df_d_getAllDeletedThreadList(topicId);
+		
 		if(threadList!=null){
 			for(DfThread thread: threadList){
 				thread.setDeletedFlag(false);
-				System.out.println("deletedFlag set");
 				threadDao.df_d_addThread(thread);
 			}
 		}
-		System.out.println("df_s_approveTopic OUT");
 	}
 
 	@Override
@@ -174,5 +172,18 @@ public class DfTopicServiceImpl implements DfTopicService{
 	public List<DfTopic> df_s_getAllDeletedNonDeletedTopicList() {
 		// TODO Auto-generated method stub
 		return topicDao.getAllDeletedNonDeletedTopicList();
+	}
+
+	@Override
+	public List<DfTopic> df_s_getAllUnApprovedTopics() {
+		// TODO Auto-generated method stub
+		return topicDao.df_d_getAllUnApprovedTopics();
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Override
+	public void df_s_approveTopic(Long topic_id) {
+		// TODO Auto-generated method stub
+		topicDao.df_d_approveTopic(topic_id);
 	}
 }
