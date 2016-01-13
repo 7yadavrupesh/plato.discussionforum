@@ -186,4 +186,11 @@ public class DfTopicServiceImpl implements DfTopicService{
 		// TODO Auto-generated method stub
 		topicDao.df_d_approveTopic(topic_id);
 	}
+
+	@Override
+	public List<DfTopic> df_s_getTopicList() {
+		// TODO Auto-generated method stub
+		topicDao.df_d_getTopicList();
+		return null;
+	}
 }

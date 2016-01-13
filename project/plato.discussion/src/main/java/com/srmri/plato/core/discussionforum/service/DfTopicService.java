@@ -50,4 +50,5 @@ public interface DfTopicService {
 	List<DfTopic> df_s_getAllUnApprovedTopics();
 	void df_s_UndoDeletedTopic(Long topicId);
 	void df_s_approveTopic(Long topic_id);
+	List<DfTopic> df_s_getTopicList();
 }

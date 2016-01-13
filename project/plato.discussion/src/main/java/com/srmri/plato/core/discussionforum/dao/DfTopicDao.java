@@ -70,4 +70,6 @@ public interface DfTopicDao {
 	List<DfTopic> df_d_getAllUnApprovedTopics();
 
 	void df_d_approveTopic(Long topic_id);
+
+	List<DfTopic> df_d_getTopicList();
 }

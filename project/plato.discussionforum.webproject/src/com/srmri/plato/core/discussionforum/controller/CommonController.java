@@ -10,18 +10,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ClassUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.MultipartFilter;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -43,11 +52,12 @@ import com.srmri.plato.core.discussionforum.service.DfThreadReplyService;
 import com.srmri.plato.core.discussionforum.service.DfThreadService;
 import com.srmri.plato.core.discussionforum.service.DfThreadSubscriptionService;
 import com.srmri.plato.core.discussionforum.service.DfTopicService;
-
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartException;
 @Controller
 public class CommonController {
 
-	static Long loginUserId = 1L;	
+	static Long loginUserId = 100L;	
 	static List<Long> admin = new ArrayList<Long>();
 	public CommonController(){
 		admin.add(100L);
@@ -647,8 +657,9 @@ public class CommonController {
 	@RequestMapping(value = "/approveThread", method = RequestMethod.GET)
 	public String approveThread(Model model) {
 		Map<Long,String> topics = new HashMap<Long,String>();
-
-		for(DfTopic topic: topicService.df_s_getAllTopicList()){
+		List<DfTopic> alltoicsExists = topicService.df_s_getAllDeletedNonDeletedTopicList();
+		if(alltoicsExists != null)
+		for(DfTopic topic: alltoicsExists){
 			topics.put(topic.getTopicId(), topic.getTopicTitle());
 		}
 		List<DfThread> finalApprovalList = new ArrayList<DfThread>();
@@ -851,10 +862,15 @@ public class CommonController {
 		model = prepareViewThread(model, threadReply, threadReply.getThreadId());
 		return "viewThread";
 	}
+	//@RequestParam(value = "file", required=false) List<MultipartFile> files
 	@RequestMapping(value = "/addThreadReply", method = RequestMethod.POST)
 	public String saveThreadReply(Model model,@Valid @ModelAttribute("threadReply") DfThreadReply threadReply, 
-			final BindingResult result, @RequestParam(value = "file", required=false) List<MultipartFile> files,RedirectAttributes redirectAttributes) {
-
+			final BindingResult result,HttpServletRequest request ,RedirectAttributes redirectAttributes)  throws Exception{
+		System.out.println("reached*******************");
+		
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		List<MultipartFile> files = multipartRequest.getFiles("file");
+				
 		if(result.hasErrors()){
 			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.threadReply", result);
 			redirectAttributes.addFlashAttribute("threadReply", threadReply);
@@ -914,7 +930,29 @@ public class CommonController {
 
 		return "redirect:viewThread.html?thread_id="+threadReply.getThreadId();
 	}
-
+//	@MultipartForm
+//	@ExceptionHandler(MultipartException.class)
+//	public String handleIOException(MultipartException ex, HttpServletRequest request) {
+//		System.out.println("*****************"+ex.getClass());
+//	    return ClassUtils.getShortName(ex.getClass());
+//	  }
+	  @ExceptionHandler(MaxUploadSizeExceededException.class)
+	  public ModelAndView handleIOException(MaxUploadSizeExceededException ex, HttpServletRequest request) {
+		  String referrer = request.getHeader("referer");
+		  RedirectView rw = new RedirectView(referrer);
+		  System.out.println(referrer);
+		  System.out.println("*****************");
+		  FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);
+		    if (outputFlashMap != null){
+		        outputFlashMap.put("myAttribute", true);
+		    }
+		    Model model = null;
+		    model.addAttribute("FileUploadError", true);
+		    ModelAndView mv = new ModelAndView("redirect:viewThread.html?thread_id=90",(Map<String, ?>) model); 
+		    return mv;
+		  //  return rw;
+	//	  return "redirect:viewThread.html?thread_id=90";
+	  }
 	/******************************************* Subscription *************************************************/
 
 	@RequestMapping(value = "/subscribeThread", method = RequestMethod.GET)

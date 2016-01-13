@@ -46,7 +46,8 @@
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- setting maximum upload size -->
-		<property name="maxUploadSize" value="1000000000" />
+		<!-- <property name="resolveLazily" value="true"/> -->
+		<property name="maxUploadSize" value="10" />
 	</bean>
 	<bean id="hibernateTransactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">

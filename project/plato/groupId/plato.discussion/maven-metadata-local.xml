@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>plato.groupId</groupId>
+  <artifactId>plato.discussion</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20160113061353</lastUpdated>
+  </versioning>
+</metadata>
