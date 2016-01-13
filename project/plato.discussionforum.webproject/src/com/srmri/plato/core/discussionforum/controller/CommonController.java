@@ -217,10 +217,10 @@ public class CommonController {
 		model.addAttribute("deletedTopics",deletedTopicsList);
 		return "deletedTopic";
 	}
-	
+
 	@RequestMapping(value = "/approveTopic", method = RequestMethod.GET)
 	public String approveTopic(Model model) {
-		
+
 		if(checkAdmin(loginUserId)){
 			model.addAttribute("approveTopics",topicService.df_s_getAllUnApprovedTopics());
 		}else{
@@ -228,10 +228,10 @@ public class CommonController {
 		}
 		return "approveTopic";
 	}
-	
+
 	@RequestMapping(value = "/saveApproveTopic", method = RequestMethod.GET)
 	public String saveApproveTopic(Model model, @RequestParam Long topic_id) {
-		
+
 		if(checkAdmin(loginUserId)){
 			topicService.df_s_approveTopic(topic_id);
 			model.addAttribute("approveTopics",topicService.df_s_getAllUnApprovedTopics());
@@ -659,9 +659,9 @@ public class CommonController {
 		Map<Long,String> topics = new HashMap<Long,String>();
 		List<DfTopic> alltoicsExists = topicService.df_s_getAllDeletedNonDeletedTopicList();
 		if(alltoicsExists != null)
-		for(DfTopic topic: alltoicsExists){
-			topics.put(topic.getTopicId(), topic.getTopicTitle());
-		}
+			for(DfTopic topic: alltoicsExists){
+				topics.put(topic.getTopicId(), topic.getTopicTitle());
+			}
 		List<DfThread> finalApprovalList = new ArrayList<DfThread>();
 		List<DfThread> threadListForApproval = threadService.df_s_getAllUnApprovedThreadList();
 		List<DfTopic> topicList = topicService.df_s_getTopicList(loginUserId);
@@ -867,10 +867,10 @@ public class CommonController {
 	public String saveThreadReply(Model model,@Valid @ModelAttribute("threadReply") DfThreadReply threadReply, 
 			final BindingResult result,HttpServletRequest request ,RedirectAttributes redirectAttributes)  throws Exception{
 		System.out.println("reached*******************");
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		List<MultipartFile> files = multipartRequest.getFiles("file");
-				
+
 		if(result.hasErrors()){
 			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.threadReply", result);
 			redirectAttributes.addFlashAttribute("threadReply", threadReply);
@@ -930,29 +930,30 @@ public class CommonController {
 
 		return "redirect:viewThread.html?thread_id="+threadReply.getThreadId();
 	}
-//	@MultipartForm
+
 //	@ExceptionHandler(MultipartException.class)
 //	public String handleIOException(MultipartException ex, HttpServletRequest request) {
 //		System.out.println("*****************"+ex.getClass());
-//	    return ClassUtils.getShortName(ex.getClass());
-//	  }
-	  @ExceptionHandler(MaxUploadSizeExceededException.class)
-	  public ModelAndView handleIOException(MaxUploadSizeExceededException ex, HttpServletRequest request) {
-		  String referrer = request.getHeader("referer");
-		  RedirectView rw = new RedirectView(referrer);
-		  System.out.println(referrer);
-		  System.out.println("*****************");
-		  FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);
-		    if (outputFlashMap != null){
-		        outputFlashMap.put("myAttribute", true);
-		    }
-		    Model model = null;
-		    model.addAttribute("FileUploadError", true);
-		    ModelAndView mv = new ModelAndView("redirect:viewThread.html?thread_id=90",(Map<String, ?>) model); 
-		    return mv;
-		  //  return rw;
-	//	  return "redirect:viewThread.html?thread_id=90";
-	  }
+//		return ClassUtils.getShortName(ex.getClass());
+//	}
+//	
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	public ModelAndView handleIOException(MaxUploadSizeExceededException ex, HttpServletRequest request) {
+		String referrer = request.getHeader("referer");
+		RedirectView rw = new RedirectView(referrer);
+		System.out.println(referrer);
+		System.out.println("*****************");
+		FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);
+		if (outputFlashMap != null){
+			outputFlashMap.put("myAttribute", true);
+		}
+		Model model = null;
+		model.addAttribute("FileUploadError", true);
+		ModelAndView mv = new ModelAndView("redirect:viewThread.html?thread_id=90",(Map<String, ?>) model); 
+		return mv;
+		//  return rw;
+		//	  return "redirect:viewThread.html?thread_id=90";
+	}
 	/******************************************* Subscription *************************************************/
 
 	@RequestMapping(value = "/subscribeThread", method = RequestMethod.GET)
