@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.fileupload.FileUpload;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +23,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -55,7 +59,24 @@ import com.srmri.plato.core.discussionforum.service.DfTopicService;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 @Controller
-public class CommonController {
+public class CommonController{
+	
+//	@Override
+//	public MultipartHttpServletRequest resolveMultipart(HttpServletRequest request) throws MultipartException {
+//		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+//		List<MultipartFile> files = multipartRequest.getFiles("file");
+//	    try {
+//	        List fileItems = ((ServletFileUpload) fileUpload).parseRequest(request);
+//	        MultipartParsingResult parsingResult = parseFileItems(fileItems, encoding);
+//	        return new DefaultMultipartHttpServletRequest(
+//	                request, parsingResult.getMultipartFiles(), parsingResult.getMultipartParameters(), parsingResult.getMultipartParameterContentTypes());
+//	    } catch (FileUploadBase.SizeLimitExceededException ex) {
+//	        throw new MaxUploadSizeExceededException(fileUpload.getSizeMax(), ex);
+//	    }
+//	    catch (FileUploadException ex) {
+//	        throw new MultipartException("Could not parse multipart servlet request", ex);
+//	    }
+//	}
 
 	static Long loginUserId = 100L;	
 	static List<Long> admin = new ArrayList<Long>();
@@ -865,9 +886,7 @@ public class CommonController {
 	//@RequestParam(value = "file", required=false) List<MultipartFile> files
 	@RequestMapping(value = "/addThreadReply", method = RequestMethod.POST)
 	public String saveThreadReply(Model model,@Valid @ModelAttribute("threadReply") DfThreadReply threadReply, 
-			final BindingResult result,HttpServletRequest request ,RedirectAttributes redirectAttributes)  throws Exception{
-		System.out.println("reached*******************");
-
+			final BindingResult result,HttpServletRequest request ,RedirectAttributes redirectAttributes){
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		List<MultipartFile> files = multipartRequest.getFiles("file");
 
@@ -937,23 +956,37 @@ public class CommonController {
 //		return ClassUtils.getShortName(ex.getClass());
 //	}
 //	
-	@ExceptionHandler(MaxUploadSizeExceededException.class)
-	public ModelAndView handleIOException(MaxUploadSizeExceededException ex, HttpServletRequest request) {
-		String referrer = request.getHeader("referer");
-		RedirectView rw = new RedirectView(referrer);
-		System.out.println(referrer);
-		System.out.println("*****************");
-		FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);
-		if (outputFlashMap != null){
-			outputFlashMap.put("myAttribute", true);
-		}
-		Model model = null;
-		model.addAttribute("FileUploadError", true);
-		ModelAndView mv = new ModelAndView("redirect:viewThread.html?thread_id=90",(Map<String, ?>) model); 
-		return mv;
-		//  return rw;
-		//	  return "redirect:viewThread.html?thread_id=90";
-	}
+//	@ExceptionHandler(MaxUploadSizeExceededException.class)
+//	public ModelAndView handleIOException(MaxUploadSizeExceededException ex, HttpServletRequest request) {
+//		String referrer = request.getHeader("referer");
+//		RedirectView rw = new RedirectView(referrer);
+//		System.out.println(referrer);
+//		System.out.println("*****************");
+//		FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);
+//		if (outputFlashMap != null){
+//			outputFlashMap.put("myAttribute", true);
+//		}
+//		Model model = null;
+//		model.addAttribute("FileUploadError", true);
+//		ModelAndView mv = new ModelAndView("redirect:viewThread.html?thread_id=90",(Map<String, ?>) model); 
+//		return mv;
+//		//  return rw;
+//		//	  return "redirect:viewThread.html?thread_id=90";
+//	}
+//	
+//	
+//	  @ResponseBody
+//	  public ModelAndView resolveException(HttpServletRequest httpServletRequest, 
+//	            HttpServletResponse httpServletResponse, Object o, Exception e) {
+//	      if (e instanceof MaxUploadSizeExceededException) {
+//	          ModelAndView modelAndView = new ModelAndView("listTopic");
+//	          modelAndView.addObject("error", "Error: Your file size is too large to upload. Please upload a file of size < 5MB and continue.");
+//	          return modelAndView;
+//	      }
+//	      e.printStackTrace();
+//	      return new ModelAndView("listTopic");
+//	  }
+//	
 	/******************************************* Subscription *************************************************/
 
 	@RequestMapping(value = "/subscribeThread", method = RequestMethod.GET)
@@ -1083,5 +1116,10 @@ public class CommonController {
 		outStream.close();
 		return "redirect:viewThread.html?thread_id="+thread_id;
 	}
-
+//	@Override
+//	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
+//			Exception ex) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 }

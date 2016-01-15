@@ -1,0 +1,6 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Thu Jan 14 13:38:13 IST 2016
+file\:///home/srmtech-ubuntu120464bit/.m2/repository/com/.lastUpdated=1452758893889
+@default-C\:\\Users\\srmri\\.m2\\repository-C\:\\Users\\srmri\\.m2\\repository/.lastUpdated=1452160048452
+C\:\\Users\\srmri\\.m2\\repository/.error=Could not transfer artifact plato.groupId\:plato.discussion\:jar\:sources\:0.0.1-SNAPSHOT from/to C\:\\Users\\srmri\\.m2\\repository (C\:\\Users\\srmri\\.m2\\repository)\: Cannot access C\:\\Users\\srmri\\.m2\\repository with type default using the available connector factories\: AetherRepositoryConnectorFactory, BasicRepositoryConnectorFactory
+file\:///home/srmtech-ubuntu120464bit/.m2/repository/com/.error=

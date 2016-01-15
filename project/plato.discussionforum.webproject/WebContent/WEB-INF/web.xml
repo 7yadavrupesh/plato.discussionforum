@@ -19,4 +19,45 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
+
+
+<!--  Added stuff   -->
+
+	<filter>
+		<filter-name>meh</filter-name>
+		<filter-class>com.srmri.plato.core.discussionforum.controller.MultipartExceptionHandler</filter-class>
+	</filter>
+<!-- 
+	<filter>
+		<description>
+        Allows the application to accept multipart file data.
+    </description>
+		<display-name>springMultipartFilter</display-name>
+		<filter-name>springMultipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+		init-param> <param-name>multipartResolverBeanName</param-name> <param-value>multipartResolver</param-value> 
+			</init-param
+	</filter>
+	<filter>
+		<description>
+        Secures access to web resources using the Spring Security framework.
+    </description>
+		<display-name>springSecurityFilterChain</display-name>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springMultipartFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>*.html</url-pattern>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	 -->
+	
+	<!--  Added stuff   -->
 </web-app>
