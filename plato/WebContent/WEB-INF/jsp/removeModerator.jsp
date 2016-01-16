@@ -8,13 +8,12 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>AdminLTE 2 | Data Tables</title>
+<title>Remove Moderator</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
 <!-- Bootstrap 3.3.5 -->
-<script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <link rel="stylesheet"
 	href="./resources/bootstrap/css/bootstrap.min.css">
 <!-- Font Awesome -->
@@ -23,16 +22,27 @@
 <!-- Ionicons -->
 <link rel="stylesheet"
 	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- DataTables -->
+<!-- daterange picker -->
 <link rel="stylesheet"
-	href="./resources/plugins/datatables/dataTables.bootstrap.css">
+	href="./resources/plugins/daterangepicker/daterangepicker-bs3.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="./resources/plugins/iCheck/all.css">
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet"
+	href="./resources/plugins/colorpicker/bootstrap-colorpicker.min.css">
+<!-- Bootstrap time Picker -->
+<link rel="stylesheet"
+	href="./resources/plugins/timepicker/bootstrap-timepicker.min.css">
+<!-- Select2 -->
+<link rel="stylesheet"
+	href="./resources/plugins/select2/select2.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="./resources/dist/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
 	href="./resources/dist/css/skins/_all-skins.min.css">
-<link href="./resources/custom/select2/css/select2.css" rel="stylesheet" />
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -40,17 +50,6 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<style>
-.table {
-	table-layout: fixed;
-}
-
-.table td {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-</style>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 
@@ -278,7 +277,8 @@
 										<a href="#" class="btn btn-default btn-flat">Profile</a>
 									</div>
 									<div class="pull-right">
-										<a href="logout.html" class="btn btn-default btn-flat">Sign out</a>
+										<a href="logout.html" class="btn btn-default btn-flat">Sign
+											out</a>
 									</div>
 								</li>
 							</ul></li>
@@ -352,207 +352,69 @@
 								</ul></li>
 						</ul></li>
 				</ul>
+
 			</section>
 			<!-- /.sidebar -->
 		</aside>
-		<!--  alert START  -->
-		<c:choose>
-			<c:when test="${alert == 'success'}">
-				<div class="alert alert-success alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">x</button>
-					<h4>
-						<i class="icon fa fa-check"></i> Success!
-					</h4>
-					Success : Thread Added
-				</div>
-			</c:when>
-			<c:when test="${alert == 'fail'}">
-				<div class="alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">x</button>
-					<h4>
-						<i class="icon fa fa-ban"></i> Failed!
-					</h4>
-					Failed: No Thread Added
-				</div>
-			</c:when>
-		</c:choose>
-		<!--  alert END  -->
+
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					Discussion Forum <small>Discuss this question</small>
+					Remove Moderator <small>choose moderator</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Discussion Forum</li>
+					<li class="active">Remove Moderator</li>
 				</ol>
 			</section>
-									<!-- Display alert message -->
+			<!-- Display alert message -->
 			<c:if test="${not empty alertMessage}">
 				<div class="alert alert-${css} alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert"
 						aria-label="Close">
-						<span aria-hidden="true">x</span>
+						<span aria-hidden="true">×</span>
 					</button>
 					<strong>${alertMessage}</strong>
 				</div>
 			</c:if>
 
-			<!-- -----Display alert message---- -->
+			<!-- --------- -->
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->
-				<div class="box box-primary direct-chat direct-chat-primary">
-					<!-- <div class="box-header with-border"> -->
-					<!-- <i class="fa fa-text-width"></i> -->
-					<h3 class="box-title">
-						<c:out value="Q. ${thread.threadTitle}" />
-					</h3>
-					<!-- </div> -->
-					<!-- /.box-header -->
-					<div class="box-body">
-						<blockquote>
-							<p>
-								<c:out value="${thread.description}" />
-							</p>
-							<small> <c:out value="${thread.createdTime}" /> <cite
-								title="Source Title">By <c:out
-										value="${thread.createdUserid}" /></cite>
-							</small>
-						</blockquote>
-						<c:if test="${not empty finalThreadFileListMap}">
-							<div class="box-body">
-								<div style="margin-left: 15px;">
-									<h6 class="small">Attached files</h6>
-									<c:forEach items="${finalThreadFileListMap}" var="file">
-										<a
-											href="downloadFile.html?file_id=${file.key}&thread_id=${thread.threadId}">${file.value }&nbsp;&nbsp;
-											<span class="fa fa-download" title="download attached file"></span>
-										</a>
-										<br>
-									</c:forEach>
-								</div>
-							</div>
-						</c:if>
-						<c:choose>
-							<c:when test="${threadEditAllowed == true }">
-								<div id="editThread" class="pull-right">
-									<a href="editThread.html?thread_id=${thread.threadId}"><span
-										class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp; <a
-										onclick="return confirm_delete(this);"
-										href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
-										class="fa fa-remove" title="delete"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;
-								</div>
-							</c:when>
-							<c:otherwise>
-								<div id="editThread" class="pull-right">
-									<span class="fa fa-edit" title="edit"></span>&nbsp;&nbsp; <span
-										class="fa fa-remove" title="delete"></span>&nbsp;&nbsp;
-								</div>
-							</c:otherwise>
-						</c:choose>
-						<div class="pull-right">
-							<c:choose>
-								<c:when test="${checkSubscribe == false}">
-									<a href="subscribeThread.html?thread_id=${thread.threadId}">Subscribe</a>&nbsp;&nbsp;
-							</c:when>
-								<c:otherwise>
-									<a href="unSubscribeThread.html?thread_id=${thread.threadId}">UnSubscribe</a>&nbsp;&nbsp;
-							</c:otherwise>
-							</c:choose>
-						</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<div class="detailBox">
-					<div class="box-footer box-comments">
-						<c:choose>
-							<c:when test="${!empty threadReplys}">
-								<c:forEach items="${threadReplys}" var="threadReply">
-									<div class="box-comment">
-										<img alt="user image"
-											src="./resources/dist/img/user3-128x128.jpg"
-											class="img-circle img-sm">
-										<div class="comment-text">
-											<span class="username"> Maria Gonzales <span
-												class="text-muted pull-right"> <c:out
-														value="By ${threadReply.key.submittedUserid}" /> <c:out
-														value=" Date: ${threadReply.key.submittedTime}" />
-											</span>
-											</span> <br>
-											<!-- /.username -->
-											<c:out value="${threadReply.key.replyText}" />
-											<c:if
-												test="${loginUserId == threadReply.key.submittedUserid  || loginUserId == topicUserId || admin == true}">
-												<br>
-												<br>
-												<c:if test="${not empty threadReply.value}">
-													<p class="small">Files To Download</p>
-													<c:forEach items="${threadReply.value}" var="fileList">
-														<a
-															href="downloadFile.html?file_id=${fileList.key}&thread_id=${threadReply.key.threadId}">${fileList.value }&nbsp;&nbsp;<span
-															class="fa fa-download" title="download attached file"></span></a>
-														<br>
-													</c:forEach>
-												</c:if>
-												<div class="pull-right">
-													<a onclick="return confirm_delete(this);"
-														href="deleteThreadReply.html?reply_id=${threadReply.key.replyId}"><span
-														class="fa fa-remove" title="delete comment"></span></a>&nbsp;&nbsp;
-													<a
-														href="editThreadReply.html?reply_id=${threadReply.key.replyId}"><span
-														class="fa fa-edit" title="edit"></span></a>
-												</div>
-
-											</c:if>
-										</div>
-									</div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<c:out value="No comments, be first to add comment"></c:out>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-
-				<br>
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">Add Comment</h3>
+								<h3 class="box-title">Remove Moderator</h3>
 							</div>
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form:form method="POST" modelAttribute="threadReply"
-								action="addThreadReply.html" enctype="multipart/form-data">
+							<form:form id="removeModerator" method="Post" name="moderator"
+								action="getModeratorListToRemove.html" modelAttribute="moderator"
+								role="form">
 								<div class="box-body">
 									<div class="form-group">
-										<form:input path="threadId" name="threadId" type="hidden"
-											value="${thread.threadId }"></form:input>
+										<form:label path="topicId">Select Topic</form:label>
+										<form:select id="topicId" path="topicId" class="select2 form-control">
+											<form:option value="" label="--- Select Topic ---" />
+											<form:options items="${topics}" />
+										</form:select>
+										<form:errors path="topicId" cssClass="text-red" />
 									</div>
 									<div class="form-group">
-										<form:label path="replyText" for="replyText">Comment</form:label>
-										<form:textarea path="replyText" class="form-control"
-											placeholder="Comment" name="replyText" rows="6" cols=""
-											value="${threadReply.replyText}"></form:textarea>
-										<form:errors path="replyText" class="text-red" />
+										<form:label path="assignedToUserid">Select User</form:label>
+										<form:select id="assignedToUserid" path="assignedToUserid"
+											class="select2 form-control">
+											<form:option value="" label="--- Select User ---" />
+											<form:options items="${usersList}" />
+										</form:select>
+										<form:errors path="assignedToUserid" class="text-red" />
 									</div>
-									<div id="fileUpload" class="form-group">
-										<label for="file">Select Files</label> <input type="file"
-											name="file" size=50 multiple /><br>
+									<div class="box-footer">
+										<button type="submit" class="btn btn-primary">Add
+											Moderator</button>
 									</div>
-									<a id="addMoreFiles" class="btn btn-default btn-xs">Add
-										More Files</a>
-								</div>
-								<!-- /.box-body -->
-								<div class="box-footer">
-									<button class="btn btn-primary" type="submit">Submit</button>
 								</div>
 							</form:form>
 						</div>
@@ -732,23 +594,40 @@
 	</div>
 	<!-- ./wrapper -->
 
+	<!-- jQuery 2.1.4 -->
+	<script src="./resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<!-- Bootstrap 3.3.5 -->
 	<script src="./resources/bootstrap/js/bootstrap.min.js"></script>
-	<!-- DataTables -->
-	<script src="./resources/plugins/datatables/jquery.dataTables.min.js"></script>
+	<!-- Select2 -->
+	<script src="./resources/plugins/select2/select2.full.min.js"></script>
+	<!-- InputMask -->
+	<script src="./resources/plugins/input-mask/jquery.inputmask.js"></script>
 	<script
-		src="./resources/plugins/datatables/dataTables.bootstrap.min.js"></script>
-	<!-- SlimScroll -->
+		src="./resources/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+	<script
+		src="./resources/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+	<!-- date-range-picker -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+	<script src="./resources/plugins/daterangepicker/daterangepicker.js"></script>
+	<!-- bootstrap color picker -->
+	<script
+		src="./resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+	<!-- bootstrap time picker -->
+	<script
+		src="./resources/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+	<!-- SlimScroll 1.3.0 -->
 	<script src="./resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- iCheck 1.0.1 -->
+	<script src="./resources/plugins/iCheck/icheck.min.js"></script>
 	<!-- FastClick -->
 	<script src="./resources/plugins/fastclick/fastclick.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="./resources/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="./resources/dist/js/demo.js"></script>
-	<script src="./resources/custom/select2/js/select2.min.js"></script>
-	<script src="./resources/custom/js/custom.js"></script>
-	<!-- page script -->
+	<!-- Page script -->
+
 	<script>
 		$(function() {
 			$("#example1").DataTable();
@@ -761,6 +640,35 @@
 				"autoWidth" : false
 			});
 		});
+		$(".select2").select2();
+		$("#topicId").change(
+				function() {
+					var $form = $("#removeModerator");
+					//alert( $form.serialize());
+					var method = $form.attr("method") ? $form.attr("method").toUpperCase() : "GET";
+					$.ajax({
+						url : $form.attr("action"),
+						data : $form.serialize(),
+						type : method,
+						success : function(result) {
+							// do stuff with the result, if you want to 
+							//console.log(result);
+							var mydata = $(result).find('select[id=assignedToUserid]');
+							//alert(mydata);
+							//console.log(mydata);
+							// Insert into current page to somewhere with class="after-me"
+							//$('#assignedToUserid').remove();
+							$('span.select2').remove();
+							$('#assignedToUserid').replaceWith(mydata);
+							
+							$(".select2").select2();
+/* 							if (first == false) {
+								first = true;
+								$("#example1").DataTable();
+							} */
+						}
+					});
+				});
 	</script>
 </body>
 </html>

@@ -75,4 +75,11 @@ public class DfModeratorAssignedServiceImpl implements DfModeratorAssignedServic
 		// TODO Auto-generated method stub
 		moderatorDao.df_d_addModerator(moderator);
 	}
+
+	@Override
+	public List<DfModeratorAssigned> df_s_getModeratorObjList(Long topicId) {
+		// TODO Auto-generated method stub
+		moderatorDao.df_d_getModeratorObjList(topicId);
+		return null;
+	}
 }

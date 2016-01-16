@@ -395,7 +395,7 @@
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="assignedToUserid">Select User</form:label>
-										<form:select path="assignedToUserid"
+										<form:select id="assignedToUserid" path="assignedToUserid"
 											class="select2 form-control">
 											<form:option value="" label="--- Select User ---" />
 											<form:options items="${usersList}" />
@@ -404,7 +404,7 @@
 									</div>
 									<div class="form-group">
 										<form:label path="topicId">Select Topic</form:label>
-										<form:select path="topicId" class="select2 form-control">
+										<form:select id="topicId" path="topicId" class="select2 form-control">
 											<form:option value="" label="--- Select Topic ---" />
 											<form:options items="${topics}" />
 										</form:select>
@@ -640,6 +640,7 @@
 			});
 		});
 		 $(".select2").select2();
+
 	</script>
 </body>
 </html>

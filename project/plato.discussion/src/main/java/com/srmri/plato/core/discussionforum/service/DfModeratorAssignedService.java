@@ -35,7 +35,7 @@ public interface DfModeratorAssignedService {
 	boolean df_s_notifyModerator();
 	
 	List<Long> df_s_getModeratorList(Long topicId);
-
+	List<DfModeratorAssigned> df_s_getModeratorObjList(Long topicId);
 	List<DfModeratorAssigned> df_s_getTopicUserActModerator(Long loginUserId);
 	void df_s_addModerator(DfModeratorAssigned moderator);
 }

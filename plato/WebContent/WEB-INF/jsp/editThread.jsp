@@ -452,7 +452,7 @@
 												</div>
 												<div id="fileUpload" class="form-group">
 													<label for="file">Select Files</label> <input type="file"
-														name="file" size=50 multiple />
+														name="file" size=50 multiple /><br>
 												</div>
 												<a id="addMoreFiles" class="btn btn-small">Add More
 													Files</a>

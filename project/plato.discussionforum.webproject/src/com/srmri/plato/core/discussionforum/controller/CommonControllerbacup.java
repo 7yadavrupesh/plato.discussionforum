@@ -58,8 +58,8 @@ import com.srmri.plato.core.discussionforum.service.DfThreadSubscriptionService;
 import com.srmri.plato.core.discussionforum.service.DfTopicService;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
-@Controller
-public class CommonController{
+
+public class CommonControllerbacup{
 	
 //	@Override
 //	public MultipartHttpServletRequest resolveMultipart(HttpServletRequest request) throws MultipartException {
@@ -80,7 +80,7 @@ public class CommonController{
 
 	static Long loginUserId = 100L;	
 	static List<Long> admin = new ArrayList<Long>();
-	public CommonController(){
+	public CommonControllerbacup(){
 		admin.add(100L);
 		admin.add(200L);
 	}
@@ -1008,16 +1008,8 @@ public class CommonController{
 	/****************************************** Moderator *****************************************************/
 
 	Model prepareAddModeratorModel(Model model, DfModeratorAssigned moderator){
-		List<DfTopic> topicListUserActAsModerator = new ArrayList<DfTopic>();
-		
-		if(checkAdmin(loginUserId)){
-			topicListUserActAsModerator = topicService.df_s_getAllTopicList();
-			System.out.println("***********************admin"+topicListUserActAsModerator.size()
-					);
-		}{
-			topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);	
-		}
-		
+		List<DfTopic> topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);
+
 		if(topicListUserActAsModerator.isEmpty()){
 			List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
 
@@ -1046,12 +1038,13 @@ public class CommonController{
 	}
 	@RequestMapping(value = "/addModerator", method = RequestMethod.GET)
 	public String addModerator(Model model) {
-			model = prepareAddModeratorModel(model, new DfModeratorAssigned());
-			return "addModerator";
+		model = prepareAddModeratorModel(model, new DfModeratorAssigned());
+		return "addModerator";
 	}
 
 	@RequestMapping(value = "/addModerator", method = RequestMethod.POST)
 	public String saveModerator(@Validated @ModelAttribute("moderator") DfModeratorAssigned moderator, BindingResult result,Model model,RedirectAttributes redirectAttributes) {	
+
 		if(result.hasErrors()){
 			model.addAttribute("alertMessage", "Add moderator failed!");
 			model.addAttribute("css", "danger");
@@ -1062,49 +1055,15 @@ public class CommonController{
 		redirectAttributes.addFlashAttribute("css", "success");
 		model.addAttribute("alert", "success");
 		moderator.setAssignedByUserid(loginUserId);
+		System.out.println("assigned by"+ moderator.getAssignedByUserid());
+		System.out.println("assigned to "+ moderator.getAssignedToUserid());
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
 		moderator.setAssignedTime(curTime);
 
 		moderatorAssignedService.df_s_addModerator(moderator);
 		return "redirect:addModerator.html";
 	}
-//	@RequestMapping(value = "/removeModerator", method = RequestMethod.GET)
-//	public String removeModerator(Model model) {
-//		
-//	}
 
-	@RequestMapping(value = "/removeModerator", method = RequestMethod.POST)
-	public String saveRemoveModerator(@Validated @ModelAttribute("moderator") DfModeratorAssigned moderator, BindingResult result,Model model,RedirectAttributes redirectAttributes) {	
-		if(result.hasErrors()){
-			model.addAttribute("alertMessage", "Add moderator failed!");
-			model.addAttribute("css", "danger");
-			model = prepareAddModeratorModel(model, moderator);
-			return "addModerator";
-		}
-		redirectAttributes.addFlashAttribute("alertMessage", "New moderator assigned!");
-		redirectAttributes.addFlashAttribute("css", "success");
-		model.addAttribute("alert", "success");
-		moderator.setAssignedByUserid(loginUserId);
-		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
-		moderator.setAssignedTime(curTime);
-
-		moderatorAssignedService.df_s_addModerator(moderator);
-		return "redirect:removeModerator.html";
-	}
-	
-	@RequestMapping(value = "/getModeratorListToRemove", method = RequestMethod.POST)
-	public String getModeratorToRemove(@RequestParam Long topic_id, Model model,RedirectAttributes redirectAttributes) {	
-		
-		List<DfModeratorAssigned> moderatorList = moderatorAssignedService.df_s_getModeratorObjList(topic_id);
-		Map<Long, String> usersList = new HashMap<Long, String>(); 
-		if(moderatorList!=null){
-			for(DfModeratorAssigned moderator : moderatorList){
-				usersList.put(moderator.getAssignedToUserid(),moderator.getAssignedToUserid().toString());
-			}
-		}
-		model.addAttribute("usersList", usersList);
-		return "redirect:addModerator.html";
-	}
 	@RequestMapping(value = "downloadFile", method = RequestMethod.GET)
 	public String doDownload(HttpServletRequest request, HttpServletResponse response, @RequestParam("file_id") Long file_id, 
 			@RequestParam("thread_id") Long thread_id) throws IOException {

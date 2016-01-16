@@ -389,8 +389,8 @@
 								<a href="addTopic.html"><button class="btn btn-primary">Add Topic</button></a>
 							</div>
 							<!-- /.box-header -->
-							<div class="box-body">
-								<table id="example1" class="table table-bordered table-striped">
+							<div class="box-body table-responsive">
+								<table id="example1" class="table table-bordered">
 									<thead>
 										<tr>
 											<th>Title</th>

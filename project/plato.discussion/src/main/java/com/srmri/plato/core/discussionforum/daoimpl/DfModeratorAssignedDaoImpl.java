@@ -97,4 +97,12 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 	    
 		return distinctMemList;
 	}
+
+	@Override
+	public List<DfModeratorAssigned> df_d_getModeratorObjList(Long topicId) {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
+		cri.add(Restrictions.eq("topicId", topicId));
+		return cri.list();
+	}
 }

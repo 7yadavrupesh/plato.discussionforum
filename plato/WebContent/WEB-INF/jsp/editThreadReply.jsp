@@ -387,8 +387,8 @@
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
-					<div>
-						<div class="box box-primary">
+					<div class="col-xs-12">
+						<div class="box">
 							<div class="box-header with-border">
 								<h3 class="box-title">Edit Reply</h3>
 							</div>
@@ -407,7 +407,7 @@
 									<c:if test="${not empty fileList }">
 										<div class="row">
 											<div class="col-md-6">
-												<div class="box box-primary">
+												<div class="box box-primary table-responsive">
 													<div class="box-header with-border">
 														<h3 class="box-title">Select Files For Delete</h3>
 													</div>
@@ -447,7 +447,7 @@
 												
 												<div id="fileUpload" class="form-group">
 													<label for="file">Select Files</label> <input type="file"
-														name="file" size=50 multiple />
+														name="file" size=50 multiple /><br>
 												</div>
 												<a id="addMoreFiles" class="btn btn-small">Add More
 													Files</a>

@@ -49,6 +49,7 @@ import com.srmri.plato.core.rbac.entity.RoleAssignment;
 import com.srmri.plato.core.rbac.entity.RoleLevel;
 import com.srmri.plato.core.rbac.service.RoleAssignmentService;
 import com.srmri.plato.core.rbac.service.RoleLevelService;
+import com.srmri.plato.core.rbac.service.RolePermissionsMapService;
 import com.srmri.plato.core.rbac.service.RoleService;
 
 import main.java.com.srmri.plato.core.login.bean.UserBean;
@@ -56,42 +57,43 @@ import main.java.com.srmri.plato.core.login.bean.UserBean;
 @Controller
 @SessionAttributes({"user"})
 public class CommonController {
-	
+
 	@Autowired
 	private RoleLevelService roleLevelService;
 	@Autowired
 	private RoleService roleService;
 	@Autowired
 	private RoleAssignmentService roleAssignmentService;
-	
-     long loginUserId;  
-     int roleId;
-     List<Long> admin = new ArrayList<Long>();
-    
-    public CommonController(){
-        //admin.add(100L);
-        //admin.add(200L);
-    }
-    
-    Boolean checkAdmin(long userId, int roleId)
-    {	
-    	   	
-    	
-    	Role role = roleService.rbac_bl_getRole(roleId);
-		
+	@Autowired RolePermissionsMapService rolePermissionsMapService;
+
+	long loginUserId;  
+	int roleId;
+	List<Long> admin = new ArrayList<Long>();
+
+	public CommonController(){
+		//admin.add(100L);
+		//admin.add(200L);
+	}
+
+	Boolean checkAdmin(long userId, int roleId)
+	{	
+
+
+		Role role = roleService.rbac_bl_getRole(roleId);
+
 		RoleLevel roleLevel = roleLevelService.rbac_bl_getRoleLevel(role.getRoleLevelId());
-        
+
 		String rlName = roleLevel.getRoleLevelName();
-    	
-		if(rlName.equals("Admin"))
+		//System.out.println("THIS IS ROLE "+rlName);
+		if(rlName.equals("Admin Level"))
 			return true;
-    	/*for(Long id : admin){
+		/*for(Long id : admin){
             if(id ==userId)
                 return true;
         }*/
-        return false;
-    }
-    
+		return false;
+	}
+
 	@Autowired
 	private DfTopicService topicService;
 	@Autowired
@@ -113,16 +115,16 @@ public class CommonController {
 	public String index(Model model){
 		return "index";
 	}
-*/
+	 */
 	@RequestMapping(value = "/listTopic", method = RequestMethod.GET)
 	public String topicList(Model model, @ModelAttribute("user") UserBean userBean){
-		
-		
+
+
 		long userId = userBean.getUserId();
 		int roleId = userBean.getRoleId();
 		this.loginUserId = userId;
 		this.roleId = roleId;
-		
+
 		//loginUserId = Long.valueOf(userBean.getUserId());
 		System.out.println("userid "+userId);
 		//loginUserId = Long.valueOf(250);
@@ -224,10 +226,10 @@ public class CommonController {
 
 	@RequestMapping(value = "/deletedTopic", method = RequestMethod.GET)
 	public String deletedTopic(Model model/*, @ModelAttribute("user") UserBean userBean*/) {
-		
+
 		/*long userId = userBean.getUserId();
 		int roleId = userBean.getRoleId();*/
-		
+
 		model.addAttribute("deletedTopics",topicService.df_s_getDeletedTopic(loginUserId));
 		List<DfTopic> allDeletedTopicList = topicService.df_s_getAllDeletedTopic();
 		List<DfModeratorAssigned> moderatorAssignedFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
@@ -250,10 +252,10 @@ public class CommonController {
 		model.addAttribute("deletedTopics",deletedTopicsList);
 		return "deletedTopic";
 	}
-	
+
 	@RequestMapping(value = "/approveTopic", method = RequestMethod.GET)
 	public String approveTopic(Model model/*, @ModelAttribute("user") UserBean userBean*/) {
-		
+
 		/*long userId = userBean.getUserId();
 		int roleId = userBean.getRoleId();*/
 		if(checkAdmin(loginUserId, roleId)){
@@ -263,10 +265,10 @@ public class CommonController {
 		}
 		return "approveTopic";
 	}
-	
+
 	@RequestMapping(value = "/saveApproveTopic", method = RequestMethod.GET)
 	public String saveApproveTopic(Model model, @RequestParam Long topic_id/*, @ModelAttribute("user") UserBean userBean*/) {
-		
+
 		/*long userId = userBean.getUserId();
 		int roleId = userBean.getRoleId();*/
 		if(checkAdmin(loginUserId, roleId)){
@@ -510,7 +512,7 @@ public class CommonController {
 			return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
 	}
 	Model prepareViewThread(Model model,DfThreadReply threadReply, Long thread_id/*, @ModelAttribute("user") UserBean userBean*/){
-		
+
 		/*long userId = userBean.getUserId();
 		int roleId = userBean.getRoleId();*/
 		List<Long> threadFileList = threadFileMapService.df_s_getFileList(thread_id);
@@ -699,10 +701,10 @@ public class CommonController {
 
 	@RequestMapping(value = "/approveThread", method = RequestMethod.GET)
 	public String approveThread(Model model/*, @ModelAttribute("user") UserBean userBean*/) {
-		
+
 		/*long userId = userBean.getUserId();
 		int roleId = userBean.getRoleId();*/
-		
+
 		Map<Long,String> topics = new HashMap<Long,String>();
 
 		for(DfTopic topic: topicService.df_s_getAllDeletedNonDeletedTopicList()){
@@ -995,8 +997,16 @@ public class CommonController {
 	/****************************************** Moderator *****************************************************/
 
 	Model prepareAddModeratorModel(Model model, DfModeratorAssigned moderator){
-		List<DfTopic> topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);
-
+		List<DfTopic> topicListUserActAsModerator = new ArrayList<DfTopic>();
+		
+		if(checkAdmin(loginUserId, roleId)){
+			topicListUserActAsModerator = topicService.df_s_getAllTopicList();
+			System.out.println("***********************admin"+topicListUserActAsModerator.size()
+					);
+		}else{
+			topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);	
+		}
+		
 		if(topicListUserActAsModerator.isEmpty()){
 			List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
 
@@ -1025,13 +1035,20 @@ public class CommonController {
 	}
 	@RequestMapping(value = "/addModerator", method = RequestMethod.GET)
 	public String addModerator(Model model) {
-		model = prepareAddModeratorModel(model, new DfModeratorAssigned());
-		return "addModerator";
+		boolean hasPermission = rolePermissionsMapService.rbac_bl_IsRolePermissionExists("DF010", roleId);
+		if(hasPermission){
+			model = prepareAddModeratorModel(model, new DfModeratorAssigned());
+			return "addModerator";
+		}
+		else{
+			model = prepareAddModeratorModel(model, new DfModeratorAssigned());
+			model.addAttribute("alertMessage", "You do not have the required permission!");
+			return "addModerator";
+		}
 	}
 
 	@RequestMapping(value = "/addModerator", method = RequestMethod.POST)
 	public String saveModerator(@Validated @ModelAttribute("moderator") DfModeratorAssigned moderator, BindingResult result,Model model,RedirectAttributes redirectAttributes) {	
-
 		if(result.hasErrors()){
 			model.addAttribute("alertMessage", "Add moderator failed!");
 			model.addAttribute("css", "danger");
@@ -1042,8 +1059,6 @@ public class CommonController {
 		redirectAttributes.addFlashAttribute("css", "success");
 		model.addAttribute("alert", "success");
 		moderator.setAssignedByUserid(loginUserId);
-		System.out.println("assigned by"+ moderator.getAssignedByUserid());
-		System.out.println("assigned to "+ moderator.getAssignedToUserid());
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
 		moderator.setAssignedTime(curTime);
 
@@ -1051,6 +1066,82 @@ public class CommonController {
 		return "redirect:addModerator.html";
 	}
 
+	Model prepareRemoveModeratorModel(Model model, DfModeratorAssigned moderator){
+		List<DfTopic> topicListUserActAsModerator = new ArrayList<DfTopic>();
+		
+		if(checkAdmin(loginUserId, roleId)){
+			topicListUserActAsModerator = topicService.df_s_getAllTopicList();
+			System.out.println("***********************admin"+topicListUserActAsModerator.size()
+					);
+		}else{
+			topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);	
+		}
+		
+		if(topicListUserActAsModerator.isEmpty()){
+			List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
+
+			if(!moderatorFor.isEmpty()){
+				for(DfModeratorAssigned mod: moderatorFor){
+					topicListUserActAsModerator.add(topicService.df_s_getTopic(mod.getTopicId()));
+				}
+			}
+		}
+
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		usersListMap.put(11L, "Rupesh");
+		usersListMap.put(15L, "Hitesh");
+		usersListMap.put(16L, "Bhupendra");
+		usersListMap.put(17L, "Sagar");
+		Map<Long,String> topicListMap = new HashMap<Long,String>();
+		if(!topicListUserActAsModerator.isEmpty()){
+			for(DfTopic topic: topicListUserActAsModerator){
+				topicListMap.put(topic.getTopicId(), topic.getTopicTitle());
+			}
+		}
+		model.addAttribute("moderator", moderator);
+		model.addAttribute("usersList",usersListMap);
+		model.addAttribute("topics", topicListMap);
+		return model;
+	}
+	
+	@RequestMapping(value = "/removeModerator", method = RequestMethod.GET)
+	public String removeModerator(Model model) {
+		model = prepareRemoveModeratorModel(model, new DfModeratorAssigned());
+		return "removeModerator";
+	}
+	
+	@RequestMapping(value = "/removeModerator", method = RequestMethod.POST)
+	public String saveRemoveModerator(@Validated @ModelAttribute("moderator") DfModeratorAssigned moderator, BindingResult result,Model model,RedirectAttributes redirectAttributes) {	
+		if(result.hasErrors()){
+			model.addAttribute("alertMessage", "Add moderator failed!");
+			model.addAttribute("css", "danger");
+			model = prepareRemoveModeratorModel(model, moderator);
+			return "addModerator";
+		}
+		redirectAttributes.addFlashAttribute("alertMessage", "New moderator assigned!");
+		redirectAttributes.addFlashAttribute("css", "success");
+		model.addAttribute("alert", "success");
+		moderator.setAssignedByUserid(loginUserId);
+		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
+		moderator.setAssignedTime(curTime);
+
+		moderatorAssignedService.df_s_addModerator(moderator);
+		return "redirect:removeModerator.html";
+	}
+	
+	@RequestMapping(value = "/getModeratorListToRemove", method = RequestMethod.POST)
+	public String getModeratorToRemove(@RequestParam Long topicId, Model model,RedirectAttributes redirectAttributes) {	
+		
+		List<DfModeratorAssigned> moderatorList = moderatorAssignedService.df_s_getModeratorObjList(topicId);
+		Map<Long, String> usersList = new HashMap<Long, String>(); 
+		if(moderatorList!=null){
+			for(DfModeratorAssigned moderator : moderatorList){
+				usersList.put(moderator.getAssignedToUserid(),moderator.getAssignedToUserid().toString());
+			}
+		}
+		model.addAttribute("usersList", usersList);
+		return "redirect:removeModerator.html";
+	}
 	@RequestMapping(value = "downloadFile", method = RequestMethod.GET)
 	public String doDownload(HttpServletRequest request, HttpServletResponse response, @RequestParam("file_id") Long file_id, 
 			@RequestParam("thread_id") Long thread_id) throws IOException {
