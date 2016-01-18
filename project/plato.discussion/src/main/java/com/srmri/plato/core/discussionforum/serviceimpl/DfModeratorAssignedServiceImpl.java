@@ -69,7 +69,8 @@ public class DfModeratorAssignedServiceImpl implements DfModeratorAssignedServic
 		// TODO Auto-generated method stub
 		return moderatorDao.df_d_getTopicUserActModerator(loginUserId);
 	}
-
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
 	public void df_s_addModerator(DfModeratorAssigned moderator) {
 		// TODO Auto-generated method stub
@@ -79,7 +80,26 @@ public class DfModeratorAssignedServiceImpl implements DfModeratorAssignedServic
 	@Override
 	public List<DfModeratorAssigned> df_s_getModeratorObjList(Long topicId) {
 		// TODO Auto-generated method stub
-		moderatorDao.df_d_getModeratorObjList(topicId);
-		return null;
+		return moderatorDao.df_d_getModeratorObjList(topicId);
+	}
+
+	@Override
+	public DfModeratorAssigned df_s_getModerator(Long assignedToUserid, Long topicId) {
+		// TODO Auto-generated method stub
+	return 	moderatorDao.df_d_getModerator(assignedToUserid,topicId);
+
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Override
+	public void df_s_removeModerator(DfModeratorAssigned moderatorToDelete) {
+		// TODO Auto-generated method stub
+		moderatorDao.df_d_removeModerator(moderatorToDelete.getModeratorId());
+	}
+
+	@Override
+	public List<DfModeratorAssigned> df_s_getAllModerators() {
+		// TODO Auto-generated method stub
+		return moderatorDao.df_d_getAllModerators();
 	}
 }

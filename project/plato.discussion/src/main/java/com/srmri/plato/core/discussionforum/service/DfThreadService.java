@@ -56,7 +56,7 @@ public interface DfThreadService {
 	 *  Get Topic Thread
 	 */
 	List<DfThread> df_s_getTopicThreads(Long topicId);
-	List<DfThread> df_s_getThreadList();
+	List<DfThread> df_s_getAllThreadList();
 	DfThread df_s_getThread(Long threadId);
 	boolean df_s_addThread(DfThread thread);
 	List<DfThread> df_s_getAllUnApprovedThreadList();

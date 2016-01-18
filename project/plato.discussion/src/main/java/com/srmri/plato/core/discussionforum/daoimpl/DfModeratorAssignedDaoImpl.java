@@ -98,11 +98,31 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 		return distinctMemList;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DfModeratorAssigned> df_d_getModeratorObjList(Long topicId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		cri.add(Restrictions.eq("topicId", topicId));
+		return cri.list();
+	}
+
+	@Override
+	public DfModeratorAssigned df_d_getModerator(Long assignedToUserid, Long topicId) {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
+		cri.add(Restrictions.eq("topicId", topicId));
+		cri.add(Restrictions.eq("assignedToUserid", assignedToUserid));
+		if(!cri.list().isEmpty()){
+			return (DfModeratorAssigned) cri.list().get(0);
+		}
+		else return null;
+	}
+
+	@Override
+	public List<DfModeratorAssigned> df_d_getAllModerators() {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		return cri.list();
 	}
 }

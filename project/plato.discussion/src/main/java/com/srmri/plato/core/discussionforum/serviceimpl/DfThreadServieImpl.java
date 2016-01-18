@@ -149,7 +149,7 @@ public class DfThreadServieImpl implements DfThreadService{
 	}
 	
 	@Override
-	public List<DfThread> df_s_getThreadList() {
+	public List<DfThread> df_s_getAllThreadList() {
 		// TODO Auto-generated method stub
 		return threadDao.df_d_getAllThreadList();
 	}

@@ -44,4 +44,8 @@ public interface DfModeratorAssignedDao {
 
 	List<DfModeratorAssigned> df_d_getModeratorObjList(Long topicId);
 
+	DfModeratorAssigned df_d_getModerator(Long assignedToUserid, Long topicId);
+
+	List<DfModeratorAssigned> df_d_getAllModerators();
+
 }

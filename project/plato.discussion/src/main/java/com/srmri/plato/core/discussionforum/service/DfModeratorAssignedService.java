@@ -38,4 +38,11 @@ public interface DfModeratorAssignedService {
 	List<DfModeratorAssigned> df_s_getModeratorObjList(Long topicId);
 	List<DfModeratorAssigned> df_s_getTopicUserActModerator(Long loginUserId);
 	void df_s_addModerator(DfModeratorAssigned moderator);
+
+	DfModeratorAssigned df_s_getModerator(Long assignedToUserid, Long topicId);
+
+	void df_s_removeModerator(DfModeratorAssigned moderatorToDelete);
+
+	List<DfModeratorAssigned> df_s_getAllModerators();
+
 }

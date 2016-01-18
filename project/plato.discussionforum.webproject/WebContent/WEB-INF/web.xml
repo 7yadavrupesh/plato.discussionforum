@@ -23,10 +23,10 @@
 
 <!--  Added stuff   -->
 
-	<filter>
+<!-- 	<filter>
 		<filter-name>meh</filter-name>
 		<filter-class>com.srmri.plato.core.discussionforum.controller.MultipartExceptionHandler</filter-class>
-	</filter>
+	</filter> -->
 <!-- 
 	<filter>
 		<description>
