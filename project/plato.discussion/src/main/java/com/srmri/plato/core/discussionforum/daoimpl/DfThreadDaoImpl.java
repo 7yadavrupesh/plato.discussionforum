@@ -212,4 +212,12 @@ public class DfThreadDaoImpl implements DfThreadDao{
 		cri.add(Restrictions.eq("deletedFlag",true));
 		return cri.list();
 	}
+
+	@Override
+	public List<DfThread> df_d_getAllThreadListUser(Long userId) {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
+		cri.add(Restrictions.eq("createdUserid",userId));
+		return cri.list();
+	}
 }

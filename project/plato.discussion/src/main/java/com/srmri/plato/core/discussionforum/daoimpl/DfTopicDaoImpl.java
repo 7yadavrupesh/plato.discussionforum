@@ -41,9 +41,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 *  Add Topic
 	 */
 	public void df_d_addTopic(DfTopic topic){
-		System.out.println("df_d_addTopic Enter");
 		sessionFactory.getCurrentSession().saveOrUpdate(topic);
-		System.out.println("df_d_addTopic out");
 	}
 	
 	/*
@@ -59,11 +57,9 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 *  Delete Topic
 	 */
 	public void df_d_deteteTopic(Long topicId){
-		System.out.println("df_d_deleteTopic Enter");
 		DfTopic topic = df_d_getTopic(topicId);
 		topic.setDeletedFlag(true);
 		df_d_addTopic(topic);
-		System.out.println("df_d_deleteTopic out");
 	}
 	
 	/*
@@ -107,8 +103,6 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("createdUserid", userId));
 		List<DfTopic> list = cri.list();
-		if(list == null)
-			System.out.println("list is null");
 		return list;
 	}
 

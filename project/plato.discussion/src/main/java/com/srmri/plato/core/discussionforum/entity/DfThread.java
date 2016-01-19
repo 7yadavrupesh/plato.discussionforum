@@ -32,6 +32,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "discussion_forum.df_thread")
@@ -77,6 +78,17 @@ public class DfThread implements Serializable{
 	@Column(name = "deleted_flag")
 	private Boolean deletedFlag;
 	
+	@Column(name = "approved_by")
+	private Long approvedBy;
+	
+	public Long getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(Long approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
 	public DfThread() {
 		// TODO Auto-generated constructor stub
 	}
@@ -121,8 +133,9 @@ public class DfThread implements Serializable{
 	/**
 	 * @return the createdTime
 	 */
-	public Timestamp getCreatedTime() {
-		return createdTime;
+	public String getCreatedTime() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return dateFormat.format(createdTime);
 	}
 	/**
 	 * @param createdTime the createdTime to set
@@ -133,8 +146,9 @@ public class DfThread implements Serializable{
 	/**
 	 * @return the modifiedTime
 	 */
-	public Timestamp getModifiedTime() {
-		return modifiedTime;
+	public String getModifiedTime() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return dateFormat.format(modifiedTime);
 	}
 	/**
 	 * @param modifiedTime the modifiedTime to set

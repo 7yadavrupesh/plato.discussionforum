@@ -26,6 +26,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "discussion_forum.df_thread_subscription")
@@ -93,8 +94,9 @@ public class DfThreadSubscription implements Serializable{
 	/**
 	 * @return the deleteFlag
 	 */
-	public Timestamp getSubscriptionTime() {
-		return subscriptionTime;
+	public String getSubscriptionTime() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return dateFormat.format(subscriptionTime);
 	}
 	/**
 	 * @param subscriptionTime the subscriptionTime to set

@@ -185,4 +185,9 @@ public class DfThreadServieImpl implements DfThreadService{
 	public List<DfThread> df_s_getAllDeletedThreadList(){
 		return threadDao.df_d_getAllDeletedThreadList();
 	}
+	@Override
+	public List<DfThread> df_s_getAllThreadListUser(Long userId) {
+		// TODO Auto-generated method stub
+		return threadDao.df_d_getAllThreadListUser(userId);
+	}
 }

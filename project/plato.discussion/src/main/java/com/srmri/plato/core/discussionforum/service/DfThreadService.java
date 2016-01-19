@@ -64,4 +64,5 @@ public interface DfThreadService {
 	void df_s_undoDeletedThread(Long thread_id);
 	List<DfThread> df_s_getAllDeletedThreadList(Long topicId);
 	List<DfThread> df_s_getAllDeletedThreadList();
+	List<DfThread> df_s_getAllThreadListUser(Long userId);
 }

@@ -83,4 +83,6 @@ public interface DfThreadDao {
 	List<DfThread> df_d_getAllDeletedThreadList(Long topicId);
 
 	List<DfThread> df_d_getAllDeletedThreadList();
+
+	List<DfThread> df_d_getAllThreadListUser(Long userId);
 }

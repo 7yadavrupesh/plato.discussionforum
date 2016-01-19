@@ -30,6 +30,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "discussion_forum.df_thread_reply")
@@ -93,8 +94,9 @@ public class DfThreadReply implements Serializable{
 	/**
 	 * @return the submittedTime
 	 */
-	public Timestamp getSubmittedTime() {
-		return submittedTime;
+	public String getSubmittedTime() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return dateFormat.format(submittedTime);
 	}
 	/**
 	 * @param submittedTime the submittedTime to set

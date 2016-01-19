@@ -29,6 +29,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "discussion_forum.df_moderator_assigned")
@@ -103,8 +104,9 @@ public class DfModeratorAssigned implements Serializable {
 	/**
 	 * @return the assignedTime
 	 */
-	public Timestamp getAssignedTime() {
-		return assignedTime;
+	public String getAssignedTime() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return dateFormat.format(assignedTime);
 	}
 	/**
 	 * @param assignedTime the assignedTime to set

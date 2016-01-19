@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,8 +57,7 @@ import com.srmri.plato.core.discussionforum.service.DfThreadReplyService;
 import com.srmri.plato.core.discussionforum.service.DfThreadService;
 import com.srmri.plato.core.discussionforum.service.DfThreadSubscriptionService;
 import com.srmri.plato.core.discussionforum.service.DfTopicService;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.MultipartException;
+
 
 public class CommonControllerbacup{
 	
@@ -108,6 +108,13 @@ public class CommonControllerbacup{
 	private DfThreadFileMapService threadFileMapService;
 	@Autowired
 	private DfThreadReplyFileMapService threadReplyFileMapService;
+	
+	@RequestMapping(value = "/discussionforumDashboard", method = RequestMethod.GET)
+	public String discussionforumDashboard(Model model) {	         
+		model.addAttribute("userId", loginUserId);
+		System.out.println(loginUserId);
+		return"discussionforumDashboard";
+	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(Model model){
@@ -115,9 +122,12 @@ public class CommonControllerbacup{
 	}
 
 	@RequestMapping(value = "/listTopic", method = RequestMethod.GET)
-	public String topicList(Model model){
-
-		List<DfTopic> allTopicList = topicService.df_s_getAllTopicList();
+	public String topicList(Model model, @RequestParam(value="userId", required=false) Long createdUserid){
+		List<DfTopic> allTopicList = new ArrayList<DfTopic>();
+		if(createdUserid != null)
+			allTopicList = topicService.df_s_getTopicList(createdUserid);
+		else
+			allTopicList = topicService.df_s_getAllTopicList();
 		Map<Long, Boolean> moderatorAllowMap = new HashMap<Long,Boolean>();
 
 		if(checkAdmin(loginUserId)){
@@ -475,10 +485,10 @@ public class CommonControllerbacup{
 		}
 
 
-		System.out.println(thread.getThreadTitle()+thread.getThreadId());
-		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
-		thread.setCreatedTime(threadService.df_s_getThread(thread.getThreadId()).getCreatedTime());
-		thread.setModifiedTime(curTime);
+		Timestamp time = Timestamp.valueOf(threadService.df_s_getThread(thread.getThreadId()).getCreatedTime());
+		
+		thread.setCreatedTime(time);
+		thread.setModifiedTime(time);
 		thread.setCreatedUserid(loginUserId);
 		thread.setDeletedFlag(false);
 		thread.setApproved(true);
@@ -1123,3 +1133,6 @@ public class CommonControllerbacup{
 //		return null;
 //	}
 }
+
+
+//Timestamp time = Timestamp.valueOf(threadService.df_s_getThread(thread.getThreadId()).getCreatedTime());

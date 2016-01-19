@@ -30,6 +30,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name="discussion_forum.df_topic")
@@ -48,6 +49,12 @@ public class DfTopic implements Serializable{
 	@Column(name = "topic_title")
 	private String topicTitle;
 	
+
+	@NotBlank(message = "should not be blank")
+	@Size(min=2,max=1000, message="min 10 characters")
+	@Column(name = "topic_description")
+	private String topicDescription;
+	
 	@Column(name = "created_userid")
 	private Long createdUserid;
 	
@@ -60,6 +67,15 @@ public class DfTopic implements Serializable{
 	@Column(name="approved_flag")
 	private Boolean approvedFlag;
 	
+	@Column(name="approved_by")
+	private Long approvedBy;
+	
+	public Long getApprovedBy() {
+		return approvedBy;
+	}
+	public void setApprovedBy(Long approvedBy) {
+		this.approvedBy = approvedBy;
+	}
 	public DfTopic() {
 		// TODO Auto-generated constructor stub
 	}
@@ -102,8 +118,10 @@ public class DfTopic implements Serializable{
 	/**
 	 * @return the createdTime
 	 */
-	public Timestamp getCreatedTime() {
-		return createdTime;
+	public String getCreatedTime() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		 return dateFormat.format(createdTime);
+		//return createdTime;
 	}
 	/**
 	 * @param createdTime the createdTime to set
@@ -135,5 +153,11 @@ public class DfTopic implements Serializable{
 	 */
 	public void setApprovedFlag(Boolean approvedFlag) {
 		this.approvedFlag = approvedFlag;
+	}
+	public String getTopicDescription() {
+		return topicDescription;
+	}
+	public void setTopicDescription(String topicDescription) {
+		this.topicDescription = topicDescription;
 	}
 }

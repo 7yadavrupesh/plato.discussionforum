@@ -60,8 +60,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		cri.add(Restrictions.eq("assignedToUserid",assignedToUserId));
-		List<DfModeratorAssigned> result = cri.list();
-		return result;
+		return cri.list();
 	}
 	
 	/*
