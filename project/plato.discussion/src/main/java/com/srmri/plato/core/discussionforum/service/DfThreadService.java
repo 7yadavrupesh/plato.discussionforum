@@ -65,4 +65,5 @@ public interface DfThreadService {
 	List<DfThread> df_s_getAllDeletedThreadList(Long topicId);
 	List<DfThread> df_s_getAllDeletedThreadList();
 	List<DfThread> df_s_getAllThreadListUser(Long userId);
+	List<DfThread> df_s_getAllThreadApprovedByUser(Long userId);
 }

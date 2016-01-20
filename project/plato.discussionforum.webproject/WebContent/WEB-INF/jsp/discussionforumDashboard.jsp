@@ -500,10 +500,10 @@
 											<a href="listThreadUser.html?userId=${userId}">Threads Created</a>
 										</p>
 										<p>
-											<a href="#">Topics Approved</a>
+											<a href="approveTopicByUser.html?userId=${userId}">Topics Approved</a>
 										</p>
 										<p>
-											<a href="#">Threads Approved</a>
+											<a href="approvedThreadByUser.html?userId=${userId }">Threads Approved</a>
 										</p>
 									</div>
 									<div class="icon">
@@ -520,10 +520,10 @@
 										<h3>Approval Waiting</h3>
 										<!-- /.box-header -->
 										<p>
-											<a href="approveTopic.html">Topics (${threadApproveLeft })</a>
+											<a href="approveTopic.html">Topics (${topicApproveLeft })</a>
 										</p>
 										<p>
-											<a href="approveThread.html">Threads (${topicApproveLeft })</a>
+											<a href="approveThread.html">Threads (${threadApproveLeft })</a>
 										</p>
 									</div>
 									<div class="icon">

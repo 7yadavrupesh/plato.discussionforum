@@ -40,6 +40,18 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+<style>
+.modal-header, h5, .close {
+	background-color: #d73925;
+	color: white !important;
+	text-align: center;
+	font-size: 30px;
+}
+
+.modal-footer {
+	background-color: #f9f9f9;
+}
+</style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -403,7 +415,7 @@
 														<c:out value="${thread.key.threadTitle}" />
 												</a></td>
 												<td title="${topics[thread.key.topicId]}"><c:out
-																value="${topics[thread.key.topicId]}" /></td>
+														value="${topics[thread.key.topicId]}" /></td>
 												<td title="${thread.key.createdTime}"><c:out
 														value="${thread.key.createdTime}" /></td>
 												<td title="${thread.value}"><c:out
@@ -627,7 +639,7 @@
 	<script src="./resources/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="./resources/dist/js/demo.js"></script>
-	<script src="./resources/custom/js/custom.js"></script>
+
 	<!-- page script -->
 	<script>
 		$(function() {

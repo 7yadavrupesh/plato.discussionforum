@@ -190,4 +190,9 @@ public class DfThreadServieImpl implements DfThreadService{
 		// TODO Auto-generated method stub
 		return threadDao.df_d_getAllThreadListUser(userId);
 	}
+	@Override
+	public List<DfThread> df_s_getAllThreadApprovedByUser(Long userId) {
+		// TODO Auto-generated method stub
+		return threadDao.df_d_getAllThreadApprovedByUser(userId);
+	}
 }

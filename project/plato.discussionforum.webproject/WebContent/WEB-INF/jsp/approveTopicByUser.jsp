@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>AdminLTE 2 | Data Tables</title>
+<title>Approved Topics</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -32,14 +32,15 @@
          folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
 	href="./resources/dist/css/skins/_all-skins.min.css">
-<link href="./resources/custom/select2/css/select2.css" rel="stylesheet" />
+<link rel="stylesheet" href="./resources/custom/css/style.css">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-          <style>
+</head>
+<style>
 .modal-header, h5, .close {
 	background-color: #d73925;
 	color: white !important;
@@ -51,19 +52,7 @@
 	background-color: #f9f9f9;
 }
 </style>
-<style>
-.table {
-	table-layout: fixed;
-}
 
-.table td {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-</style>
-
-</head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 
@@ -291,7 +280,8 @@
 										<a href="#" class="btn btn-default btn-flat">Profile</a>
 									</div>
 									<div class="pull-right">
-										<a href="logout.html" class="btn btn-default btn-flat">Sign out</a>
+										<a href="logout.html" class="btn btn-default btn-flat">Sign
+											out</a>
 									</div>
 								</li>
 							</ul></li>
@@ -333,7 +323,7 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="treeview"><a href="listTopic.html"> <i
+					<li class="active treeview"><a href="listTopic.html"> <i
 							class="fa fa-group"></i> <span>Discussion Forum</span> <i
 							class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">
@@ -349,12 +339,12 @@
 								</ul></li>
 						</ul>
 						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-list"></i> Show <i
-									class="fa fa-angle-left pull-right"></i></a>
+							<li class="active"><a href="#"><i class="fa fa-list"></i>
+									Show <i class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
 									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i>
 											Topic </a></li>
-									<li><a href="approveTopic.html"><i
+									<li class="active"><a href="approveTopic.html"><i
 											class="fa fa-list-ul"></i> Approve Topics </a></li>
 									<li><a href="deletedTopic.html"><i
 											class="fa fa-list-ul"></i> Deleted Topics </a></li>
@@ -365,209 +355,126 @@
 								</ul></li>
 						</ul></li>
 				</ul>
+
 			</section>
 			<!-- /.sidebar -->
 		</aside>
-		<!--  alert START  -->
-		<c:choose>
-			<c:when test="${alert == 'success'}">
-				<div class="alert alert-success alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">x</button>
-					<h4>
-						<i class="icon fa fa-check"></i> Success!
-					</h4>
-					Success : Thread Added
-				</div>
-			</c:when>
-			<c:when test="${alert == 'fail'}">
-				<div class="alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">x</button>
-					<h4>
-						<i class="icon fa fa-ban"></i> Failed!
-					</h4>
-					Failed: No Thread Added
-				</div>
-			</c:when>
-		</c:choose>
-		<!--  alert END  -->
+
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					Discussion Forum <small>Discuss this question</small>
+					Approved Topics <small>Approved Topics</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Discussion Forum</li>
+					<li class="active">Approved Topics</li>
 				</ol>
 			</section>
-									<!-- Display alert message -->
+			<!-- Display alert message -->
 			<c:if test="${not empty alertMessage}">
 				<div class="alert alert-${css} alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert"
 						aria-label="Close">
-						<span aria-hidden="true">x</span>
+						<span aria-hidden="true">×</span>
 					</button>
 					<strong>${alertMessage}</strong>
 				</div>
 			</c:if>
-
-			<!-- -----Display alert message---- -->
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->
-				<div class="box box-primary direct-chat direct-chat-primary">
-					<!-- <div class="box-header with-border"> -->
-					<!-- <i class="fa fa-text-width"></i> -->
-					<h3 class="box-title">
-						<c:out value="Q. ${thread.threadTitle}" />
-					</h3>
-					<!-- </div> -->
-					<!-- /.box-header -->
-					<div class="box-body">
-						<blockquote>
-							<p>
-								<c:out value="${thread.description}" />
-							</p>
-							<small> <c:out value="${thread.createdTime}" /> <cite
-								title="Source Title">By <c:out
-										value="${thread.createdUserid}" /></cite>
-							</small>
-						</blockquote>
-						<c:if test="${not empty finalThreadFileListMap}">
-							<div class="box-body">
-								<div style="margin-left: 15px;">
-									<h6 class="small">Attached files</h6>
-									<c:forEach items="${finalThreadFileListMap}" var="file">
-										<a
-											href="downloadFile.html?file_id=${file.key}&thread_id=${thread.threadId}">${file.value }&nbsp;&nbsp;
-											<span class="fa fa-download" title="download attached file"></span>
-										</a>
-										<br>
-									</c:forEach>
-								</div>
-							</div>
-						</c:if>
-						<c:choose>
-							<c:when test="${threadEditAllowed == true }">
-								<div id="editThread" class="pull-right">
-									<a href="editThread.html?thread_id=${thread.threadId}"><span
-										class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp; <a
-										onclick="return confirm_delete(this);"
-										href="deleteThread.html?thread_id=${thread.threadId}&frmAprThr=0"><span
-										class="fa fa-remove" title="delete"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;
-								</div>
-							</c:when>
-							<c:otherwise>
-								<div id="editThread" class="pull-right">
-									<span class="fa fa-edit" title="edit"></span>&nbsp;&nbsp; <span
-										class="fa fa-remove" title="delete"></span>&nbsp;&nbsp;
-								</div>
-							</c:otherwise>
-						</c:choose>
-						<div class="pull-right">
-							<c:choose>
-								<c:when test="${checkSubscribe == false}">
-									<a href="subscribeThread.html?thread_id=${thread.threadId}">Subscribe</a>&nbsp;&nbsp;
-							</c:when>
-								<c:otherwise>
-									<a href="unSubscribeThread.html?thread_id=${thread.threadId}">UnSubscribe</a>&nbsp;&nbsp;
-							</c:otherwise>
-							</c:choose>
-						</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<div class="detailBox">
-					<div class="box-footer box-comments">
-						<c:choose>
-							<c:when test="${!empty threadReplys}">
-								<c:forEach items="${threadReplys}" var="threadReply">
-									<div class="box-comment">
-										<img alt="user image"
-											src="./resources/dist/img/user3-128x128.jpg"
-											class="img-circle img-sm">
-										<div class="comment-text">
-											<span class="username"> Maria Gonzales <span
-												class="text-muted pull-right"> <c:out
-														value="By ${threadReply.key.submittedUserid}" /> <c:out
-														value=" Date: ${threadReply.key.submittedTime}" />
-											</span>
-											</span> <br>
-											<!-- /.username -->
-											<c:out value="${threadReply.key.replyText}" />
-											<c:if
-												test="${loginUserId == threadReply.key.submittedUserid  || loginUserId == topicUserId || admin == true}">
-												<br>
-												<br>
-												<c:if test="${not empty threadReply.value}">
-													<p class="small">Files To Download</p>
-													<c:forEach items="${threadReply.value}" var="fileList">
-														<a
-															href="downloadFile.html?file_id=${fileList.key}&thread_id=${threadReply.key.threadId}">${fileList.value }&nbsp;&nbsp;<span
-															class="fa fa-download" title="download attached file"></span></a>
-														<br>
-													</c:forEach>
-												</c:if>
-												<div class="pull-right">
-													<a onclick="return confirm_delete(this);"
-														href="deleteThreadReply.html?reply_id=${threadReply.key.replyId}"><span
-														class="fa fa-remove" title="delete comment"></span></a>&nbsp;&nbsp;
-													<a
-														href="editThreadReply.html?reply_id=${threadReply.key.replyId}"><span
-														class="fa fa-edit" title="edit"></span></a>
-												</div>
-
-											</c:if>
-										</div>
-									</div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<c:out value="No comments, be first to add comment"></c:out>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-
-				<br>
 				<div class="row">
-					<div class="col-md-12">
-						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">Add Comment</h3>
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header">
+								<h1 class="box-title">Topic List</h1>
 							</div>
 							<!-- /.box-header -->
-							<!-- form start -->
-							<form:form method="POST" modelAttribute="threadReply"
-								action="addThreadReply.html" enctype="multipart/form-data">
-								<div class="box-body">
-									<div class="form-group">
-										<form:input path="threadId" name="threadId" type="hidden"
-											value="${thread.threadId }"></form:input>
-									</div>
-									<div class="form-group">
-										<form:label path="replyText" for="replyText">Comment</form:label>
-										<form:textarea path="replyText" class="form-control"
-											placeholder="Comment" name="replyText" rows="6" cols=""
-											value="${threadReply.replyText}"></form:textarea>
-										<form:errors path="replyText" class="text-red" />
-									</div>
-									<div id="fileUpload" class="form-group">
-										<label for="file">Select Files</label> <input type="file"
-											name="file" size=50 multiple /><br>
-									</div>
-									<a id="addMoreFiles" class="btn btn-default btn-xs">Add
-										More Files</a>
-								</div>
-								<!-- /.box-body -->
-								<div class="box-footer">
-									<button class="btn btn-primary" type="submit">Submit</button>
-								</div>
-							</form:form>
+							<div class="box-body table-responsive">
+								<table id="example1" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th>Title</th>
+											<th>Description</th>
+											<th>Created By</th>
+											<th>Created At</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${approveTopics}" var="topic">
+											<tr>
+												<td><c:out value="${topic.key.topicTitle}" /></td>
+												<td><c:out value="${topic.key.topicDescription}" /></td>
+												<td><c:out value="${topic.value}" /></td>
+												<td><c:out value="${topic.key.createdTime}" /></td>
+												<td><a
+													href="editTopic.html?topic_id=${topic.key.topicId}"><span
+														class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp; <a
+													onclick="return deleteThis(this);"
+													href="deleteTopic.html?topic_id=${topic.key.topicId}"><span
+														class="fa fa-remove" title="delete"></span></a></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- Modal -->
+				<div class="modal fade" id="deleteModal" role="dialog">
+					<div class="modal-dialog modal-sm">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4>
+									<span class="glyphicon glyphicon-lock"></span> Confirm Delete
+								</h4>
+							</div>
+							<div class="modal-body">
+								<div class="text-red" id="disapproveSuccess">Are you sure
+									for delete!</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" id="yesDelete"
+									class="btn btn-success pull-right" data-dismiss="modal">
+									Ok</button>
+								<button type="submit" id="cancel"
+									class="btn btn-remove pull-left" data-dismiss="modal">
+									<span class="glyphicon glyphicon-remove"></span> Cancel
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="deleteSuccessModal" role="dialog">
+					<div class="modal-dialog modal-sm">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4>
+									<span class="glyphicon glyphicon-check"></span> Delete Success
+								</h4>
+							</div>
+							<div class="modal-body">
+								<div class="text-red" id="disapproveSuccess">Topic
+									Deleted</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" id="yesDelete"
+									class="btn btn-success pull-right" data-dismiss="modal">
+									Ok</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -759,7 +666,7 @@
 	<script src="./resources/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="./resources/dist/js/demo.js"></script>
-	<script src="./resources/custom/select2/js/select2.min.js"></script>
+	<script src="./resources/plugins/jQueryUI/jquery-ui.min.js"></script>
 	<script src="./resources/custom/js/custom.js"></script>
 	<!-- page script -->
 	<script>
@@ -774,9 +681,32 @@
 				"autoWidth" : false
 			});
 		});
-		function confirm_delete(node) {
-			return confirm("Are you sure for delete");
+		function wait() {
+			setTimeout(
+ 					function() {
+						location.href = redirectUrl;
+						location.relocation();
+					}, 2500);
 		}
+      var deleteUrl = 0;
+		var redirectUrl = 0;
+		function deleteThis(node) {
+			redirectUrl = node.baseURI;
+			deleteUrl = node.href;
+			$("#deleteModal").modal();
+			return false;
+		}
+
+		$("#yesDelete").click(function() {
+			$.ajax({
+				url : deleteUrl,
+				type : "GET",
+				success : function(result) {
+					$("#deleteSuccessModal").modal();
+					wait();
+			}
+		});
+		});
 	</script>
 </body>
 </html>

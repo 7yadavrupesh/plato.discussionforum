@@ -218,6 +218,16 @@ public class DfThreadDaoImpl implements DfThreadDao{
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		cri.add(Restrictions.eq("createdUserid",userId));
+		cri.add(Restrictions.eq("deletedFlag",false));
+		return cri.list();
+	}
+
+	@Override
+	public List<DfThread> df_d_getAllThreadApprovedByUser(Long userId) {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
+		cri.add(Restrictions.eq("approvedBy",userId));
+		cri.add(Restrictions.eq("deletedFlag",false));
 		return cri.list();
 	}
 }

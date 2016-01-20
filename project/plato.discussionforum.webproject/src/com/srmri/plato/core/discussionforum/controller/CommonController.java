@@ -66,7 +66,7 @@ public class CommonController {
 	//	private RoleAssignmentService roleAssignmentService;
 	//	@Autowired RolePermissionsMapService rolePermissionsMapService;
 
-	long loginUserId = 10L;
+	long loginUserId = 101L;
 	int roleId;
 	List<Long> admin = new ArrayList<Long>();
 	Map<Long,String> usersListMap = new HashMap<Long,String>();
@@ -234,9 +234,11 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/saveDeletedTopic", method = RequestMethod.GET)
-	public String saveDeletedTopic(Model model, @RequestParam Long topic_id) {
+	public String saveDeletedTopic(Model model, @RequestParam Long topic_id,RedirectAttributes redirectAttributes) {
 		topicService.df_s_UndoDeletedTopic(topic_id);
 		model.addAttribute("deletedTopics",topicService.df_s_getDeletedTopic(loginUserId));
+		redirectAttributes.addFlashAttribute("alertMessage", "Topic is open for discussion");
+		redirectAttributes.addFlashAttribute("css", "success");
 		return "redirect:deletedTopic.html";
 	}
 
@@ -311,6 +313,22 @@ public class CommonController {
 		topicService.df_s_deleteTopic(topic_id);
 
 		return "redirect:approveTopic.html";
+	}
+	@RequestMapping(value = "/approveTopicByUser", method = RequestMethod.GET)
+	public String approveTopicByUser(Model model, HttpServletRequest request) {
+		Long userId = Long.parseLong(request.getParameter("userId"));
+		Map<DfTopic, String> approveTopicList = new HashMap<DfTopic, String>();
+		
+		if(checkAdmin(loginUserId, roleId)){
+			List<DfTopic> topicsApprovedByUser = topicService.df_s_getAllTopicsApprovedByUser(userId);
+			for(DfTopic topic: topicsApprovedByUser){
+				approveTopicList.put(topic, usersListMap.get(topic.getCreatedUserid()));
+			}
+			model.addAttribute("approveTopics",approveTopicList);
+		}else{
+			model.addAttribute("approveTopics",null);
+		}
+		return "approveTopicByUser";
 	}
 	/************************************** THREAD **************************************************/
 
@@ -827,10 +845,7 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/approveThread", method = RequestMethod.GET)
-	public String approveThread(Model model/*, @ModelAttribute("user") UserBean userBean*/) {
-
-		/*long userId = userBean.getUserId();
-		int roleId = userBean.getRoleId();*/
+	public String approveThread(Model model) {
 
 		Map<Long,String> topics = new HashMap<Long,String>();
 
@@ -871,7 +886,49 @@ public class CommonController {
 		model.addAttribute("deletedThreads",finalApprovalList);
 		return "approveThread";
 	}
+	
+	@RequestMapping(value = "/approvedThreadByUser", method = RequestMethod.GET)
+	public String approvedThreadByUser(Model model, HttpServletRequest request) {
 
+		Map<Long,String> topics = new HashMap<Long,String>();
+		Long userId = Long.parseLong(request.getParameter("userId"));
+		for(DfTopic topic: topicService.df_s_getAllDeletedNonDeletedTopicList()){
+			topics.put(topic.getTopicId(), topic.getTopicTitle());
+		}
+		List<DfThread> approvalList = new ArrayList<DfThread>();
+		List<DfThread> threadListForApproval = threadService.df_s_getAllThreadApprovedByUser(userId);
+		//List<DfTopic> topicList = topicService.df_s_getTopicList(loginUserId);
+		//List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
+
+		// if admin give all threads for approval
+		// else check user is moderator for that threads topic?
+		if(checkAdmin(loginUserId, roleId)){
+			for(DfThread thread:threadListForApproval){
+				approvalList.add(thread);
+			}
+		}/*else{
+
+			if(!moderatorFor.isEmpty()){
+				for(DfModeratorAssigned moderator: moderatorFor){
+					topicList.add(topicService.df_s_getTopic(moderator.getTopicId()));
+				}
+			}
+			for(DfThread thread:threadListForApproval){
+				for(DfTopic top: topicList){
+					if(top.getTopicId() == thread.getTopicId())
+						approvalList.add(thread);	
+				}
+			}
+		}
+		*/
+		Map<DfThread, String> finalApprovalList = new HashMap<DfThread,String>();
+		for(DfThread thread: approvalList){
+			finalApprovalList.put(thread, usersListMap.get(thread.getCreatedUserid()));
+		}
+		model.addAttribute("topics",topics);
+		model.addAttribute("deletedThreads",finalApprovalList);
+		return "approveThreadByUser";
+	}
 	@RequestMapping(value = "/saveUndoDeletedThread", method = RequestMethod.GET)
 	public String saveUndoDeletedThread(Model model, @RequestParam Long thread_id) {
 		threadService.df_s_undoDeletedThread(thread_id);

@@ -72,4 +72,6 @@ public interface DfTopicDao {
 	void df_d_approveTopic(Long topic_id);
 
 	List<DfTopic> df_d_getTopicList();
+
+	List<DfTopic> df_d_getAllTopicsApprovedByUser(Long userId);
 }

@@ -193,4 +193,10 @@ public class DfTopicServiceImpl implements DfTopicService{
 		topicDao.df_d_getTopicList();
 		return null;
 	}
+
+	@Override
+	public List<DfTopic> df_s_getAllTopicsApprovedByUser(Long userId) {
+		// TODO Auto-generated method stub
+		return topicDao.df_d_getAllTopicsApprovedByUser(userId);
+	}
 }

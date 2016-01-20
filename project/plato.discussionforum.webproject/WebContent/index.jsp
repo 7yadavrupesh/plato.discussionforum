@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>1. <a href="listTopic.html">Click Here to go to discussion forum project</a></h2>
+<h2>1. <a href="discussionforumDashboard.html">Click Here to go to discussion forum project</a></h2>
 </body>
 </html>

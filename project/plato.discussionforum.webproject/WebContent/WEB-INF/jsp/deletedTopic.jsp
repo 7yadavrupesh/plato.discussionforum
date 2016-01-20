@@ -366,7 +366,16 @@
                 <li class="active">Undo Deleted Topic</li>
               </ol>
             </section>
-
+			<!-- Display alert message -->
+			<c:if test="${not empty alertMessage}">
+				<div class="alert alert-${css} alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<strong>${alertMessage}</strong>
+				</div>
+			</c:if>
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->

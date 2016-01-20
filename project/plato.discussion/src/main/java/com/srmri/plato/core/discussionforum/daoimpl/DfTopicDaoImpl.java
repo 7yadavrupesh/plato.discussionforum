@@ -154,5 +154,14 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	public List<DfTopic> df_d_getTopicList() {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createCriteria(DfTopic.class).list();
-	}	
+	}
+
+	@Override
+	public List<DfTopic> df_d_getAllTopicsApprovedByUser(Long userId) {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
+		cri.add(Restrictions.eq("approvedBy", userId));
+		cri.add(Restrictions.eq("deletedFlag", false));
+		return cri.list();
+	}
 }
