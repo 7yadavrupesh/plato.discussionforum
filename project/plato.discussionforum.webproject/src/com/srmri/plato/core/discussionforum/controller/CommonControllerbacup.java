@@ -125,9 +125,9 @@ public class CommonControllerbacup{
 	public String topicList(Model model, @RequestParam(value="userId", required=false) Long createdUserid){
 		List<DfTopic> allTopicList = new ArrayList<DfTopic>();
 		if(createdUserid != null)
-			allTopicList = topicService.df_s_getTopicList(createdUserid);
+			allTopicList = topicService.dfSGetTopicList(createdUserid);
 		else
-			allTopicList = topicService.df_s_getAllTopicList();
+			allTopicList = topicService.dfSGetAllTopicList();
 		Map<Long, Boolean> moderatorAllowMap = new HashMap<Long,Boolean>();
 
 		if(checkAdmin(loginUserId)){
@@ -137,7 +137,7 @@ public class CommonControllerbacup{
 		}
 		else{
 			for(DfTopic topic: allTopicList){
-				List<Long> assignedModeratorList = moderatorAssignedService.df_s_getModeratorList(topic.getTopicId());
+				List<Long> assignedModeratorList = moderatorAssignedService.dfSGetModeratorList(topic.getTopicId());
 				if(!assignedModeratorList.isEmpty()){
 					for(Long moderator:assignedModeratorList){
 						if(moderator == loginUserId){
@@ -184,14 +184,14 @@ public class CommonControllerbacup{
 		topic.setCreatedUserid(loginUserId);
 		topic.setDeletedFlag(false);
 		topic.setApprovedFlag(false);
-		topicService.df_s_insertTopic(topic);
+		topicService.dfSInsertTopic(topic);
 
 		return "redirect:listTopic.html";
 	}
 
 	@RequestMapping(value = "/editTopic", method = RequestMethod.GET)
 	public String editTopic(Model model, @RequestParam Long topic_id) {
-		model.addAttribute("topic",topicService.df_s_getTopic(topic_id));
+		model.addAttribute("topic",topicService.dfSGetTopic(topic_id));
 		return "editTopic";
 	}
 
@@ -203,9 +203,9 @@ public class CommonControllerbacup{
 			model.addAttribute("topic", topic);
 			return"editTopic";
 		}
-		DfTopic oldTopic = topicService.df_s_getTopic(topic.getTopicId());
+		DfTopic oldTopic = topicService.dfSGetTopic(topic.getTopicId());
 		oldTopic.setTopicTitle(topic.getTopicTitle());
-		topicService.df_s_insertTopic(oldTopic);		
+		topicService.dfSInsertTopic(oldTopic);		
 		redirectAttributes.addFlashAttribute("alertMessage", "Topic Updated");
 		redirectAttributes.addFlashAttribute("css", "success");
 		return "redirect:listTopic.html";
@@ -213,22 +213,22 @@ public class CommonControllerbacup{
 
 	@RequestMapping(value = "/deleteTopic", method = RequestMethod.GET)
 	public String deleteTopic(Model model, @RequestParam Long topic_id) {
-		topicService.df_s_deleteTopic(topic_id);
+		topicService.dfSDeleteTopic(topic_id);
 		return "redirect:listTopic.html";
 	}
 
 	@RequestMapping(value = "/saveDeletedTopic", method = RequestMethod.GET)
 	public String saveDeletedTopic(Model model, @RequestParam Long topic_id) {
-		topicService.df_s_UndoDeletedTopic(topic_id);
-		model.addAttribute("deletedTopics",topicService.df_s_getDeletedTopic(loginUserId));
+		topicService.dfSUndoDeletedTopic(topic_id);
+		model.addAttribute("deletedTopics",topicService.dfSGetDeletedTopic(loginUserId));
 		return "redirect:deletedTopic.html";
 	}
 
 	@RequestMapping(value = "/deletedTopic", method = RequestMethod.GET)
 	public String deletedTopic(Model model) {
-		model.addAttribute("deletedTopics",topicService.df_s_getDeletedTopic(loginUserId));
-		List<DfTopic> allDeletedTopicList = topicService.df_s_getAllDeletedTopic();
-		List<DfModeratorAssigned> moderatorAssignedFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
+		model.addAttribute("deletedTopics",topicService.dfSGetDeletedTopic(loginUserId));
+		List<DfTopic> allDeletedTopicList = topicService.dfSGetAllDeletedTopic();
+		List<DfModeratorAssigned> moderatorAssignedFor = moderatorAssignedService.dfSGetTopicUserActModerator(loginUserId);
 		List<DfTopic> deletedTopicsList = new ArrayList<DfTopic>();
 
 		if(checkAdmin(loginUserId)){
@@ -253,7 +253,7 @@ public class CommonControllerbacup{
 	public String approveTopic(Model model) {
 
 		if(checkAdmin(loginUserId)){
-			model.addAttribute("approveTopics",topicService.df_s_getAllUnApprovedTopics());
+			model.addAttribute("approveTopics",topicService.dfSGetAllUnApprovedTopics());
 		}else{
 			model.addAttribute("approveTopics",null);
 		}
@@ -264,8 +264,8 @@ public class CommonControllerbacup{
 	public String saveApproveTopic(Model model, @RequestParam Long topic_id) {
 
 		if(checkAdmin(loginUserId)){
-			topicService.df_s_approveTopic(topic_id);
-			model.addAttribute("approveTopics",topicService.df_s_getAllUnApprovedTopics());
+			topicService.dfSApproveTopic(topic_id);
+			model.addAttribute("approveTopics",topicService.dfSGetAllUnApprovedTopics());
 		}else{
 			model.addAttribute("approveTopics",null);
 		}
@@ -278,13 +278,13 @@ public class CommonControllerbacup{
 
 		Map<Long,String> topics = new HashMap<Long,String>();
 		List<DfThread>  finalThredList = new ArrayList<DfThread>();
-		finalThredList = threadService.df_s_getTopicThreads(topic_id);
-		for(DfTopic topicIt: topicService.df_s_getAllTopicList()){
+		finalThredList = threadService.dfSGetTopicThreads(topic_id);
+		for(DfTopic topicIt: topicService.dfSGetAllTopicList()){
 			topics.put(topicIt.getTopicId(), topicIt.getTopicTitle());
 		}
 
 		Map<Long, Boolean> moderatorAllowMap = new HashMap<Long,Boolean>();
-		List<Long> assignedModeratorList = moderatorAssignedService.df_s_getModeratorList(topic_id);
+		List<Long> assignedModeratorList = moderatorAssignedService.dfSGetModeratorList(topic_id);
 		if(!finalThredList.isEmpty()){
 			for(DfThread thread : finalThredList){
 
@@ -294,7 +294,7 @@ public class CommonControllerbacup{
 				else if(loginUserId == thread.getCreatedUserid()){
 					moderatorAllowMap.put(thread.getThreadId(), true);
 				}
-				else if(loginUserId == topicService.df_s_getTopic(topic_id).getCreatedUserid())
+				else if(loginUserId == topicService.dfSGetTopic(topic_id).getCreatedUserid())
 				{
 					moderatorAllowMap.put(thread.getThreadId(), true);
 				}
@@ -332,7 +332,7 @@ public class CommonControllerbacup{
 	Model prepareAddThreadModel(Model model, DfThread thread ){
 		Map<Long,String> topics = new HashMap<Long,String>();
 
-		for(DfTopic topic: topicService.df_s_getAllTopicList()){
+		for(DfTopic topic: topicService.dfSGetAllTopicList()){
 			topics.put(topic.getTopicId(), topic.getTopicTitle());
 		}
 
@@ -358,8 +358,8 @@ public class CommonControllerbacup{
 		thread.setCreatedUserid(loginUserId);
 		thread.setDeletedFlag(false);
 		thread.setApproved(false);
-		threadService.df_s_addThread(thread);
-		threadSubscriptionService.df_s_addThreadSubscription(thread.getThreadId(), loginUserId);
+		threadService.dfSAddThread(thread);
+		threadSubscriptionService.dfSAddThreadSubscription(thread.getThreadId(), loginUserId);
 
 		File serverFile = null;
 		Long UploadedFileId = 0L;
@@ -387,9 +387,9 @@ public class CommonControllerbacup{
 						fileToSaveInDB.setFileLocation(serverFile.getAbsolutePath());
 						fileToSaveInDB.setFileName(file.getOriginalFilename());
 						fileToSaveInDB.setFileSize(file.getSize());
-						UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
+						UploadedFileId = attachedFileService.dfSAddAttachedFile(fileToSaveInDB);
 
-						threadFileMapService.df_s_addThreadFileMap(thread.getThreadId(), UploadedFileId);
+						threadFileMapService.dfSAddThreadFileMap(thread.getThreadId(), UploadedFileId);
 						System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
 
 					} catch (Exception e) {
@@ -402,14 +402,14 @@ public class CommonControllerbacup{
 	}
 
 	Model prepareEditThreadModel(Model model, DfThread thread){
-		List<Long> attachedFileIdList = threadFileMapService.df_s_getFileList(thread.getThreadId());
+		List<Long> attachedFileIdList = threadFileMapService.dfSGetFileList(thread.getThreadId());
 		Map<Long, String> finalFileListMap = new HashMap<Long,String>();
 		if(!attachedFileIdList.isEmpty()){
 			for(Long fileId : attachedFileIdList){
-				String filePath = attachedFileService.df_s_getAttachedFile(fileId).getFileLocation();
+				String filePath = attachedFileService.dfSGetAttachedFile(fileId).getFileLocation();
 				File file = new File(filePath);
 				if(file.exists())
-					finalFileListMap.put(fileId, attachedFileService.df_s_getAttachedFile(fileId).getFileName());
+					finalFileListMap.put(fileId, attachedFileService.dfSGetAttachedFile(fileId).getFileName());
 			}
 		}
 
@@ -420,7 +420,7 @@ public class CommonControllerbacup{
 
 	@RequestMapping(value = "/editThread", method = RequestMethod.GET)
 	public String editThread(Model model, @RequestParam Long thread_id,HttpServletRequest request) {
-		model = prepareEditThreadModel(model, threadService.df_s_getThread(thread_id));
+		model = prepareEditThreadModel(model, threadService.dfSGetThread(thread_id));
 		return "editThread";
 	}
 
@@ -443,7 +443,7 @@ public class CommonControllerbacup{
 		{
 			for(Long c:checkBox){
 				System.out.println(c);
-				threadFileMapService.df_s_removeThreadFileMap(c);
+				threadFileMapService.dfSRemoveThreadFileMap(c);
 			}
 		}
 		// Delete Files Start		
@@ -472,9 +472,9 @@ public class CommonControllerbacup{
 						fileToSaveInDB.setFileLocation(serverFile.getAbsolutePath());
 						fileToSaveInDB.setFileName(file.getOriginalFilename());
 						fileToSaveInDB.setFileSize(file.getSize());
-						UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
+						UploadedFileId = attachedFileService.dfSAddAttachedFile(fileToSaveInDB);
 
-						threadFileMapService.df_s_addThreadFileMap(thread.getThreadId(), UploadedFileId);
+						threadFileMapService.dfSAddThreadFileMap(thread.getThreadId(), UploadedFileId);
 						System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
 
 					} catch (Exception e) {
@@ -485,14 +485,14 @@ public class CommonControllerbacup{
 		}
 
 
-		Timestamp time = Timestamp.valueOf(threadService.df_s_getThread(thread.getThreadId()).getCreatedTime());
+		Timestamp time = Timestamp.valueOf(threadService.dfSGetThread(thread.getThreadId()).getCreatedTime());
 		
 		thread.setCreatedTime(time);
 		thread.setModifiedTime(time);
 		thread.setCreatedUserid(loginUserId);
 		thread.setDeletedFlag(false);
 		thread.setApproved(true);
-		threadService.df_s_addThread(thread);
+		threadService.dfSAddThread(thread);
 
 		String sourcePage = request.getParameter("edit");
 		if(sourcePage == "approveThread")
@@ -503,13 +503,13 @@ public class CommonControllerbacup{
 			return "redirect:listThreadTopic.html?topic_id="+thread.getTopicId();
 	}
 	Model prepareViewThread(Model model,DfThreadReply threadReply, Long thread_id){
-		List<Long> threadFileList = threadFileMapService.df_s_getFileList(thread_id);
+		List<Long> threadFileList = threadFileMapService.dfSGetFileList(thread_id);
 		Map<Long,String> finalThreadFileListMap = new HashMap<Long,String>();
 
 		if(!threadFileList.isEmpty())
 		{
 			for(Long attachedFileId: threadFileList){
-				String filePath = attachedFileService.df_s_getAttachedFile(attachedFileId).getFileLocation();
+				String filePath = attachedFileService.dfSGetAttachedFile(attachedFileId).getFileLocation();
 				File file = new File(filePath);
 				if(file.exists())
 					finalThreadFileListMap.put(attachedFileId,file.getName());
@@ -517,11 +517,11 @@ public class CommonControllerbacup{
 		}
 
 		model.addAttribute("finalThreadFileListMap", finalThreadFileListMap);
-		List<DfThreadReply> threadReplysList = threadReplyService.df_s_getThreadReplyList(thread_id);
+		List<DfThreadReply> threadReplysList = threadReplyService.dfSGetThreadReplyList(thread_id);
 		Map<DfThreadReply,Map<Long,String>> finalThreadReplyList = new HashMap<DfThreadReply,Map<Long,String>>();
-		DfThread thread = threadService.df_s_getThread(thread_id);
+		DfThread thread = threadService.dfSGetThread(thread_id);
 		Boolean threadEditAllowed = false;
-		List<Long> assignedModeratorList = moderatorAssignedService.df_s_getModeratorList(thread.getTopicId());
+		List<Long> assignedModeratorList = moderatorAssignedService.dfSGetModeratorList(thread.getTopicId());
 
 		// Role check Start
 		if(checkAdmin(loginUserId)){
@@ -530,7 +530,7 @@ public class CommonControllerbacup{
 		else if(loginUserId == thread.getCreatedUserid()){
 			threadEditAllowed =  true;
 		}
-		else if(loginUserId == topicService.df_s_getTopic(thread.getTopicId()).getCreatedUserid())
+		else if(loginUserId == topicService.dfSGetTopic(thread.getTopicId()).getCreatedUserid())
 		{
 			threadEditAllowed =  true;
 		}
@@ -553,7 +553,7 @@ public class CommonControllerbacup{
 
 		if(!threadReplysList.isEmpty()){
 			for(DfThreadReply reply: threadReplysList){
-				List<Long> attachedFilesList  = threadReplyFileMapService.df_s_getFileList(reply.getReplyId());
+				List<Long> attachedFilesList  = threadReplyFileMapService.dfSGetFileList(reply.getReplyId());
 
 				if(attachedFilesList.isEmpty())
 				{
@@ -562,7 +562,7 @@ public class CommonControllerbacup{
 				}else{
 					Map<Long,String> fileList = new HashMap<Long,String>();
 					for(Long attachedFileId: attachedFilesList){
-						String filePath = attachedFileService.df_s_getAttachedFile(attachedFileId).getFileLocation();
+						String filePath = attachedFileService.dfSGetAttachedFile(attachedFileId).getFileLocation();
 						File file = new File(filePath);
 						if(file.exists()){
 							fileList.put(attachedFileId,file.getName());
@@ -574,24 +574,24 @@ public class CommonControllerbacup{
 		}
 
 		model.addAttribute("threadEditAllowed", threadEditAllowed);
-		model.addAttribute("thread",  threadService.df_s_getThread(thread_id));
+		model.addAttribute("thread",  threadService.dfSGetThread(thread_id));
 		model.addAttribute("threadReplys",finalThreadReplyList);
 		model.addAttribute("threadReply", threadReply);
 		model.addAttribute("loginUserId",loginUserId);
-		model.addAttribute("topicUserId",topicService.df_s_getTopic(threadService.df_s_getThread(thread_id).getTopicId()).getCreatedUserid());
-		model.addAttribute("checkSubscribe", threadSubscriptionService.df_s_isSubscribed(thread_id,loginUserId));
+		model.addAttribute("topicUserId",topicService.dfSGetTopic(threadService.dfSGetThread(thread_id).getTopicId()).getCreatedUserid());
+		model.addAttribute("checkSubscribe", threadSubscriptionService.dfSIsSubscribed(thread_id,loginUserId));
 		return model;
 	}
 	@RequestMapping(value = "/viewThread", method = RequestMethod.GET)
 	public String viewThread(Model model, @RequestParam Long thread_id) {
 		//model = prepareViewThread(model,threadReply,thread_id);
-		List<Long> threadFileList = threadFileMapService.df_s_getFileList(thread_id);
+		List<Long> threadFileList = threadFileMapService.dfSGetFileList(thread_id);
 		Map<Long,String> finalThreadFileListMap = new HashMap<Long,String>();
 
 		if(!threadFileList.isEmpty())
 		{
 			for(Long attachedFileId: threadFileList){
-				String filePath = attachedFileService.df_s_getAttachedFile(attachedFileId).getFileLocation();
+				String filePath = attachedFileService.dfSGetAttachedFile(attachedFileId).getFileLocation();
 				File file = new File(filePath);
 				if(file.exists())
 					finalThreadFileListMap.put(attachedFileId,file.getName());
@@ -599,11 +599,11 @@ public class CommonControllerbacup{
 		}
 
 		model.addAttribute("finalThreadFileListMap", finalThreadFileListMap);
-		List<DfThreadReply> threadReplysList = threadReplyService.df_s_getThreadReplyList(thread_id);
+		List<DfThreadReply> threadReplysList = threadReplyService.dfSGetThreadReplyList(thread_id);
 		Map<DfThreadReply,Map<Long,String>> finalThreadReplyList = new HashMap<DfThreadReply,Map<Long,String>>();
-		DfThread thread = threadService.df_s_getThread(thread_id);
+		DfThread thread = threadService.dfSGetThread(thread_id);
 		Boolean threadEditAllowed = false;
-		List<Long> assignedModeratorList = moderatorAssignedService.df_s_getModeratorList(thread.getTopicId());
+		List<Long> assignedModeratorList = moderatorAssignedService.dfSGetModeratorList(thread.getTopicId());
 
 		// Role check Start
 		if(checkAdmin(loginUserId)){
@@ -612,7 +612,7 @@ public class CommonControllerbacup{
 		else if(loginUserId == thread.getCreatedUserid()){
 			threadEditAllowed =  true;
 		}
-		else if(loginUserId == topicService.df_s_getTopic(thread.getTopicId()).getCreatedUserid())
+		else if(loginUserId == topicService.dfSGetTopic(thread.getTopicId()).getCreatedUserid())
 		{
 			threadEditAllowed =  true;
 		}
@@ -635,7 +635,7 @@ public class CommonControllerbacup{
 
 		if(!threadReplysList.isEmpty()){
 			for(DfThreadReply reply: threadReplysList){
-				List<Long> attachedFilesList  = threadReplyFileMapService.df_s_getFileList(reply.getReplyId());
+				List<Long> attachedFilesList  = threadReplyFileMapService.dfSGetFileList(reply.getReplyId());
 
 				if(attachedFilesList.isEmpty())
 				{
@@ -644,7 +644,7 @@ public class CommonControllerbacup{
 				}else{
 					Map<Long,String> fileList = new HashMap<Long,String>();
 					for(Long attachedFileId: attachedFilesList){
-						String filePath = attachedFileService.df_s_getAttachedFile(attachedFileId).getFileLocation();
+						String filePath = attachedFileService.dfSGetAttachedFile(attachedFileId).getFileLocation();
 						File file = new File(filePath);
 						if(file.exists()){
 							fileList.put(attachedFileId,file.getName());
@@ -656,22 +656,22 @@ public class CommonControllerbacup{
 		}
 
 		model.addAttribute("threadEditAllowed", threadEditAllowed);
-		model.addAttribute("thread",  threadService.df_s_getThread(thread_id));
+		model.addAttribute("thread",  threadService.dfSGetThread(thread_id));
 		model.addAttribute("threadReplys",finalThreadReplyList);
 		if(!model.containsAttribute("threadReply")){
 			model.addAttribute("threadReply", new DfThreadReply());
 		}
 		model.addAttribute("loginUserId",loginUserId);
-		model.addAttribute("topicUserId",topicService.df_s_getTopic(threadService.df_s_getThread(thread_id).getTopicId()).getCreatedUserid());
-		model.addAttribute("checkSubscribe", threadSubscriptionService.df_s_isSubscribed(thread_id,loginUserId));
+		model.addAttribute("topicUserId",topicService.dfSGetTopic(threadService.dfSGetThread(thread_id).getTopicId()).getCreatedUserid());
+		model.addAttribute("checkSubscribe", threadSubscriptionService.dfSIsSubscribed(thread_id,loginUserId));
 		return "viewThread";
 	}
 
 	@RequestMapping(value = "/deleteThread", method = RequestMethod.GET)
 	public String deleteThread(Model model, @RequestParam Long thread_id,@RequestParam(value="frmAprThr") int flag) {
 
-		Long topic_id = threadService.df_s_getThread(thread_id).getTopicId();
-		threadService.df_s_deleteThread(thread_id);
+		Long topic_id = threadService.dfSGetThread(thread_id).getTopicId();
+		threadService.dfSDeleteThread(thread_id);
 
 		if(flag == 1)
 			return "redirect:approveThread.html";
@@ -681,22 +681,22 @@ public class CommonControllerbacup{
 
 	@RequestMapping(value = "/saveApproveThread", method = RequestMethod.GET)
 	public String saveApproveThread(Model model, @RequestParam Long thread_id) {
-		threadService.df_s_approveThread(thread_id, true);
+		threadService.dfSApproveThread(thread_id, true);
 		return "redirect:approveThread.html";
 	}
 
 	@RequestMapping(value = "/approveThread", method = RequestMethod.GET)
 	public String approveThread(Model model) {
 		Map<Long,String> topics = new HashMap<Long,String>();
-		List<DfTopic> alltoicsExists = topicService.df_s_getAllDeletedNonDeletedTopicList();
+		List<DfTopic> alltoicsExists = topicService.dfSGetAllDeletedNonDeletedTopicList();
 		if(alltoicsExists != null)
 			for(DfTopic topic: alltoicsExists){
 				topics.put(topic.getTopicId(), topic.getTopicTitle());
 			}
 		List<DfThread> finalApprovalList = new ArrayList<DfThread>();
-		List<DfThread> threadListForApproval = threadService.df_s_getAllUnApprovedThreadList();
-		List<DfTopic> topicList = topicService.df_s_getTopicList(loginUserId);
-		List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
+		List<DfThread> threadListForApproval = threadService.dfSGetAllUnApprovedThreadList();
+		List<DfTopic> topicList = topicService.dfSGetTopicList(loginUserId);
+		List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.dfSGetTopicUserActModerator(loginUserId);
 
 		// if admin give all threads for approval
 		// else check user is moderator for that threads topic?
@@ -708,7 +708,7 @@ public class CommonControllerbacup{
 
 			if(!moderatorFor.isEmpty()){
 				for(DfModeratorAssigned moderator: moderatorFor){
-					topicList.add(topicService.df_s_getTopic(moderator.getTopicId()));
+					topicList.add(topicService.dfSGetTopic(moderator.getTopicId()));
 				}
 			}
 			for(DfThread thread:threadListForApproval){
@@ -725,30 +725,30 @@ public class CommonControllerbacup{
 
 	@RequestMapping(value = "/saveUndoDeletedThread", method = RequestMethod.GET)
 	public String saveUndoDeletedThread(Model model, @RequestParam Long thread_id) {
-		threadService.df_s_undoDeletedThread(thread_id);
+		threadService.dfSUndoDeletedThread(thread_id);
 		Map<Long,String> topics = new HashMap<Long,String>();
 
-		for(DfTopic topic: topicService.df_s_getAllTopicList()){
+		for(DfTopic topic: topicService.dfSGetAllTopicList()){
 			topics.put(topic.getTopicId(), topic.getTopicTitle());
 		}
 		System.out.println("topics size"+topics.size());
 		model.addAttribute("topics",topics);
-		model.addAttribute("deletedThreads",threadService.df_s_getDeletedThreadList(loginUserId));
+		model.addAttribute("deletedThreads",threadService.dfSGetDeletedThreadList(loginUserId));
 		return "redirect:deletedThreadList.html";
 	}
 
 	@RequestMapping(value = "/deletedThreadList", method = RequestMethod.GET)
 	public String deletedThreadList(Model model) {
 		Map<Long,String> topics = new HashMap<Long,String>();
-		List<DfTopic> allDeletedNonDeletedTopicList = topicService.df_s_getAllDeletedNonDeletedTopicList();
+		List<DfTopic> allDeletedNonDeletedTopicList = topicService.dfSGetAllDeletedNonDeletedTopicList();
 		for(DfTopic topic: allDeletedNonDeletedTopicList ){
 			topics.put(topic.getTopicId(), topic.getTopicTitle());
 		}
 
-		List<DfThread> allDeletedThreadList = threadService.df_s_getAllDeletedThreadList();
+		List<DfThread> allDeletedThreadList = threadService.dfSGetAllDeletedThreadList();
 		List<DfThread> finalDeletedThreadList = new ArrayList<DfThread>();
-		List<DfTopic> topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);
-		List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
+		List<DfTopic> topicListUserActAsModerator = topicService.dfSGetTopicList(loginUserId);
+		List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.dfSGetTopicUserActModerator(loginUserId);
 
 		// if admin give all threads for approval
 		// else check user is moderator for that threads topic?
@@ -759,7 +759,7 @@ public class CommonControllerbacup{
 		}else{
 			if(!moderatorFor.isEmpty()){
 				for(DfModeratorAssigned moderator: moderatorFor){
-					topicListUserActAsModerator.add(topicService.df_s_getTopic(moderator.getTopicId()));
+					topicListUserActAsModerator.add(topicService.dfSGetTopic(moderator.getTopicId()));
 				}
 			}
 
@@ -782,13 +782,13 @@ public class CommonControllerbacup{
 	Model prepareThreadReply(Model model, DfThreadReply reply){
 
 		Map<Long,String> finalFileList = new HashMap<Long,String>();
-		List<DfThreadReplyFileMap> fileList = threadReplyFileMapService.df_s_getThreadReplyFileMapList(reply.getReplyId());
+		List<DfThreadReplyFileMap> fileList = threadReplyFileMapService.dfSGetThreadReplyFileMapList(reply.getReplyId());
 
 		for(DfThreadReplyFileMap fileObj : fileList){
-			String filePath = attachedFileService.df_s_getAttachedFile(fileObj.getFileId()).getFileLocation();
+			String filePath = attachedFileService.dfSGetAttachedFile(fileObj.getFileId()).getFileLocation();
 			File file = new File(filePath);
 			if(file.exists())
-				finalFileList.put(fileObj.getFileId(), attachedFileService.df_s_getAttachedFile(fileObj.getFileId()).getFileName());
+				finalFileList.put(fileObj.getFileId(), attachedFileService.dfSGetAttachedFile(fileObj.getFileId()).getFileName());
 		}
 		model.addAttribute("newThreadReply",reply);
 		model.addAttribute("threadReply",reply);
@@ -799,7 +799,7 @@ public class CommonControllerbacup{
 	public String editReply(Model model, @RequestParam(value = "reply_id", required=false) Long reply_id) {
 		if(reply_id == null)
 			return "redirect:listTopic.html";
-		model = prepareThreadReply(model, threadReplyService.df_s_getThreadReply(reply_id));
+		model = prepareThreadReply(model, threadReplyService.dfSGetThreadReply(reply_id));
 		return "editThreadReply";
 	}
 
@@ -818,14 +818,14 @@ public class CommonControllerbacup{
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(loginUserId);
 		newThreadReply.setThreadId(newThreadReply.getThreadId());
-		threadReplyService.df_s_addThreadReply(newThreadReply);
+		threadReplyService.dfSAddThreadReply(newThreadReply);
 
 		// Delete Files Start
 		if(checkBox != null)
 		{
 			for(Long fileId:checkBox){
 				System.out.println(fileId);
-				threadReplyFileMapService.df_s_removeThreadReplyFileMapList(fileId);
+				threadReplyFileMapService.dfSRemoveThreadReplyFileMapList(fileId);
 				//attachedFileService.df_s_removeAttachedFile(c);
 			}
 		}
@@ -857,9 +857,9 @@ public class CommonControllerbacup{
 						fileToSaveInDB.setFileLocation(serverFile.getAbsolutePath());
 						fileToSaveInDB.setFileName(file.getOriginalFilename());
 						fileToSaveInDB.setFileSize(file.getSize());
-						UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
+						UploadedFileId = attachedFileService.dfSAddAttachedFile(fileToSaveInDB);
 
-						threadReplyFileMapService.df_s_setThreadReplyFileMapList( newThreadReply.getReplyId(), UploadedFileId );
+						threadReplyFileMapService.dfSSetThreadReplyFileMapList( newThreadReply.getReplyId(), UploadedFileId );
 						System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
 
 					} catch (Exception e) {
@@ -869,8 +869,8 @@ public class CommonControllerbacup{
 			}
 		}
 
-		List<DfThreadReply> trl =  threadReplyService.df_s_getThreadReplyList(newThreadReply.getThreadId());
-		model.addAttribute("thread",  threadService.df_s_getThread(newThreadReply.getThreadId()));
+		List<DfThreadReply> trl =  threadReplyService.dfSGetThreadReplyList(newThreadReply.getThreadId());
+		model.addAttribute("thread",  threadService.dfSGetThread(newThreadReply.getThreadId()));
 		model.addAttribute("threadReplys",trl);
 		model.addAttribute("newThreadReply", new DfThreadReply());		
 
@@ -880,9 +880,9 @@ public class CommonControllerbacup{
 	@RequestMapping(value = "/deleteThreadReply", method = RequestMethod.GET)
 	public String deleteThreadReply(Model model, @RequestParam Long reply_id) {
 		Map<Long,String> topics = new HashMap<Long,String>();
-		Long threadId = threadReplyService.df_s_getThreadReply(reply_id).getThreadId();
-		threadReplyService.df_s_deleteThreadReply(reply_id);
-		for(DfTopic topic: topicService.df_s_getAllTopicList()){
+		Long threadId = threadReplyService.dfSGetThreadReply(reply_id).getThreadId();
+		threadReplyService.dfSDeleteThreadReply(reply_id);
+		for(DfTopic topic: topicService.dfSGetAllTopicList()){
 			topics.put(topic.getTopicId(), topic.getTopicTitle());
 		}
 		return "redirect:viewThread.html?thread_id="+threadId;
@@ -911,7 +911,7 @@ public class CommonControllerbacup{
 		threadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		threadReply.setSubmittedUserid(loginUserId);
 		threadReply.setThreadId(threadReply.getThreadId());
-		threadReplyService.df_s_addThreadReply(threadReply);
+		threadReplyService.dfSAddThreadReply(threadReply);
 
 		File serverFile = null;
 		Long UploadedFileId = 0L;
@@ -940,9 +940,9 @@ public class CommonControllerbacup{
 						fileToSaveInDB.setFileLocation(serverFile.getAbsolutePath());
 						fileToSaveInDB.setFileName(file.getOriginalFilename());
 						fileToSaveInDB.setFileSize(file.getSize());
-						UploadedFileId = attachedFileService.df_s_addAttachedFile(fileToSaveInDB);
+						UploadedFileId = attachedFileService.dfSAddAttachedFile(fileToSaveInDB);
 
-						threadReplyFileMapService.df_s_setThreadReplyFileMapList( threadReply.getReplyId(), UploadedFileId );
+						threadReplyFileMapService.dfSSetThreadReplyFileMapList( threadReply.getReplyId(), UploadedFileId );
 						System.out.println("Server File Location="	+ serverFile.getAbsolutePath());
 
 					} catch (Exception e) {
@@ -952,8 +952,8 @@ public class CommonControllerbacup{
 			}
 		}
 
-		List<DfThreadReply> trl =  threadReplyService.df_s_getThreadReplyList(threadReply.getThreadId());
-		model.addAttribute("thread",  threadService.df_s_getThread(threadReply.getThreadId()));
+		List<DfThreadReply> trl =  threadReplyService.dfSGetThreadReplyList(threadReply.getThreadId());
+		model.addAttribute("thread",  threadService.dfSGetThread(threadReply.getThreadId()));
 		model.addAttribute("threadReplys",trl);
 		//model.addAttribute("newThreadReply", new DfThreadReply());		
 
@@ -1001,7 +1001,7 @@ public class CommonControllerbacup{
 
 	@RequestMapping(value = "/subscribeThread", method = RequestMethod.GET)
 	public String subscribeThread(Model model,@RequestParam Long thread_id, RedirectAttributes redirectAttributes) {
-		threadSubscriptionService.df_s_addThreadSubscription(thread_id, loginUserId);
+		threadSubscriptionService.dfSAddThreadSubscription(thread_id, loginUserId);
 		redirectAttributes.addFlashAttribute("alertMessage", "Subscription successful");
 		redirectAttributes.addFlashAttribute("css", "success");
 		return "redirect:viewThread.html?thread_id="+thread_id;
@@ -1009,7 +1009,7 @@ public class CommonControllerbacup{
 
 	@RequestMapping(value = "/unSubscribeThread", method = RequestMethod.GET)
 	public String unSubscribeThread(Model model,@RequestParam Long thread_id,RedirectAttributes redirectAttributes) {
-		threadSubscriptionService.df_s_removeThreadSubscription(thread_id, loginUserId);
+		threadSubscriptionService.dfSRemoveThreadSubscription(thread_id, loginUserId);
 		redirectAttributes.addFlashAttribute("alertMessage", "UnSubscription successful");
 		redirectAttributes.addFlashAttribute("css", "success");
 		return "redirect:viewThread.html?thread_id="+thread_id;
@@ -1018,14 +1018,14 @@ public class CommonControllerbacup{
 	/****************************************** Moderator *****************************************************/
 
 	Model prepareAddModeratorModel(Model model, DfModeratorAssigned moderator){
-		List<DfTopic> topicListUserActAsModerator = topicService.df_s_getTopicList(loginUserId);
+		List<DfTopic> topicListUserActAsModerator = topicService.dfSGetTopicList(loginUserId);
 
 		if(topicListUserActAsModerator.isEmpty()){
-			List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.df_s_getTopicUserActModerator(loginUserId);
+			List<DfModeratorAssigned> moderatorFor = moderatorAssignedService.dfSGetTopicUserActModerator(loginUserId);
 
 			if(!moderatorFor.isEmpty()){
 				for(DfModeratorAssigned mod: moderatorFor){
-					topicListUserActAsModerator.add(topicService.df_s_getTopic(mod.getTopicId()));
+					topicListUserActAsModerator.add(topicService.dfSGetTopic(mod.getTopicId()));
 				}
 			}
 		}
@@ -1070,7 +1070,7 @@ public class CommonControllerbacup{
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
 		moderator.setAssignedTime(curTime);
 
-		moderatorAssignedService.df_s_addModerator(moderator);
+		moderatorAssignedService.dfSAddModerator(moderator);
 		return "redirect:addModerator.html";
 	}
 
@@ -1080,7 +1080,7 @@ public class CommonControllerbacup{
 		final int BUFFER_SIZE = 4096;
 		//String filePath = "/downloads/SpringProject.zip";
 
-		DfAttachedFile fileAttched = attachedFileService.df_s_getAttachedFile(file_id);
+		DfAttachedFile fileAttched = attachedFileService.dfSGetAttachedFile(file_id);
 		String filePath = fileAttched.getFileLocation();
 		// get absolute path of the application
 		ServletContext context = request.getServletContext();

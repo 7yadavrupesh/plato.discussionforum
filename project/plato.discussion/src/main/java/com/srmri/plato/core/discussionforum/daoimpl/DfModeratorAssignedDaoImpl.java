@@ -44,7 +44,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 	 *  Add Moderator
 	 */
 	@Override
-	public Long df_d_addModerator(DfModeratorAssigned moderator) {
+	public Long dfDAddModerator(DfModeratorAssigned moderator) {
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().saveOrUpdate(moderator);
 		return moderator.getModeratorId();
@@ -56,7 +56,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfModeratorAssigned> df_d_getTopicUserActModerator(Long assignedToUserId) {
+	public List<DfModeratorAssigned> dfDGetTopicUserActModerator(Long assignedToUserId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		cri.add(Restrictions.eq("assignedToUserid",assignedToUserId));
@@ -68,7 +68,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 	 *  Remove Moderator
 	 */
 	@Override
-	public void df_d_removeModerator(Long modId) {
+	public void dfDRemoveModerator(Long modId) {
 		// TODO Auto-generated method stub
 		DfModeratorAssigned moderator = new DfModeratorAssigned();
 		moderator.setModeratorId(modId);
@@ -81,7 +81,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 	 */
 	@SuppressWarnings("null")
 	@Override
-	public List<Long> df_d_getModeratorList(Long topicId) {
+	public List<Long> dfDGetModeratorList(Long topicId) {
 		// TODO Auto-generated method stub
 		
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
@@ -99,7 +99,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfModeratorAssigned> df_d_getModeratorObjList(Long topicId) {
+	public List<DfModeratorAssigned> dfDGetModeratorObjList(Long topicId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		cri.add(Restrictions.eq("topicId", topicId));
@@ -107,7 +107,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 	}
 
 	@Override
-	public DfModeratorAssigned df_d_getModerator(Long assignedToUserid, Long topicId) {
+	public DfModeratorAssigned dfDGetModerator(Long assignedToUserid, Long topicId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		cri.add(Restrictions.eq("topicId", topicId));
@@ -119,7 +119,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 	}
 
 	@Override
-	public List<DfModeratorAssigned> df_d_getAllModerators() {
+	public List<DfModeratorAssigned> dfDGetAllModerators() {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		return cri.list();

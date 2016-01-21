@@ -44,7 +44,7 @@ public class DfAttachedFileDaoImpl implements DfAttachedFileDao{
 	 *  Add Attached File
 	 */
 	@Override
-	public Long df_d_addAttachedFile(DfAttachedFile attachedFile) {
+	public Long dfDAddAttachedFile(DfAttachedFile attachedFile) {
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().saveOrUpdate(attachedFile);
 		sessionFactory.getCurrentSession().flush();
@@ -56,21 +56,21 @@ public class DfAttachedFileDaoImpl implements DfAttachedFileDao{
 	 * Remove Attached File
 	 */
 	@Override
-	public void df_d_removeAttachedFile(Long fileId) {
+	public void dfDRemoveAttachedFile(Long fileId) {
 		DfAttachedFile fileObj= (DfAttachedFile) sessionFactory.getCurrentSession().load(DfAttachedFile.class, fileId);		
 		sessionFactory.getCurrentSession().delete(fileObj);
 		sessionFactory.getCurrentSession().flush();
 	}
 	
 	@Override
-	public void df_d_removeAttachedFile(DfAttachedFile file){
+	public void dfDRemoveAttachedFile(DfAttachedFile file){
 		
 		sessionFactory.getCurrentSession().delete(file);
 		sessionFactory.getCurrentSession().flush();
 	}
 	
 	@Override
-	public DfAttachedFile df_d_getAttachedFile(Long fileId) {
+	public DfAttachedFile dfDGetAttachedFile(Long fileId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfAttachedFile.class);
 		@SuppressWarnings("unchecked")

@@ -47,9 +47,9 @@ public class DfTopicServiceImpl implements DfTopicService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_insertTopic(DfTopic topic) {
+	public void dfSInsertTopic(DfTopic topic) {
 		// TODO Auto-generated method stub
-		topicDao.df_d_addTopic(topic);
+		topicDao.dfDAddTopic(topic);
 	}
 
 	/*
@@ -58,7 +58,7 @@ public class DfTopicServiceImpl implements DfTopicService{
 	 */	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_insertTopic(String topicTitle, Long createdUserid, Timestamp createdTime,
+	public boolean dfSInsertTopic(String topicTitle, Long createdUserid, Timestamp createdTime,
 			boolean deleteFlag) {
 		// TODO Auto-generated method stub
 
@@ -68,7 +68,7 @@ public class DfTopicServiceImpl implements DfTopicService{
 		topic.setCreatedUserid(createdUserid);
 		topic.setDeletedFlag(deleteFlag);
 
-		topicDao.df_d_addTopic(topic);
+		topicDao.dfDAddTopic(topic);
 		return false;
 	}
 
@@ -78,16 +78,16 @@ public class DfTopicServiceImpl implements DfTopicService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_deleteTopic(Long topicId) {
+	public boolean dfSDeleteTopic(Long topicId) {
 		// TODO Auto-generated method stub
 		
-		topicDao.df_d_deteteTopic(topicId);
+		topicDao.dfDDeteteTopic(topicId);
 		
-		List<DfThread> threadList = threadDao.df_d_getAllThreadList(topicId);
+		List<DfThread> threadList = threadDao.dfDGetAllThreadList(topicId);
 
 		if(threadList != null){
 			for(int i=0;i<threadList.size(); i++){
-				threadDao.df_d_deteteThread(threadList.get(i).getThreadId());
+				threadDao.dfDDeteteThread(threadList.get(i).getThreadId());
 			}
 		}
 		
@@ -100,50 +100,50 @@ public class DfTopicServiceImpl implements DfTopicService{
 	 */
 	@SuppressWarnings("null")
 	@Override
-	public List<DfThread> df_s_getThreadListWaitForApproval(Long userId) {
+	public List<DfThread> dfSGetThreadListWaitForApproval(Long userId) {
 		//topicDaoImpl.getAllTopicList(userId);
 		// TODO Auto-generated method stub
-		List<DfTopic> topicLIst = topicDao.df_d_getTopicUserActModerator(userId);
+		List<DfTopic> topicLIst = topicDao.dfDGetTopicUserActModerator(userId);
 		Iterator<DfTopic> it = topicLIst.iterator();
 		List<DfThread> threadList = null;
 		while(it.hasNext()){
 			DfTopic topic = (DfTopic) it.next();
-			threadList.addAll(threadDao.df_d_getAllUnApprovedThreadList());
+			threadList.addAll(threadDao.dfDGetAllUnApprovedThreadList());
 		}
 		return threadList;
 	}
 
 	@Override
-	public List<DfTopic> df_s_getAllTopicList() {
+	public List<DfTopic> dfSGetAllTopicList() {
 		// TODO Auto-generated method stub
-		return topicDao.df_d_getAllTopicList();
+		return topicDao.dfDGetAllTopicList();
 	}
 
 	@Override
-	public DfTopic df_s_getTopic(Long topicId){
-		return topicDao.df_d_getTopic(topicId);
+	public DfTopic dfSGetTopic(Long topicId){
+		return topicDao.dfDGetTopic(topicId);
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_UndoDeletedTopic(Long topicId) {
+	public void dfSUndoDeletedTopic(Long topicId) {
 		// TODO Auto-generated method stub
-		DfTopic topic = topicDao.df_d_getTopic(topicId);
+		DfTopic topic = topicDao.dfDGetTopic(topicId);
 		topic.setDeletedFlag(false);
-		List<DfThread> threadList = threadDao.df_d_getAllDeletedThreadList(topicId);
+		List<DfThread> threadList = threadDao.dfDGetAllDeletedThreadList(topicId);
 		
 		if(threadList!=null){
 			for(DfThread thread: threadList){
 				thread.setDeletedFlag(false);
-				threadDao.df_d_addThread(thread);
+				threadDao.dfDAddThread(thread);
 			}
 		}
 	}
 
 	@Override
-	public List<DfTopic> df_s_getDeletedTopic(Long userId) {
+	public List<DfTopic> dfSGetDeletedTopic(Long userId) {
 		// TODO Auto-generated method stub
-		List<DfTopic> allTopicList = topicDao.df_d_getTopicUserActModerator(userId);
+		List<DfTopic> allTopicList = topicDao.dfDGetTopicUserActModerator(userId);
 		List<DfTopic> deletedTopicList = new ArrayList<DfTopic>();
 		
 		for(int i=0;i<allTopicList.size();i++){
@@ -157,46 +157,46 @@ public class DfTopicServiceImpl implements DfTopicService{
 	}
 
 	@Override
-	public List<DfTopic> df_s_getTopicList(Long userId) {
+	public List<DfTopic> dfSGetTopicList(Long userId) {
 		// TODO Auto-generated method stub
-		return topicDao.df_d_getTopicList(userId);
+		return topicDao.dfDGetTopicList(userId);
 	}
 
 	@Override
-	public List<DfTopic> df_s_getAllDeletedTopic() {
+	public List<DfTopic> dfSGetAllDeletedTopic() {
 		// TODO Auto-generated method stub
-		return topicDao.df_d_getAllDeletedTopic();
+		return topicDao.dfDGetAllDeletedTopic();
 	}
 
 	@Override
-	public List<DfTopic> df_s_getAllDeletedNonDeletedTopicList() {
+	public List<DfTopic> dfSGetAllDeletedNonDeletedTopicList() {
 		// TODO Auto-generated method stub
-		return topicDao.getAllDeletedNonDeletedTopicList();
+		return topicDao.dfDGetAllDeletedNonDeletedTopicList();
 	}
 
 	@Override
-	public List<DfTopic> df_s_getAllUnApprovedTopics() {
+	public List<DfTopic> dfSGetAllUnApprovedTopics() {
 		// TODO Auto-generated method stub
-		return topicDao.df_d_getAllUnApprovedTopics();
+		return topicDao.dfDGetAllUnApprovedTopics();
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_approveTopic(Long topic_id) {
+	public void dfSApproveTopic(Long topic_id) {
 		// TODO Auto-generated method stub
-		topicDao.df_d_approveTopic(topic_id);
+		topicDao.dfDApproveTopic(topic_id);
 	}
 
 	@Override
-	public List<DfTopic> df_s_getTopicList() {
+	public List<DfTopic> dfSGetTopicList() {
 		// TODO Auto-generated method stub
-		topicDao.df_d_getTopicList();
+		topicDao.dfDGetTopicList();
 		return null;
 	}
 
 	@Override
-	public List<DfTopic> df_s_getAllTopicsApprovedByUser(Long userId) {
+	public List<DfTopic> dfSGetAllTopicsApprovedByUser(Long userId) {
 		// TODO Auto-generated method stub
-		return topicDao.df_d_getAllTopicsApprovedByUser(userId);
+		return topicDao.dfDGetAllTopicsApprovedByUser(userId);
 	}
 }

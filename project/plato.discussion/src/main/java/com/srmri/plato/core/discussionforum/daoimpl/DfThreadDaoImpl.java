@@ -43,7 +43,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 *  Method definition
 	 *  Add Thread
 	 */
-	public void df_d_addThread(DfThread thread){
+	public void dfDAddThread(DfThread thread){
 		System.out.println("df_d_addThread IN");
 		sessionFactory.getCurrentSession().saveOrUpdate(thread);
 		sessionFactory.getCurrentSession().flush();
@@ -54,7 +54,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 *  Method definition
 	 *  Delete Thread using thread id
 	 */
-	public void df_d_deteteThread(Long threadId){
+	public void dfDDeteteThread(Long threadId){
 		DfThread thread = new DfThread();
 		thread = (DfThread) sessionFactory.getCurrentSession().get(DfThread.class, threadId);
 		thread.setDeletedFlag(true);
@@ -65,7 +65,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 *  Method definition
 	 *  Delete Thread using Thread Object
 	 */
-	public void df_d_deteteThread(DfThread thread){
+	public void dfDDeteteThread(DfThread thread){
 		sessionFactory.getCurrentSession().delete(thread);
 	}
 	
@@ -73,7 +73,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 *  Method definition
 	 *  Update Thread
 	 */
-	public void df_d_updateThread(DfThread thread){
+	public void dfDUpdateThread(DfThread thread){
 		sessionFactory.getCurrentSession().saveOrUpdate(thread);
 	}
 	
@@ -82,7 +82,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 *  Get All Thread List Using Topic Object
 	 */
 	@SuppressWarnings("unchecked")
-	public List<DfThread> df_d_getAllThreadList(DfTopic topic){
+	public List<DfThread> dfDGetAllThreadList(DfTopic topic){
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		cri.add(Restrictions.and(Restrictions.eq("topicId", topic.getTopicId()),Restrictions.eq("deletedFlag", false)));
 		cri.add(Restrictions.eq("approved", true));
@@ -94,7 +94,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 *  Get All Thread List Using Topic Id
 	 */
 	@SuppressWarnings("unchecked")
-	public List<DfThread> df_d_getAllThreadList(Long topicId){
+	public List<DfThread> dfDGetAllThreadList(Long topicId){
 		
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 
@@ -105,7 +105,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<DfThread> df_d_getAllThreadList(){
+	public List<DfThread> dfDGetAllThreadList(){
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		cri.add(Restrictions.and(Restrictions.eq("deletedFlag", false),Restrictions.eq("approved", true)));
 		return cri.list();
@@ -114,7 +114,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 *  Method definition
 	 *  Get Thread Details
 	 */
-	public String df_d_getThreadDetail(Long threadId){
+	public String dfDGetThreadDetail(Long threadId){
 	 Criteria cri =	sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 	 cri.add(Restrictions.eq("threadId", threadId));
 	 @SuppressWarnings("unchecked")
@@ -138,7 +138,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 *  Approve Thread
 	 */
 	@Override
-	public void df_d_approveThread(Long threadId, boolean approveFlag) {
+	public void dfDApproveThread(Long threadId, boolean approveFlag) {
 		// TODO Auto-generated method stub
 		DfThread thread = new DfThread();
 		thread  = (DfThread)sessionFactory.getCurrentSession().get(DfThread.class, threadId);
@@ -152,7 +152,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfThread> df_d_getAllUnApprovedThreadList() {
+	public List<DfThread> dfDGetAllUnApprovedThreadList() {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		cri.add(Restrictions.and(Restrictions.eq("approved", false),Restrictions.eq("deletedFlag", false)));
@@ -161,7 +161,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public DfThread df_d_getThread(Long threadId) {
+	public DfThread dfDGetThread(Long threadId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		List<DfThread> tlist = cri.add(Restrictions.eq("threadId", threadId)).list();
@@ -172,7 +172,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	}
 
 	@Override
-	public List<DfThread> df_d_getDeletedThreadList(Long userId) {
+	public List<DfThread> dfDGetDeletedThreadList(Long userId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		@SuppressWarnings("unchecked")
@@ -184,14 +184,14 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	}
 
 	@Override
-	public void df_d_undoDeletedThread(Long thread_id) {
+	public void dfDUndoDeletedThread(Long thread_id) {
 		// TODO Auto-generated method stub
 		DfThread thread = new DfThread();
 		thread  = (DfThread)sessionFactory.getCurrentSession().get(DfThread.class, thread_id);
 		thread.setDeletedFlag(false);
 	}
 	
-	public List<DfThread> df_d_getAllDeletedThreadList(Long topicId){
+	public List<DfThread> dfDGetAllDeletedThreadList(Long topicId){
 		
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		cri.add(Restrictions.and(Restrictions.eq("deletedFlag", true),Restrictions.eq("topicId", topicId)));
@@ -206,7 +206,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	}
 
 	@Override
-	public List<DfThread> df_d_getAllDeletedThreadList() {
+	public List<DfThread> dfDGetAllDeletedThreadList() {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		cri.add(Restrictions.eq("deletedFlag",true));
@@ -214,7 +214,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	}
 
 	@Override
-	public List<DfThread> df_d_getAllThreadListUser(Long userId) {
+	public List<DfThread> dfDGetAllThreadListUser(Long userId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		cri.add(Restrictions.eq("createdUserid",userId));
@@ -223,7 +223,7 @@ public class DfThreadDaoImpl implements DfThreadDao{
 	}
 
 	@Override
-	public List<DfThread> df_d_getAllThreadApprovedByUser(Long userId) {
+	public List<DfThread> dfDGetAllThreadApprovedByUser(Long userId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThread.class);
 		cri.add(Restrictions.eq("approvedBy",userId));

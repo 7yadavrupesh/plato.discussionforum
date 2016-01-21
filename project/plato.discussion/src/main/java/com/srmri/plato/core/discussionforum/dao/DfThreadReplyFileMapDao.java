@@ -12,10 +12,10 @@ import com.srmri.plato.core.discussionforum.entity.DfThreadReplyFileMap;
  *
  */
 public interface DfThreadReplyFileMapDao {
-	void df_d_addThreadReplyFileMap(DfThreadReplyFileMap trfm);
-	List<DfThreadReplyFileMap> df_d_getThreadReplyFileMapList(Long threadReplyId); 
-	List<Long> df_d_getFileList(Long threadReplyId);
-	void df_d_removeThreadReplyFileMap(DfThreadReplyFileMap trfm);
-	DfThreadReplyFileMap df_d_getThreadReplyFileMap(Long fileId);
-	void df_d_removeThreadReplyFileMap(Long fileId);
+	void dfDAddThreadReplyFileMap(DfThreadReplyFileMap trfm);
+	List<DfThreadReplyFileMap> dfDGetThreadReplyFileMapList(Long threadReplyId); 
+	List<Long> dfDGetFileList(Long threadReplyId);
+	void dfDRemoveThreadReplyFileMap(DfThreadReplyFileMap trfm);
+	DfThreadReplyFileMap dfDGetThreadReplyFileMap(Long fileId);
+	void dfDRemoveThreadReplyFileMap(Long fileId);
 }

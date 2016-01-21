@@ -24,15 +24,15 @@ public interface DfAttachedFileDao {
 	 *  Method Declaration
 	 *  Add Attached File
 	 */
-	Long df_d_addAttachedFile(DfAttachedFile attachedFile);
+	Long dfDAddAttachedFile(DfAttachedFile attachedFile);
 
 	/*
 	 * Method Declaration
 	 * Remove Attached File
 	 */
-	void df_d_removeAttachedFile(Long fileId);
+	void dfDRemoveAttachedFile(Long fileId);
 
-	DfAttachedFile df_d_getAttachedFile(Long fileId);
+	DfAttachedFile dfDGetAttachedFile(Long fileId);
 
-	void df_d_removeAttachedFile(DfAttachedFile file);
+	void dfDRemoveAttachedFile(DfAttachedFile file);
 }

@@ -42,7 +42,7 @@ public class DfThreadSubscriptionDoaImpl implements DfThreadSubscriptionDao{
 	 *  Add Subscription
 	 */
 	@Override
-	public void df_d_addSubscription(DfThreadSubscription sbs) {
+	public void dfDAddSubscription(DfThreadSubscription sbs) {
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().saveOrUpdate(sbs);
 		sessionFactory.getCurrentSession().flush();
@@ -54,7 +54,7 @@ public class DfThreadSubscriptionDoaImpl implements DfThreadSubscriptionDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void df_d_removeSubscription(Long threadId, Long userId) {
+	public void dfDRemoveSubscription(Long threadId, Long userId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadSubscription.class);
 		cri.add(Restrictions.and(
@@ -74,13 +74,13 @@ public class DfThreadSubscriptionDoaImpl implements DfThreadSubscriptionDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfThreadSubscription> df_d_getThreadSubscriberList() {
+	public List<DfThreadSubscription> dfDGetThreadSubscriberList() {
 		// TODO Auto-generated method stub
 		return (List<DfThreadSubscription>) sessionFactory.getCurrentSession().createCriteria(DfThreadSubscription.class).list();
 	}
 
 	@Override
-	public boolean df_d_isSubscribed(Long thread_id, Long loginUserId) {
+	public boolean dfDIsSubscribed(Long thread_id, Long loginUserId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadSubscription.class);
 		cri.add(Restrictions.and(Restrictions.eq("threadId", thread_id), Restrictions.eq("subscriptionUserid", loginUserId)));

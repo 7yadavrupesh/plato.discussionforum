@@ -20,11 +20,11 @@ import com.srmri.plato.core.discussionforum.entity.DfAttachedFile;
 
 public interface DfAttachedFileService {
 
-	Long df_s_addAttachedFile(DfAttachedFile attachedFile);
+	Long dfSAddAttachedFile(DfAttachedFile attachedFile);
 
-	void df_s_removeAttachedFile(Long fileId);
+	void dfSRemoveAttachedFile(Long fileId);
 	
-	DfAttachedFile df_s_getAttachedFile(Long fileId);
+	DfAttachedFile dfSGetAttachedFile(Long fileId);
 
-	void df_s_removeAttachedFile(DfAttachedFile file);
+	void dfSRemoveAttachedFile(DfAttachedFile file);
 }

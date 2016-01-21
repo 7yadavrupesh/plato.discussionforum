@@ -27,24 +27,24 @@ public interface DfThreadReplyService {
 	 *  Method declaration
 	 *  Get Thread Reply List
 	 */
-	List<DfThreadReply> df_s_getThreadReplyList(DfTopic topicId);
+	List<DfThreadReply> dfSGetThreadReplyList(DfTopic topicId);
 	/*
 	 *  Method declaration
 	 *  Insert New Reply
 	 */
-	boolean df_s_addThreadReply(Long userId, Long threadId, String text);
-	boolean df_s_addThreadReply(DfThreadReply threadReply);
+	boolean dfSAddThreadReply(Long userId, Long threadId, String text);
+	boolean dfSAddThreadReply(DfThreadReply threadReply);
 	/*
 	 *  Method declaration
 	 *  Notify User For New Reply
 	 */
-	boolean df_s_notifyUserNewReply(Long threadReplyId, Long threadId);
+	boolean dfSNotifyUserNewReply(Long threadReplyId, Long threadId);
 	/*
 	 *  Method declaration
 	 *  Get Thread Reply List
 	 */
-	List<DfThreadReply> df_s_getThreadReplyList(Long threadId);
+	List<DfThreadReply> dfSGetThreadReplyList(Long threadId);
 	
-	void df_s_deleteThreadReply(Long replyId);
-	DfThreadReply df_s_getThreadReply(Long replyId);
+	void dfSDeleteThreadReply(Long replyId);
+	DfThreadReply dfSGetThreadReply(Long replyId);
 }

@@ -20,51 +20,51 @@ public class DfThreadReplyFileMapServiceImpl implements DfThreadReplyFileMapServ
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void df_s_setThreadReplyFileMapList(DfThreadReplyFileMap trfm) {
+	public void dfSSetThreadReplyFileMapList(DfThreadReplyFileMap trfm) {
 		// TODO Auto-generated method stub
-		threadReplyFileMapDao.df_d_addThreadReplyFileMap(trfm);
+		threadReplyFileMapDao.dfDAddThreadReplyFileMap(trfm);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void df_s_removeThreadReplyFileMapList(DfThreadReplyFileMap trfm) {
+	public void dfSRemoveThreadReplyFileMapList(DfThreadReplyFileMap trfm) {
 		// TODO Auto-generated method stub
-		threadReplyFileMapDao.df_d_removeThreadReplyFileMap(trfm);
+		threadReplyFileMapDao.dfDRemoveThreadReplyFileMap(trfm);
 	}
 
 	@Override
-	public List<DfThreadReplyFileMap> df_s_getThreadReplyFileMapList(Long threadReplyId) {
+	public List<DfThreadReplyFileMap> dfSGetThreadReplyFileMapList(Long threadReplyId) {
 		// TODO Auto-generated method stub
-		return threadReplyFileMapDao.df_d_getThreadReplyFileMapList(threadReplyId);
+		return threadReplyFileMapDao.dfDGetThreadReplyFileMapList(threadReplyId);
 	}
 
 	@Override
-	public List<Long> df_s_getFileList(Long threadReplyId) {
+	public List<Long> dfSGetFileList(Long threadReplyId) {
 		// TODO Auto-generated method stub
 		
-		return threadReplyFileMapDao.df_d_getFileList(threadReplyId);
+		return threadReplyFileMapDao.dfDGetFileList(threadReplyId);
 	}
 
 	@Override
-	public DfThreadReplyFileMap df_s_getThreadReplyFileMap(Long fileId) {
+	public DfThreadReplyFileMap dfSGetThreadReplyFileMap(Long fileId) {
 		// TODO Auto-generated method stub
-		return threadReplyFileMapDao.df_d_getThreadReplyFileMap(fileId);
+		return threadReplyFileMapDao.dfDGetThreadReplyFileMap(fileId);
 	}
 
 	@Override
-	public void df_s_setThreadReplyFileMapList(Long replyId, Long uploadedFileId) {
+	public void dfSSetThreadReplyFileMapList(Long replyId, Long uploadedFileId) {
 		// TODO Auto-generated method stub
 		DfThreadReplyFileMap obj = new DfThreadReplyFileMap();
 		obj.setFileId(uploadedFileId);
 		obj.setThreadReplyId(replyId);
-		threadReplyFileMapDao.df_d_addThreadReplyFileMap(obj);
+		threadReplyFileMapDao.dfDAddThreadReplyFileMap(obj);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void df_s_removeThreadReplyFileMapList(Long fileId) {
+	public void dfSRemoveThreadReplyFileMapList(Long fileId) {
 		// TODO Auto-generated method stub
-		threadReplyFileMapDao.df_d_removeThreadReplyFileMap(fileId);
+		threadReplyFileMapDao.dfDRemoveThreadReplyFileMap(fileId);
 	}
 
 }

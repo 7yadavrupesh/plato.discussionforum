@@ -28,28 +28,28 @@ public interface DfTopicService {
 	 *  Method declaration
 	 *  Insert New Topic
 	 */
-	boolean df_s_insertTopic(String topicTitle, Long createdUserid, Timestamp createdTime, boolean deleteFlag);
-	void df_s_insertTopic(DfTopic topic);
+	boolean dfSInsertTopic(String topicTitle, Long createdUserid, Timestamp createdTime, boolean deleteFlag);
+	void dfSInsertTopic(DfTopic topic);
 	/*
 	 *  Method declaration
 	 *  Delete Topic
 	 */
-	boolean df_s_deleteTopic(Long topicId);
+	boolean dfSDeleteTopic(Long topicId);
 	/*
 	 *  Method declaration
 	 *  Get Thread List Waiting For Approval
 	 */
-	List<DfThread> df_s_getThreadListWaitForApproval(Long userId);
+	List<DfThread> dfSGetThreadListWaitForApproval(Long userId);
 	
-	List<DfTopic> df_s_getAllTopicList();
-	DfTopic df_s_getTopic(Long topicId);
-	List<DfTopic> df_s_getDeletedTopic(Long userId);
-	List<DfTopic> df_s_getTopicList(Long userId);
-	List<DfTopic> df_s_getAllDeletedTopic();
-	List<DfTopic> df_s_getAllDeletedNonDeletedTopicList();
-	List<DfTopic> df_s_getAllUnApprovedTopics();
-	void df_s_UndoDeletedTopic(Long topicId);
-	void df_s_approveTopic(Long topic_id);
-	List<DfTopic> df_s_getTopicList();
-	List<DfTopic> df_s_getAllTopicsApprovedByUser(Long userId);
+	List<DfTopic> dfSGetAllTopicList();
+	DfTopic dfSGetTopic(Long topicId);
+	List<DfTopic> dfSGetDeletedTopic(Long userId);
+	List<DfTopic> dfSGetTopicList(Long userId);
+	List<DfTopic> dfSGetAllDeletedTopic();
+	List<DfTopic> dfSGetAllDeletedNonDeletedTopicList();
+	List<DfTopic> dfSGetAllUnApprovedTopics();
+	void dfSUndoDeletedTopic(Long topicId);
+	void dfSApproveTopic(Long topic_id);
+	List<DfTopic> dfSGetTopicList();
+	List<DfTopic> dfSGetAllTopicsApprovedByUser(Long userId);
 }

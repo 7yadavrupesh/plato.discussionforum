@@ -44,7 +44,7 @@ public class DfThreadSubscriptionServiceImpl implements DfThreadSubscriptionServ
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_addThreadSubscription(Long threadId, Long userId) {
+	public void dfSAddThreadSubscription(Long threadId, Long userId) {
 		// TODO Auto-generated method stub
 		DfThreadSubscription sbs = new DfThreadSubscription();
 		java.util.Date date = new java.util.Date();
@@ -53,18 +53,18 @@ public class DfThreadSubscriptionServiceImpl implements DfThreadSubscriptionServ
 		sbs.setSubscriptionTime(subscriptionTime);
 		sbs.setThreadId(threadId);
 		sbs.setSubscriptionUserid(userId);
-		threadSubscriptionDao.df_d_addSubscription(sbs);
+		threadSubscriptionDao.dfDAddSubscription(sbs);
 	}
 
 	@Override
-	public void df_s_removeThreadSubscription(Long threadId, Long userId) {
+	public void dfSRemoveThreadSubscription(Long threadId, Long userId) {
 		// TODO Auto-generated method stub
-		threadSubscriptionDao.df_d_removeSubscription(threadId, userId);
+		threadSubscriptionDao.dfDRemoveSubscription(threadId, userId);
 	}
 
 	@Override
-	public boolean df_s_isSubscribed(Long thread_id, Long loginUserId) {
+	public boolean dfSIsSubscribed(Long thread_id, Long loginUserId) {
 		// TODO Auto-generated method stub
-		return threadSubscriptionDao.df_d_isSubscribed(thread_id,loginUserId);
+		return threadSubscriptionDao.dfDIsSubscribed(thread_id,loginUserId);
 	}
 }

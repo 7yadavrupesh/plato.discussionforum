@@ -42,7 +42,7 @@ public class DfThreadReplyDaoImpl implements DfThreadReplyDao{
 	 *  Insert New Reply
 	 */
 	@Override
-	public void df_d_insertNewReply(DfThreadReply threadReply) {
+	public void dfDInsertNewReply(DfThreadReply threadReply) {
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().saveOrUpdate(threadReply);
 		sessionFactory.getCurrentSession().flush();
@@ -53,7 +53,7 @@ public class DfThreadReplyDaoImpl implements DfThreadReplyDao{
 	 *  Get Reply Detail
 	 */
 	@Override
-	public DfThreadReply df_d_getReplyDetail(Long replyId) {
+	public DfThreadReply dfDGetReplyDetail(Long replyId) {
 		// TODO Auto-generated method stub
 		return (DfThreadReply)sessionFactory.getCurrentSession().get(DfThreadReply.class,replyId);
 	}
@@ -64,7 +64,7 @@ public class DfThreadReplyDaoImpl implements DfThreadReplyDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfThreadReply> df_d_getThreadReplyList(Long threadId) {
+	public List<DfThreadReply> dfDGetThreadReplyList(Long threadId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadReply.class);
 		return cri.add(Restrictions.and(Restrictions.eq("threadId", threadId),Restrictions.eq("deletedFlag", false))).list();
@@ -75,7 +75,7 @@ public class DfThreadReplyDaoImpl implements DfThreadReplyDao{
 	 *  Delete Thread Reply
 	 */
 	@Override
-	public void df_d_deleteThreadReply(Long replyId) {
+	public void dfDDeleteThreadReply(Long replyId) {
 		// TODO Auto-generated method stub
 		DfThreadReply tr = (DfThreadReply) sessionFactory.getCurrentSession().get(DfThreadReply.class,replyId);
 		tr.setDeleteFlag(true);

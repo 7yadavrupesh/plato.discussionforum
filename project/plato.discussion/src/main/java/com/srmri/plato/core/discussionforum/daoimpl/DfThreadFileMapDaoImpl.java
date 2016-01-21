@@ -43,23 +43,23 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void df_d_addThreadFileMap(DfThreadFileMap threadFileMap) {
+	public void dfDAddThreadFileMap(DfThreadFileMap threadFileMap) {
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().saveOrUpdate(threadFileMap);
 		sessionFactory.getCurrentSession().flush();
 	}
 
 	@Override
-	public void df_d_removeThreadFileMap(DfThreadFileMap threadFileMap) {
+	public void dfDRemoveThreadFileMap(DfThreadFileMap threadFileMap) {
 		// TODO Auto-generated method stub
 		Long fileIdForDelete = threadFileMap.getFileId();
 		sessionFactory.getCurrentSession().delete(threadFileMap);
 		sessionFactory.getCurrentSession().flush();
-		attachedFileService.df_s_removeAttachedFile(fileIdForDelete);
+		attachedFileService.dfSRemoveAttachedFile(fileIdForDelete);
 	}
 
 	@Override
-	public List<DfThreadFileMap> df_d_getTheadFileMapList(Long threadId) {
+	public List<DfThreadFileMap> dfDGetTheadFileMapList(Long threadId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadFileMap.class);
 		cri.add(Restrictions.eq("threadId", threadId));
@@ -67,7 +67,7 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 	}
 
 	@Override
-	public List<Long> df_d_getFileList(Long threadId) {
+	public List<Long> dfDGetFileList(Long threadId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadFileMap.class);
 		cri.add(Restrictions.eq("threadId", threadId));
@@ -86,7 +86,7 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 	}
 
 	@Override
-	public DfThreadFileMap df_d_getThreadFileMap(Long fileId) {
+	public DfThreadFileMap dfDGetThreadFileMap(Long fileId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadFileMap.class);
 		cri.add(Restrictions.eq("fileId", fileId));
@@ -97,7 +97,7 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 	}
 
 	@Override
-	public void df_d_addThreadFileMap(Long threadId, Long uploadedFileId) {
+	public void dfDAddThreadFileMap(Long threadId, Long uploadedFileId) {
 		// TODO Auto-generated method stub
 		DfThreadFileMap obj = new DfThreadFileMap();
 		obj.setFileId(uploadedFileId);
@@ -107,7 +107,7 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 	}
 
 	@Override
-	public void df_d_removeThreadFileMap(Long fileId) {
+	public void dfDRemoveThreadFileMap(Long fileId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfThreadFileMap.class);
 		cri.add(Restrictions.eq("fileId", fileId));
@@ -116,7 +116,7 @@ public class DfThreadFileMapDaoImpl implements DfThreadFileMapDao{
 		if(obj != null){
 			sessionFactory.getCurrentSession().delete(obj);
 			sessionFactory.getCurrentSession().flush();	
-			attachedFileService.df_s_removeAttachedFile(fileId);
+			attachedFileService.dfSRemoveAttachedFile(fileId);
 		}	
 	}
 }

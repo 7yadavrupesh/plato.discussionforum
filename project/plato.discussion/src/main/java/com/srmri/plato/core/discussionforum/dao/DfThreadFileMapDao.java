@@ -22,11 +22,11 @@ import com.srmri.plato.core.discussionforum.entity.DfThreadFileMap;
 
 public interface DfThreadFileMapDao {
 	
-	void df_d_addThreadFileMap(DfThreadFileMap threadFileMap);
-	void df_d_removeThreadFileMap(DfThreadFileMap threadFileMap);
-	List<DfThreadFileMap> df_d_getTheadFileMapList(Long threadId);
-	List<Long> df_d_getFileList(Long threadId);
-	DfThreadFileMap df_d_getThreadFileMap(Long fileId );
-	void df_d_addThreadFileMap(Long threadId, Long uploadedFileId);
-	void df_d_removeThreadFileMap(Long c);
+	void dfDAddThreadFileMap(DfThreadFileMap threadFileMap);
+	void dfDRemoveThreadFileMap(DfThreadFileMap threadFileMap);
+	List<DfThreadFileMap> dfDGetTheadFileMapList(Long threadId);
+	List<Long> dfDGetFileList(Long threadId);
+	DfThreadFileMap dfDGetThreadFileMap(Long fileId );
+	void dfDAddThreadFileMap(Long threadId, Long uploadedFileId);
+	void dfDRemoveThreadFileMap(Long c);
 }

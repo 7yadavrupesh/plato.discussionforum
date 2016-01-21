@@ -41,7 +41,7 @@ public class DfThreadServieImpl implements DfThreadService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_newThreadCreate(Long topicId, Long createdUserId, String title, String description, 
+	public boolean dfSNewThreadCreate(Long topicId, Long createdUserId, String title, String description, 
 			Long uploadedFile) {
 		// TODO Auto-generated method stub
 		
@@ -62,7 +62,7 @@ public class DfThreadServieImpl implements DfThreadService{
 		DfThread thread = new DfThread(createdUserId, createdTime, modifiedTime, topicId,
 				title, description, approved, deletedFlag);
 		
-		threadDao.df_d_addThread(thread);
+		threadDao.dfDAddThread(thread);
 		return false;
 	}
 	/*
@@ -71,11 +71,11 @@ public class DfThreadServieImpl implements DfThreadService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_addThread(DfThread thread) {
+	public boolean dfSAddThread(DfThread thread) {
 		// TODO Auto-generated method stub
 
 		
-		threadDao.df_d_addThread(thread);
+		threadDao.dfDAddThread(thread);
 		return false;
 	}
 	
@@ -85,9 +85,9 @@ public class DfThreadServieImpl implements DfThreadService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_deleteThread(Long threadId) {
+	public boolean dfSDeleteThread(Long threadId) {
 		// TODO Auto-generated method stub
-		threadDao.df_d_deteteThread(threadId);
+		threadDao.dfDDeteteThread(threadId);
 		return false;
 	}
 	
@@ -97,9 +97,9 @@ public class DfThreadServieImpl implements DfThreadService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_deleteThread(DfThread thread) {
+	public boolean dfSDeleteThread(DfThread thread) {
 		// TODO Auto-generated method stub
-		threadDao.df_d_deteteThread(thread);
+		threadDao.dfDDeteteThread(thread);
 		return false;
 	}
 
@@ -109,7 +109,7 @@ public class DfThreadServieImpl implements DfThreadService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_changeVisibilityThread(DfThread thread, boolean flag) {
+	public boolean dfSChangeVisibilityThread(DfThread thread, boolean flag) {
 		// TODO Auto-generated method stub
 		thread.setApproved(flag);
 		return false;
@@ -120,9 +120,9 @@ public class DfThreadServieImpl implements DfThreadService{
 	 *  Get all threads comes under given thread using thread object
 	 */
 	@Override
-	public List<DfThread> df_s_getTopicThreads(DfTopic topic) {
+	public List<DfThread> dfSGetTopicThreads(DfTopic topic) {
 		// TODO Auto-generated method stub
-		return threadDao.df_d_getAllThreadList(topic);
+		return threadDao.dfDGetAllThreadList(topic);
 	}
 	
 	/*
@@ -131,9 +131,9 @@ public class DfThreadServieImpl implements DfThreadService{
 	 */
 
 	@Override
-	public List<DfThread> df_s_getTopicThreads(Long topicId) {
+	public List<DfThread> dfSGetTopicThreads(Long topicId) {
 		// TODO Auto-generated method stub
-		return threadDao.df_d_getAllThreadList(topicId);
+		return threadDao.dfDGetAllThreadList(topicId);
 	}
 
 	/*
@@ -142,57 +142,57 @@ public class DfThreadServieImpl implements DfThreadService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_approveThread(Long threadId, boolean approveFlag) {
+	public boolean dfSApproveThread(Long threadId, boolean approveFlag) {
 		// TODO Auto-generated method stub
-		threadDao.df_d_approveThread(threadId, approveFlag);
+		threadDao.dfDApproveThread(threadId, approveFlag);
 		return true;
 	}
 	
 	@Override
-	public List<DfThread> df_s_getAllThreadList() {
+	public List<DfThread> dfSGetAllThreadList() {
 		// TODO Auto-generated method stub
-		return threadDao.df_d_getAllThreadList();
+		return threadDao.dfDGetAllThreadList();
 	}
 
 	@Override
-	public DfThread df_s_getThread(Long threadId) {
+	public DfThread dfSGetThread(Long threadId) {
 		// TODO Auto-generated method stub
-		return threadDao.df_d_getThread(threadId);
+		return threadDao.dfDGetThread(threadId);
 	}
 	@Override
-	public List<DfThread> df_s_getAllUnApprovedThreadList() {
+	public List<DfThread> dfSGetAllUnApprovedThreadList() {
 		// TODO Auto-generated method stub
-		return threadDao.df_d_getAllUnApprovedThreadList();
+		return threadDao.dfDGetAllUnApprovedThreadList();
 	}
 	@Override
-	public List<DfThread> df_s_getDeletedThreadList(Long UserId) {
+	public List<DfThread> dfSGetDeletedThreadList(Long UserId) {
 		// TODO Auto-generated method stub
-		return threadDao.df_d_getDeletedThreadList(UserId);
+		return threadDao.dfDGetDeletedThreadList(UserId);
 	}
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_undoDeletedThread(Long thread_id) {
+	public void dfSUndoDeletedThread(Long thread_id) {
 		// TODO Auto-generated method stub
-		threadDao.df_d_undoDeletedThread(thread_id);
+		threadDao.dfDUndoDeletedThread(thread_id);
 	}
 	
 	@Override
-	public List<DfThread> df_s_getAllDeletedThreadList(Long topicId){
-		return threadDao.df_d_getAllDeletedThreadList(topicId);
+	public List<DfThread> dfSGetAllDeletedThreadList(Long topicId){
+		return threadDao.dfDGetAllDeletedThreadList(topicId);
 	}
 	
 	@Override
-	public List<DfThread> df_s_getAllDeletedThreadList(){
-		return threadDao.df_d_getAllDeletedThreadList();
+	public List<DfThread> dfSGetAllDeletedThreadList(){
+		return threadDao.dfDGetAllDeletedThreadList();
 	}
 	@Override
-	public List<DfThread> df_s_getAllThreadListUser(Long userId) {
+	public List<DfThread> dfSGetAllThreadListUser(Long userId) {
 		// TODO Auto-generated method stub
-		return threadDao.df_d_getAllThreadListUser(userId);
+		return threadDao.dfDGetAllThreadListUser(userId);
 	}
 	@Override
-	public List<DfThread> df_s_getAllThreadApprovedByUser(Long userId) {
+	public List<DfThread> dfSGetAllThreadApprovedByUser(Long userId) {
 		// TODO Auto-generated method stub
-		return threadDao.df_d_getAllThreadApprovedByUser(userId);
+		return threadDao.dfDGetAllThreadApprovedByUser(userId);
 	}
 }

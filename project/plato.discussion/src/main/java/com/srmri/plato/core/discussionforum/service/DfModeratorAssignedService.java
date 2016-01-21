@@ -26,23 +26,23 @@ public interface DfModeratorAssignedService {
 	 *  Method declaration
 	 *  Set Moderator
 	 */
-	boolean df_s_setModerator(Long topicId, Long userId, boolean flag);
+	boolean dfSSetModerator(Long topicId, Long userId, boolean flag);
 	
 	/*
 	 *  Method declaration
 	 *  Notify Moderator
 	 */
-	boolean df_s_notifyModerator();
+	boolean dfSNotifyModerator();
 	
-	List<Long> df_s_getModeratorList(Long topicId);
-	List<DfModeratorAssigned> df_s_getModeratorObjList(Long topicId);
-	List<DfModeratorAssigned> df_s_getTopicUserActModerator(Long loginUserId);
-	void df_s_addModerator(DfModeratorAssigned moderator);
+	List<Long> dfSGetModeratorList(Long topicId);
+	List<DfModeratorAssigned> dfSGetModeratorObjList(Long topicId);
+	List<DfModeratorAssigned> dfSGetTopicUserActModerator(Long loginUserId);
+	void dfSAddModerator(DfModeratorAssigned moderator);
 
-	DfModeratorAssigned df_s_getModerator(Long assignedToUserid, Long topicId);
+	DfModeratorAssigned dfSGetModerator(Long assignedToUserid, Long topicId);
 
-	void df_s_removeModerator(DfModeratorAssigned moderatorToDelete);
+	void dfSRemoveModerator(DfModeratorAssigned moderatorToDelete);
 
-	List<DfModeratorAssigned> df_s_getAllModerators();
+	List<DfModeratorAssigned> dfSGetAllModerators();
 
 }

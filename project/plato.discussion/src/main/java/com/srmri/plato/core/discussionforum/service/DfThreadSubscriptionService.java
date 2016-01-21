@@ -21,8 +21,8 @@ public interface DfThreadSubscriptionService {
 	 *  Method declaration
 	 *  Set Thread Follow
 	 */
-	void df_s_addThreadSubscription(Long threadId, Long userId);
-	void df_s_removeThreadSubscription(Long threadId, Long userId);
-	boolean df_s_isSubscribed(Long thread_id,Long loginUserId);
+	void dfSAddThreadSubscription(Long threadId, Long userId);
+	void dfSRemoveThreadSubscription(Long threadId, Long userId);
+	boolean dfSIsSubscribed(Long thread_id,Long loginUserId);
 
 }

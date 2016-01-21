@@ -39,9 +39,9 @@ public class DfThreadReplyServiceImpl implements DfThreadReplyService{
 	 *  Get Thread Reply List By Topic Id
 	 */
 	@Override
-	public List<DfThreadReply> df_s_getThreadReplyList(Long threadId) {
+	public List<DfThreadReply> dfSGetThreadReplyList(Long threadId) {
 		// TODO Auto-generated method stub
-		return threadReplyDmo.df_d_getThreadReplyList(threadId);
+		return threadReplyDmo.dfDGetThreadReplyList(threadId);
 	}
 
 	/*
@@ -49,9 +49,9 @@ public class DfThreadReplyServiceImpl implements DfThreadReplyService{
 	 *  Get Thread Reply List By Topic Object
 	 */
 	@Override
-	public List<DfThreadReply> df_s_getThreadReplyList(DfTopic topic) {
+	public List<DfThreadReply> dfSGetThreadReplyList(DfTopic topic) {
 		// TODO Auto-generated method stub
-		return threadReplyDmo.df_d_getThreadReplyList(topic.getTopicId());
+		return threadReplyDmo.dfDGetThreadReplyList(topic.getTopicId());
 	}
 	
 	/*
@@ -60,14 +60,14 @@ public class DfThreadReplyServiceImpl implements DfThreadReplyService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_addThreadReply(Long userId, Long threadId, String text) {
+	public boolean dfSAddThreadReply(Long userId, Long threadId, String text) {
 		// TODO Auto-generated method stub
 		DfThreadReply threadReply = new DfThreadReply();
 		threadReply.setThreadId(threadId);
 		threadReply.setReplyText(text);
 		threadReply.setSubmittedUserid(userId);
 		threadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
-		threadReplyDmo.df_d_insertNewReply(threadReply);
+		threadReplyDmo.dfDInsertNewReply(threadReply);
 		return false;
 	}
 
@@ -76,28 +76,28 @@ public class DfThreadReplyServiceImpl implements DfThreadReplyService{
 	 *  Notify Respective User For New Reply
 	 */
 	@Override
-	public boolean df_s_notifyUserNewReply(Long threadReplyId, Long threadId) {
+	public boolean dfSNotifyUserNewReply(Long threadReplyId, Long threadId) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean df_s_addThreadReply(DfThreadReply threadReply) {
+	public boolean dfSAddThreadReply(DfThreadReply threadReply) {
 		// TODO Auto-generated method stub
-		threadReplyDmo.df_d_insertNewReply(threadReply);
+		threadReplyDmo.dfDInsertNewReply(threadReply);
 		return false;
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_deleteThreadReply(Long replyId) {
+	public void dfSDeleteThreadReply(Long replyId) {
 		// TODO Auto-generated method stub
-		threadReplyDmo.df_d_deleteThreadReply(replyId);
+		threadReplyDmo.dfDDeleteThreadReply(replyId);
 	}
 
 	@Override
-	public DfThreadReply df_s_getThreadReply(Long replyId) {
+	public DfThreadReply dfSGetThreadReply(Long replyId) {
 		// TODO Auto-generated method stub
-		return threadReplyDmo.df_d_getReplyDetail(replyId);
+		return threadReplyDmo.dfDGetReplyDetail(replyId);
 	}
 }

@@ -35,7 +35,7 @@ public class DiscussionForumTest {
 		newThreadReply.setSubmittedTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		newThreadReply.setSubmittedUserid(11L);
 		
-		threadReplyService.df_s_removeAttachedFile(90L);
+		threadReplyService.dfSRemoveAttachedFile(90L);
 
 /*		// Rupesh Impl
 //		DfTopic topic = new DfTopic();

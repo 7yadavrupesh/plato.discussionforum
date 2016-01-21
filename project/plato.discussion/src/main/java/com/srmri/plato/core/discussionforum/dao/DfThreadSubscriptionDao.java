@@ -25,18 +25,18 @@ public interface DfThreadSubscriptionDao {
 	 *  Method Declaration
 	 *  Add Subscription
 	 */
-	void df_d_addSubscription(DfThreadSubscription sbs);
+	void dfDAddSubscription(DfThreadSubscription sbs);
 	
 	/*
 	 *  Method Declaration
 	 *  Remove Subscription
 	 */
-	void df_d_removeSubscription(Long threadId,Long userId);
+	void dfDRemoveSubscription(Long threadId,Long userId);
 	
 	/*
 	 *  Method Declaration
 	 *  Get Thread Subscri
 	 */
-	List<DfThreadSubscription> df_d_getThreadSubscriberList();
-	boolean df_d_isSubscribed(Long thread_id,Long loginUserId);
+	List<DfThreadSubscription> dfDGetThreadSubscriberList();
+	boolean dfDIsSubscribed(Long thread_id,Long loginUserId);
 }

@@ -25,53 +25,53 @@ public interface DfTopicDao {
 	 *  Method Declaration
 	 *  Add Topic
 	 */
-	void df_d_addTopic(DfTopic topic);
+	void dfDAddTopic(DfTopic topic);
 	
 	/*
 	 *  Method Declaration
 	 *  Delete Topic
 	 */
-	void df_d_deteteTopic(Long topicId);
+	void dfDDeteteTopic(Long topicId);
 	
 	/*
 	 *  Method Declaration
 	 *  Update Topic
 	 */
-	boolean df_d_updateTopic(DfTopic topic);
+	boolean dfDUpdateTopic(DfTopic topic);
 	
 	/*
 	 * Method Declaration 
 	 * Get Topic
 	 */
-	DfTopic df_d_getTopic(Long topicId);
+	DfTopic dfDGetTopic(Long topicId);
 	
 	/*
 	 *  Method Declaration
 	 *  Get All Topic List
 	 */
-	List<DfTopic> df_d_getAllTopicList();
+	List<DfTopic> dfDGetAllTopicList();
 	
 	/*
 	 *  Method Declaration
 	 *  Get Topic List
 	 */
-	List<DfTopic> df_d_getTopicList(List<Long> topicIdList);
+	List<DfTopic> dfDGetTopicList(List<Long> topicIdList);
 	
 	/*
 	 *  Method Declaration
 	 *  Get Topics, User Act As Moderator
 	 */
-	List<DfTopic> df_d_getTopicUserActModerator(Long userId);
-	List<DfTopic> df_d_getTopicList(Long userId);
-	List<DfTopic> df_d_getAllDeletedTopic();
+	List<DfTopic> dfDGetTopicUserActModerator(Long userId);
+	List<DfTopic> dfDGetTopicList(Long userId);
+	List<DfTopic> dfDGetAllDeletedTopic();
 
-	List<DfTopic> getAllDeletedNonDeletedTopicList();
+	List<DfTopic> dfDGetAllDeletedNonDeletedTopicList();
 
-	List<DfTopic> df_d_getAllUnApprovedTopics();
+	List<DfTopic> dfDGetAllUnApprovedTopics();
 
-	void df_d_approveTopic(Long topic_id);
+	void dfDApproveTopic(Long topic_id);
 
-	List<DfTopic> df_d_getTopicList();
+	List<DfTopic> dfDGetTopicList();
 
-	List<DfTopic> df_d_getAllTopicsApprovedByUser(Long userId);
+	List<DfTopic> dfDGetAllTopicsApprovedByUser(Long userId);
 }

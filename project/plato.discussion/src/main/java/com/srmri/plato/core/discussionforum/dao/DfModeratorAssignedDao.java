@@ -24,28 +24,28 @@ public interface DfModeratorAssignedDao {
 	 *  Method Declaration
 	 *  Add Moderator
 	 */
-	Long df_d_addModerator(DfModeratorAssigned moderator);
+	Long dfDAddModerator(DfModeratorAssigned moderator);
 	
 	/*
 	 *  Method Declaration
 	 *  Gets All Topics, User Act As Moderator
 	 */
-	List<DfModeratorAssigned> df_d_getTopicUserActModerator(Long modId);
+	List<DfModeratorAssigned> dfDGetTopicUserActModerator(Long modId);
 	/*
 	 *  Method Declaration
 	 *  Remove Moderator
 	 */
-	void df_d_removeModerator(Long modId);
+	void dfDRemoveModerator(Long modId);
 	/*
 	 *  Method Declaration
 	 *  Get Moderator List
 	 */
-	List<Long> df_d_getModeratorList(Long topicId);
+	List<Long> dfDGetModeratorList(Long topicId);
 
-	List<DfModeratorAssigned> df_d_getModeratorObjList(Long topicId);
+	List<DfModeratorAssigned> dfDGetModeratorObjList(Long topicId);
 
-	DfModeratorAssigned df_d_getModerator(Long assignedToUserid, Long topicId);
+	DfModeratorAssigned dfDGetModerator(Long assignedToUserid, Long topicId);
 
-	List<DfModeratorAssigned> df_d_getAllModerators();
+	List<DfModeratorAssigned> dfDGetAllModerators();
 
 }

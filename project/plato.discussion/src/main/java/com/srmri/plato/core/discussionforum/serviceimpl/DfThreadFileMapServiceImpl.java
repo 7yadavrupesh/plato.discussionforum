@@ -21,47 +21,47 @@ public class DfThreadFileMapServiceImpl implements DfThreadFileMapService{
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void df_s_addThreadFileMap(DfThreadFileMap threadFileMap) {
+	public void dfSAddThreadFileMap(DfThreadFileMap threadFileMap) {
 		// TODO Auto-generated method stub
-		threadFileMapDao.df_d_addThreadFileMap(threadFileMap);
+		threadFileMapDao.dfDAddThreadFileMap(threadFileMap);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void df_s_removeThreadFileMap(DfThreadFileMap threadFileMap) {
+	public void dfSRemoveThreadFileMap(DfThreadFileMap threadFileMap) {
 		// TODO Auto-generated method stub
-		threadFileMapDao.df_d_removeThreadFileMap(threadFileMap);
+		threadFileMapDao.dfDRemoveThreadFileMap(threadFileMap);
 	}
 
 	@Override
-	public List<DfThreadFileMap> df_s_getTheadFileMapList(Long threadId) {
+	public List<DfThreadFileMap> dfSGetTheadFileMapList(Long threadId) {
 		// TODO Auto-generated method stub
-		return threadFileMapDao.df_d_getTheadFileMapList(threadId);
+		return threadFileMapDao.dfDGetTheadFileMapList(threadId);
 	}
 
 	@Override
-	public List<Long> df_s_getFileList(Long threadId) {
+	public List<Long> dfSGetFileList(Long threadId) {
 		// TODO Auto-generated method stub
-		return threadFileMapDao.df_d_getFileList(threadId);
+		return threadFileMapDao.dfDGetFileList(threadId);
 	}
 
 	@Override
-	public DfThreadFileMap df_s_getThreadFileMap(Long fileId) {
+	public DfThreadFileMap dfSGetThreadFileMap(Long fileId) {
 		// TODO Auto-generated method stub
-		return threadFileMapDao.df_d_getThreadFileMap(fileId);
+		return threadFileMapDao.dfDGetThreadFileMap(fileId);
 	}
 
 	@Override
-	public void df_s_addThreadFileMap(Long threadId, Long uploadedFileId) {
+	public void dfSAddThreadFileMap(Long threadId, Long uploadedFileId) {
 		// TODO Auto-generated method stub
-		threadFileMapDao.df_d_addThreadFileMap(threadId,uploadedFileId);
+		threadFileMapDao.dfDAddThreadFileMap(threadId,uploadedFileId);
 	}
 	
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_removeThreadFileMap(Long c) {
+	public void dfSRemoveThreadFileMap(Long c) {
 		// TODO Auto-generated method stub
-		threadFileMapDao.df_d_removeThreadFileMap(c);
+		threadFileMapDao.dfDRemoveThreadFileMap(c);
 	}
 }

@@ -35,9 +35,9 @@ public class DfAttachedFileServiceImpl implements DfAttachedFileService{
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public Long df_s_addAttachedFile(DfAttachedFile attachedFile) {
+	public Long dfSAddAttachedFile(DfAttachedFile attachedFile) {
 		// TODO Auto-generated method stub
-		return attachedFileDao.df_d_addAttachedFile(attachedFile);
+		return attachedFileDao.dfDAddAttachedFile(attachedFile);
 	}
 
 	/*
@@ -46,21 +46,21 @@ public class DfAttachedFileServiceImpl implements DfAttachedFileService{
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_removeAttachedFile(Long fileId) {
+	public void dfSRemoveAttachedFile(Long fileId) {
 		// TODO Auto-generated method stub
-		attachedFileDao.df_d_removeAttachedFile(fileId);
+		attachedFileDao.dfDRemoveAttachedFile(fileId);
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_removeAttachedFile(DfAttachedFile file) {
+	public void dfSRemoveAttachedFile(DfAttachedFile file) {
 		// TODO Auto-generated method stub
-		attachedFileDao.df_d_removeAttachedFile(file);
+		attachedFileDao.dfDRemoveAttachedFile(file);
 	}
 	@Override
-	public DfAttachedFile df_s_getAttachedFile(Long fileId) {
+	public DfAttachedFile dfSGetAttachedFile(Long fileId) {
 		// TODO Auto-generated method stub
-		return attachedFileDao.df_d_getAttachedFile(fileId);
+		return attachedFileDao.dfDGetAttachedFile(fileId);
 		
 	}
 }

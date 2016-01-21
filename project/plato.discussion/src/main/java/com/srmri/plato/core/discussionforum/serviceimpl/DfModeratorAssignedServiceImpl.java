@@ -43,7 +43,7 @@ public class DfModeratorAssignedServiceImpl implements DfModeratorAssignedServic
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public boolean df_s_setModerator(Long topicId, Long userId, boolean flag) {
+	public boolean dfSSetModerator(Long topicId, Long userId, boolean flag) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -53,53 +53,53 @@ public class DfModeratorAssignedServiceImpl implements DfModeratorAssignedServic
 	 *  Notify Moderator
 	 */
 	@Override
-	public boolean df_s_notifyModerator() {
+	public boolean dfSNotifyModerator() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<Long> df_s_getModeratorList(Long topicId) {
+	public List<Long> dfSGetModeratorList(Long topicId) {
 		// TODO Auto-generated method stub
-		return moderatorDao.df_d_getModeratorList(topicId);
+		return moderatorDao.dfDGetModeratorList(topicId);
 	}
 
 	@Override
-	public List<DfModeratorAssigned> df_s_getTopicUserActModerator(Long loginUserId) {
+	public List<DfModeratorAssigned> dfSGetTopicUserActModerator(Long loginUserId) {
 		// TODO Auto-generated method stub
-		return moderatorDao.df_d_getTopicUserActModerator(loginUserId);
+		return moderatorDao.dfDGetTopicUserActModerator(loginUserId);
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_addModerator(DfModeratorAssigned moderator) {
+	public void dfSAddModerator(DfModeratorAssigned moderator) {
 		// TODO Auto-generated method stub
-		moderatorDao.df_d_addModerator(moderator);
+		moderatorDao.dfDAddModerator(moderator);
 	}
 
 	@Override
-	public List<DfModeratorAssigned> df_s_getModeratorObjList(Long topicId) {
+	public List<DfModeratorAssigned> dfSGetModeratorObjList(Long topicId) {
 		// TODO Auto-generated method stub
-		return moderatorDao.df_d_getModeratorObjList(topicId);
+		return moderatorDao.dfDGetModeratorObjList(topicId);
 	}
 
 	@Override
-	public DfModeratorAssigned df_s_getModerator(Long assignedToUserid, Long topicId) {
+	public DfModeratorAssigned dfSGetModerator(Long assignedToUserid, Long topicId) {
 		// TODO Auto-generated method stub
-	return 	moderatorDao.df_d_getModerator(assignedToUserid,topicId);
+	return 	moderatorDao.dfDGetModerator(assignedToUserid,topicId);
 
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
-	public void df_s_removeModerator(DfModeratorAssigned moderatorToDelete) {
+	public void dfSRemoveModerator(DfModeratorAssigned moderatorToDelete) {
 		// TODO Auto-generated method stub
-		moderatorDao.df_d_removeModerator(moderatorToDelete.getModeratorId());
+		moderatorDao.dfDRemoveModerator(moderatorToDelete.getModeratorId());
 	}
 
 	@Override
-	public List<DfModeratorAssigned> df_s_getAllModerators() {
+	public List<DfModeratorAssigned> dfSGetAllModerators() {
 		// TODO Auto-generated method stub
-		return moderatorDao.df_d_getAllModerators();
+		return moderatorDao.dfDGetAllModerators();
 	}
 }

@@ -24,23 +24,23 @@ public interface DfThreadReplyDao {
 	 *  Method Declaration
 	 *  Insert New Reply
 	 */
-	void df_d_insertNewReply(DfThreadReply threadReply);
+	void dfDInsertNewReply(DfThreadReply threadReply);
 	
 	/*
 	 *  Method Declaration
 	 *  Get Reply Detail
 	 */
-	DfThreadReply df_d_getReplyDetail(Long replyId);
+	DfThreadReply dfDGetReplyDetail(Long replyId);
 	
 	/*
 	 *  Method Declaration
 	 *  Get Thread Reply List
 	 */
-	List<DfThreadReply> df_d_getThreadReplyList(Long threadId);
+	List<DfThreadReply> dfDGetThreadReplyList(Long threadId);
 	
 	/*
 	 *  Method Declaration
 	 *  Delete Thread Reply
 	 */
-	void df_d_deleteThreadReply(Long replyId);
+	void dfDDeleteThreadReply(Long replyId);
 }

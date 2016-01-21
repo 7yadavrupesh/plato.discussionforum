@@ -25,45 +25,45 @@ public interface DfThreadService {
 	 *  Method declaration
 	 *  Create New Thread
 	 */
-	boolean df_s_newThreadCreate(Long topicId, Long userId, String title,String description,Long file);
+	boolean dfSNewThreadCreate(Long topicId, Long userId, String title,String description,Long file);
 	/*
 	 *  Method declaration
 	 *  Delete Thread
 	 */
-	boolean df_s_deleteThread(DfThread thread);
+	boolean dfSDeleteThread(DfThread thread);
 	/*
 	 *  Method declaration
 	 *  Change Visibility Of Given Thread
 	 */
-	boolean df_s_changeVisibilityThread(DfThread thread, boolean flag);
+	boolean dfSChangeVisibilityThread(DfThread thread, boolean flag);
 	/*
 	 *  Method declaration
 	 *  Get All Threads Under Given Thread
 	 */
-	List<DfThread> df_s_getTopicThreads(DfTopic topic);
+	List<DfThread> dfSGetTopicThreads(DfTopic topic);
 	/*
 	 *  Method declaration
 	 *  Approve Thread
 	 */
-	boolean df_s_approveThread(Long threadId, boolean flag);
+	boolean dfSApproveThread(Long threadId, boolean flag);
 	/*
 	 *  Method declaration
 	 *  Delete Thread
 	 */
-	boolean df_s_deleteThread(Long threadId);
+	boolean dfSDeleteThread(Long threadId);
 	/*
 	 *  Method declaration
 	 *  Get Topic Thread
 	 */
-	List<DfThread> df_s_getTopicThreads(Long topicId);
-	List<DfThread> df_s_getAllThreadList();
-	DfThread df_s_getThread(Long threadId);
-	boolean df_s_addThread(DfThread thread);
-	List<DfThread> df_s_getAllUnApprovedThreadList();
-	List<DfThread> df_s_getDeletedThreadList(Long UserId);
-	void df_s_undoDeletedThread(Long thread_id);
-	List<DfThread> df_s_getAllDeletedThreadList(Long topicId);
-	List<DfThread> df_s_getAllDeletedThreadList();
-	List<DfThread> df_s_getAllThreadListUser(Long userId);
-	List<DfThread> df_s_getAllThreadApprovedByUser(Long userId);
+	List<DfThread> dfSGetTopicThreads(Long topicId);
+	List<DfThread> dfSGetAllThreadList();
+	DfThread dfSGetThread(Long threadId);
+	boolean dfSAddThread(DfThread thread);
+	List<DfThread> dfSGetAllUnApprovedThreadList();
+	List<DfThread> dfSGetDeletedThreadList(Long UserId);
+	void dfSUndoDeletedThread(Long thread_id);
+	List<DfThread> dfSGetAllDeletedThreadList(Long topicId);
+	List<DfThread> dfSGetAllDeletedThreadList();
+	List<DfThread> dfSGetAllThreadListUser(Long userId);
+	List<DfThread> dfSGetAllThreadApprovedByUser(Long userId);
 }

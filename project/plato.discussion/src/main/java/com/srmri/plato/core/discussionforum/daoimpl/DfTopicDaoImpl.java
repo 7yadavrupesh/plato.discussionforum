@@ -40,7 +40,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 *  Method definition
 	 *  Add Topic
 	 */
-	public void df_d_addTopic(DfTopic topic){
+	public void dfDAddTopic(DfTopic topic){
 		sessionFactory.getCurrentSession().saveOrUpdate(topic);
 	}
 	
@@ -48,7 +48,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 *  Method definition
 	 *  Get Topic
 	 */
-	public DfTopic df_d_getTopic(Long topicId){
+	public DfTopic dfDGetTopic(Long topicId){
 		return (DfTopic)sessionFactory.getCurrentSession().get(DfTopic.class, topicId); 
 	}
 	
@@ -56,10 +56,10 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 *  Method definition
 	 *  Delete Topic
 	 */
-	public void df_d_deteteTopic(Long topicId){
-		DfTopic topic = df_d_getTopic(topicId);
+	public void dfDDeteteTopic(Long topicId){
+		DfTopic topic = dfDGetTopic(topicId);
 		topic.setDeletedFlag(true);
-		df_d_addTopic(topic);
+		dfDAddTopic(topic);
 	}
 	
 	/*
@@ -67,7 +67,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 *  Get All Topic List
 	 */
 	@SuppressWarnings("unchecked")
-	public List<DfTopic> df_d_getAllTopicList(){
+	public List<DfTopic> dfDGetAllTopicList(){
 		Criteria cri= sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("deletedFlag", false));
 		cri.add(Restrictions.eq("approvedFlag", true));
@@ -78,7 +78,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 *  Method definition
 	 *  Get Topic List
 	 */
-	public List<DfTopic> df_d_getTopicList(List<Long> topicIdList){
+	public List<DfTopic> dfDGetTopicList(List<Long> topicIdList){
 		List<DfTopic> list = null;
 		return list;
 	}
@@ -87,7 +87,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 *  Method definition
 	 *  Update Topic
 	 */
-	public boolean df_d_updateTopic(DfTopic topic){
+	public boolean dfDUpdateTopic(DfTopic topic){
 		sessionFactory.getCurrentSession().saveOrUpdate(topic);
 		return false;
 	}
@@ -98,7 +98,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfTopic> df_d_getTopicUserActModerator(Long userId) {
+	public List<DfTopic> dfDGetTopicUserActModerator(Long userId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("createdUserid", userId));
@@ -108,7 +108,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfTopic> df_d_getTopicList(Long userId) {
+	public List<DfTopic> dfDGetTopicList(Long userId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.and(Restrictions.eq("createdUserid", userId),Restrictions.eq("deletedFlag", false)));
@@ -118,7 +118,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	}
 
 	@Override
-	public List<DfTopic> df_d_getAllDeletedTopic() {
+	public List<DfTopic> dfDGetAllDeletedTopic() {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("deletedFlag", true));
@@ -128,13 +128,13 @@ public class DfTopicDaoImpl implements DfTopicDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfTopic> getAllDeletedNonDeletedTopicList() {
+	public List<DfTopic> dfDGetAllDeletedNonDeletedTopicList() {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createCriteria(DfTopic.class).list();
 	}
 
 	@Override
-	public List<DfTopic> df_d_getAllUnApprovedTopics() {
+	public List<DfTopic> dfDGetAllUnApprovedTopics() {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("approvedFlag", false));
@@ -143,7 +143,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 	}
 
 	@Override
-	public void df_d_approveTopic(Long topic_id) {
+	public void dfDApproveTopic(Long topic_id) {
 		// TODO Auto-generated method stub
 		DfTopic topic = (DfTopic) sessionFactory.getCurrentSession().load(DfTopic.class, topic_id);
 		topic.setApprovedFlag(true);
@@ -151,13 +151,13 @@ public class DfTopicDaoImpl implements DfTopicDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DfTopic> df_d_getTopicList() {
+	public List<DfTopic> dfDGetTopicList() {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createCriteria(DfTopic.class).list();
 	}
 
 	@Override
-	public List<DfTopic> df_d_getAllTopicsApprovedByUser(Long userId) {
+	public List<DfTopic> dfDGetAllTopicsApprovedByUser(Long userId) {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
 		cri.add(Restrictions.eq("approvedBy", userId));
