@@ -865,6 +865,7 @@ public class CommonController {
 	public String deleteThread(Model model, @RequestParam Long thread_id,@RequestParam(value="message", required =false) String message, HttpServletRequest request) {
 		if(message != null){
 			// send mail for delete 
+			sendUserMail(message);
 		}
 		Long topic_id = threadService.dfSGetThread(thread_id).getTopicId();
 		threadService.dfSDeleteThread(thread_id);
