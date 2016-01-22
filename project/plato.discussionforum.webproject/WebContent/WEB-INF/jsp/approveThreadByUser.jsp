@@ -367,7 +367,8 @@
 					Approved Threads <small>Approved Threads</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
 					<li class="active">Approved Threads</li>
 				</ol>
 			</section>
@@ -400,17 +401,23 @@
 											<th>Topic</th>
 											<th>Created By</th>
 											<th>Created At</th>
+											<th>Times Viewed</th>
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${deletedThreads}" var="thread">
 											<tr>
-												<td><c:out value="${thread.key.threadTitle}" /></td>
+												<td>
+												<a onclick="return increaseClick(${thread.key.threadId});" title="${thread.key.threadTitle}"
+													href="viewThread.html?thread_id=${thread.key.threadId}">
+														<c:out value="${thread.key.threadTitle}" />
+												</a></td>
 												<td><c:out value="${thread.key.description}" /></td>
 												<td><c:out value="${topics[thread.key.topicId]}" /></td>
 												<td><c:out value="${thread.value}" /></td>
 												<td><c:out value="${thread.key.createdTime}" /></td>
+												<td><c:out value="${thread.key.numberOfView}" /></td>
 												<td><a
 													href="editThread.html?thread_id=${thread.key.threadId}"><span
 														class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp; <a
@@ -755,6 +762,16 @@
 			}
 		});
 		});
+		function increaseClick(id){
+	       	 $.ajax({
+	                url : "increaseThreadCount.html",
+	                data: "thread_id="+id,
+	                type : "GET",
+	                success : function(result) {
+	                return true;
+	                }
+	                });	
+	        }
     </script>
 </body>
 </html>

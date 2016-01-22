@@ -81,12 +81,23 @@ public class DfThread implements Serializable{
 	@Column(name = "approved_by")
 	private Long approvedBy;
 	
+	@Column(name="number_of_view")
+	private Long numberOfView = 0L;
+	
 	public Long getApprovedBy() {
 		return approvedBy;
 	}
 
 	public void setApprovedBy(Long approvedBy) {
 		this.approvedBy = approvedBy;
+	}
+
+	public Long getNumberOfView() {
+		return numberOfView;
+	}
+
+	public void setNumberOfView(Long numberOfView) {
+		this.numberOfView = numberOfView;
 	}
 
 	public DfThread() {

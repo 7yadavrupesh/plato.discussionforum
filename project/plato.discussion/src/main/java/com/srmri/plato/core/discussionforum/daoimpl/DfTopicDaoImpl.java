@@ -74,23 +74,6 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		return cri.list();
 	}
 	
-	/*
-	 *  Method definition
-	 *  Get Topic List
-	 */
-	public List<DfTopic> dfDGetTopicList(List<Long> topicIdList){
-		List<DfTopic> list = null;
-		return list;
-	}
-	
-	/*
-	 *  Method definition
-	 *  Update Topic
-	 */
-	public boolean dfDUpdateTopic(DfTopic topic){
-		sessionFactory.getCurrentSession().saveOrUpdate(topic);
-		return false;
-	}
 	
 	/*
 	 *  Method definition
@@ -117,6 +100,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		return cri.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DfTopic> dfDGetAllDeletedTopic() {
 		// TODO Auto-generated method stub
@@ -133,6 +117,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		return sessionFactory.getCurrentSession().createCriteria(DfTopic.class).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DfTopic> dfDGetAllUnApprovedTopics() {
 		// TODO Auto-generated method stub
@@ -156,6 +141,7 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		return sessionFactory.getCurrentSession().createCriteria(DfTopic.class).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DfTopic> dfDGetAllTopicsApprovedByUser(Long userId) {
 		// TODO Auto-generated method stub

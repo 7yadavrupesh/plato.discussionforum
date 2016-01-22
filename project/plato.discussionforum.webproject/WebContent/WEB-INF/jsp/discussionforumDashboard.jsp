@@ -397,8 +397,8 @@
 				<ol class="breadcrumb">
 					<li><a href="discussionforumDashboard.html"><i
 							class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active"><a href="discussionforumDashboard.html"><i
-							class="fa fa-dashboard"></i> Discussion Forum</a></li>
+					<li class="active"><i
+							class="fa fa-group"></i> Discussion Forum</li>
 				</ol>
 			</section>
 
@@ -417,9 +417,6 @@
 								<div class="small-box bg-blue">
 									<div class="inner">
 										<h3>Topics</h3>
-										<p>
-											<a href="#">Recent Topics</a>
-										</p>
 										<p>
 											<a href="listTopic.html">All Topic</a>
 										</p>
@@ -443,9 +440,6 @@
 								<div class="small-box bg-green">
 									<div class="inner">
 										<h3>Threads</h3>
-										<p>
-											<a href="#">Recent Threads</a>
-										</p>
 										<p>
 											<a href="listThread.html">All Threads</a>
 										</p>

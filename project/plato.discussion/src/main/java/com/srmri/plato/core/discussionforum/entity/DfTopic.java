@@ -70,6 +70,15 @@ public class DfTopic implements Serializable{
 	@Column(name="approved_by")
 	private Long approvedBy;
 	
+	@Column(name="number_of_view")
+	private Long numberOfView = 0L;
+	
+	public Long getNumberOfView() {
+		return numberOfView;
+	}
+	public void setNumberOfView(Long numberOfView) {
+		this.numberOfView = numberOfView;
+	}
 	public Long getApprovedBy() {
 		return approvedBy;
 	}

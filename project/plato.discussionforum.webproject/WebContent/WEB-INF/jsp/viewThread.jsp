@@ -422,8 +422,9 @@
 				<div class="box box-primary direct-chat direct-chat-primary">
 					<!-- <div class="box-header with-border"> -->
 					<!-- <i class="fa fa-text-width"></i> -->
+					
 					<h3 class="box-title">
-						<c:out value="Q. ${thread.threadTitle}" />
+						&nbsp;&nbsp;<c:out value="${thread.threadTitle}" />
 					</h3>
 					<!-- </div> -->
 					<!-- /.box-header -->

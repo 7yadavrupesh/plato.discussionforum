@@ -382,13 +382,13 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                <h1>
-                  Topic List
-                  <small>Choose any topic for discussion</small>
+                  Moderator List
+                  <small></small>
                </h1>
                <ol class="breadcrumb">
                   <li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
 					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
-                  <li class="active">Topic List</li>
+                  <li class="active">Moderator List</li>
                </ol>
             </section>
             <!-- Display alert message -->
@@ -418,12 +418,9 @@
                            <table id="example1" class="table table-bordered">
                               <thead>
                                  <tr>
-                                    <th>Title</th>
-                                    <th>Created At</th>
+                                    <th>Moderator</th>
+                                    <th>Topic</th>
                                     <th>Created By</th>
-                                    <th>Number Of Threads</th>
-                                    <th>Times Viewed</th>
-                                    <th>Action</th>
                                  </tr>
                               </thead>
                               <tbody>

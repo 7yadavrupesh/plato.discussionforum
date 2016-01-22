@@ -367,7 +367,8 @@
 					Approve Thread <small>Approve thread</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
 					<li class="active">Approve Thread</li>
 				</ol>
 			</section>
@@ -406,7 +407,12 @@
 									<tbody>
 										<c:forEach items="${deletedThreads}" var="thread">
 											<tr>
-												<td><c:out value="${thread.key.threadTitle}" /></td>
+											<td>
+												<a title="${thread.key.threadTitle}"
+													href="viewThread.html?thread_id=${thread.key.threadId}">
+														<c:out value="${thread.key.threadTitle}" />
+												</a>
+												</td>
 												<td><c:out value="${thread.key.description}" /></td>
 												<td><c:out value="${topics[thread.key.topicId]}" /></td>
 												<td><c:out value="${thread.value}" /></td>
@@ -664,7 +670,9 @@
 	<!-- page script -->
 	<script>
       $(function () {
-        $("#example1").DataTable();
+     	 $('#example1').dataTable( {
+ 		    "order": [1,'desc']
+ 		} );
         $('#example2').DataTable({
           "paging": true,
           "lengthChange": false,

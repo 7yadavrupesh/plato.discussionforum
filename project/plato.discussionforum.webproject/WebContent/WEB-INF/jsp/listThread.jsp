@@ -367,7 +367,8 @@
 					Thread List <small>Choose any thread for discussion</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
 					<li class="active">Thread List</li>
 				</ol>
 			</section>
@@ -403,14 +404,15 @@
 											<th>Topic</th>
 											<th>Created At</th>
 											<th>Created By</th>
-											<th>Number Of Replies</th>
+											<th>Replies</th>
+											<th>Times Viewed</th>
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${threads}" var="thread">
 											<tr>
-												<td><a title="${thread.key.threadTitle}"
+												<td><a onclick="return increaseClick(${thread.key.threadId});" title="${thread.key.threadTitle}"
 													href="viewThread.html?thread_id=${thread.key.threadId}">
 														<c:out value="${thread.key.threadTitle}" />
 												</a></td>
@@ -422,6 +424,8 @@
 														value="${thread.value}" /></td>
 												<td title="${numberOfReplies[thread.key.threadId]}"><c:out
 														value="${numberOfReplies[thread.key.threadId]}" /></td>
+												<td title="${thread.key.numberOfView}"><c:out
+												     	value="${thread.key.numberOfView}" /></td>
 												<td><c:choose>
 														<c:when
 															test="${moderatorAllowMap[thread.key.threadId] == true }">
@@ -643,7 +647,9 @@
 	<!-- page script -->
 	<script>
 		$(function() {
-			$("#example1").DataTable();
+       	 $('#example1').dataTable( {
+ 		    "order": [2,'desc']
+ 		} );
 			$('#example2').DataTable({
 				"paging" : true,
 				"lengthChange" : false,
@@ -666,6 +672,16 @@
 			});
 			return false;
 		}
+		function increaseClick(id){
+       	 $.ajax({
+                url : "increaseThreadCount.html",
+                data: "thread_id="+id,
+                type : "GET",
+                success : function(result) {
+                return true;
+                }
+                });	
+        }
 	</script>
 </body>
 </html>

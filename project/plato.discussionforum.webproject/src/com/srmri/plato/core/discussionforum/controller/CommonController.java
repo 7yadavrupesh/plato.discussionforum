@@ -7,11 +7,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,7 +61,28 @@ import com.srmri.plato.core.discussionforum.service.DfTopicService;
 @Controller
 @SessionAttributes({"user"})
 public class CommonController {
-
+	
+	@Autowired
+	private MailSender mailSender;
+	
+	//@RequestMapping(value = "/mailsender")
+	void sendUserMail(String message){
+		String sender="srmtestingplato@gmail.com";//sender email id
+		String receiver="7yadavrupesh@gmail.com";//receiver email id
+		sendMail(sender,receiver,"Disapprove Topic",message);
+		System.out.println("success");
+	}
+	
+	public void sendMail(String from, String to, String subject, String msg) {
+		 
+		SimpleMailMessage message = new SimpleMailMessage();
+ 
+		message.setFrom(from);
+		message.setTo(to);
+		message.setSubject(subject);
+		message.setText(msg);
+		mailSender.send(message);	
+	}
 	//	@Autowired
 	//	@Autowired
 	//	private RoleService roleService;
@@ -112,12 +136,6 @@ public class CommonController {
 	private DfThreadFileMapService threadFileMapService;
 	@Autowired
 	private DfThreadReplyFileMapService threadReplyFileMapService;
-
-	/*@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index(Model model){
-		return "index";
-	}
-	 */
 
 	@RequestMapping(value = "/discussionforumDashboard", method = RequestMethod.GET)
 	public String discussionforumDashboard(Model model) {	         
@@ -309,7 +327,7 @@ public class CommonController {
 	@RequestMapping(value = "/disApproveTopic", method = RequestMethod.GET)
 	public String disApproveTopic(Model model, @RequestParam Long topic_id, @RequestParam String message) {
 		// sendMail(message);
-		System.out.println(message+"Reached");
+		sendUserMail(message);
 		topicService.dfSDeleteTopic(topic_id);
 
 		return "redirect:approveTopic.html";
@@ -318,7 +336,7 @@ public class CommonController {
 	public String approveTopicByUser(Model model, HttpServletRequest request) {
 		Long userId = Long.parseLong(request.getParameter("userId"));
 		Map<DfTopic, String> approveTopicList = new HashMap<DfTopic, String>();
-		
+
 		if(checkAdmin(loginUserId, roleId)){
 			List<DfTopic> topicsApprovedByUser = topicService.dfSGetAllTopicsApprovedByUser(userId);
 			for(DfTopic topic: topicsApprovedByUser){
@@ -384,11 +402,19 @@ public class CommonController {
 		model.addAttribute("numberOfReplies", numberOfReplies);
 		return "listThread";
 	}
+	@RequestMapping(value = "/increaseTopicCount", method = RequestMethod.GET)
+	public String increaseTopicCount(Model model, @RequestParam Long topic_id){
+
+		// increasing times view
+		DfTopic topic =  topicService.dfSGetTopic(topic_id);
+		topic.setNumberOfView(topic.getNumberOfView()+1);
+		topicService.dfSInsertTopic(topic);
+		return "redirect:index.jsp";
+	}
 
 	@RequestMapping(value = "/listThreadTopic", method = RequestMethod.GET)
 	public String listThreadTopic(Model model, @RequestParam Long topic_id/*, @ModelAttribute("user") UserBean userBean*/) {
-		/*long userId = userBean.getUserId();
-		int roleId = userBean.getRoleId();*/
+
 		Map<Long,String> topics = new HashMap<Long,String>();
 		List<DfThread>  threadList = new ArrayList<DfThread>();
 		threadList = threadService.dfSGetTopicThreads(topic_id);
@@ -734,11 +760,20 @@ public class CommonController {
 		model.addAttribute("checkSubscribe", threadSubscriptionService.dfSIsSubscribed(thread_id,loginUserId));
 		return model;
 	}
+
+	@RequestMapping(value = "/increaseThreadCount", method = RequestMethod.GET)
+	public String increaseThreadCount(Model model, @RequestParam Long thread_id) {
+		// increase number of views
+		DfThread newThread = threadService.dfSGetThread(thread_id);
+		newThread.setNumberOfView(newThread.getNumberOfView()+1);
+		threadService.dfSAddThread(newThread);
+
+		return "redirect:index.jsp";
+	}
 	@RequestMapping(value = "/viewThread", method = RequestMethod.GET)
-	public String viewThread(Model model, @RequestParam Long thread_id/*, @ModelAttribute("user") UserBean userBean*/) {
-		//model = prepareViewThread(model,threadReply,thread_id);
-		/*long userId = userBean.getUserId();
-		int roleId = userBean.getRoleId();*/
+	public String viewThread(Model model, @RequestParam Long thread_id) {
+
+
 		List<Long> threadFileList = threadFileMapService.dfSGetFileList(thread_id);
 		Map<Long,String> finalThreadFileListMap = new HashMap<Long,String>();
 
@@ -877,7 +912,7 @@ public class CommonController {
 				}
 			}
 		}
-		
+
 		Map<DfThread, String> finalApprovalList = new HashMap<DfThread,String>();
 		for(DfThread thread: approvalList){
 			finalApprovalList.put(thread, usersListMap.get(thread.getCreatedUserid()));
@@ -886,7 +921,7 @@ public class CommonController {
 		model.addAttribute("deletedThreads",finalApprovalList);
 		return "approveThread";
 	}
-	
+
 	@RequestMapping(value = "/approvedThreadByUser", method = RequestMethod.GET)
 	public String approvedThreadByUser(Model model, HttpServletRequest request) {
 
@@ -920,7 +955,7 @@ public class CommonController {
 				}
 			}
 		}
-		*/
+		 */
 		Map<DfThread, String> finalApprovalList = new HashMap<DfThread,String>();
 		for(DfThread thread: approvalList){
 			finalApprovalList.put(thread, usersListMap.get(thread.getCreatedUserid()));
@@ -1365,5 +1400,4 @@ public class CommonController {
 		outStream.close();
 		return "redirect:viewThread.html?thread_id="+thread_id;
 	}
-
 }

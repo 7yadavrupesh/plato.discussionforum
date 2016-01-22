@@ -416,8 +416,9 @@ WARNING: Respond.js doesn't work if you view the page via file://
 					Add Thread <small>Insert new thread</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Insert New Thread</li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
+					<li class="active">Add Thread</li>
 				</ol>
 			</section>
 			<!-- Display alert message -->

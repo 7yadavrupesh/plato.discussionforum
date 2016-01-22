@@ -34,12 +34,6 @@ public interface DfTopicDao {
 	void dfDDeteteTopic(Long topicId);
 	
 	/*
-	 *  Method Declaration
-	 *  Update Topic
-	 */
-	boolean dfDUpdateTopic(DfTopic topic);
-	
-	/*
 	 * Method Declaration 
 	 * Get Topic
 	 */
@@ -51,11 +45,6 @@ public interface DfTopicDao {
 	 */
 	List<DfTopic> dfDGetAllTopicList();
 	
-	/*
-	 *  Method Declaration
-	 *  Get Topic List
-	 */
-	List<DfTopic> dfDGetTopicList(List<Long> topicIdList);
 	
 	/*
 	 *  Method Declaration

@@ -361,7 +361,8 @@
 					Deleted Thread List <small>Undo delete</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
 					<li class="active">Deleted Thread List</li>
 				</ol>
 			</section>
@@ -385,6 +386,7 @@
 											<th>Topic</th>
 											<th>Created At</th>
 											<th>Modified At</th>
+											<th>Times Viewed</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -400,6 +402,7 @@
 												</c:forEach>
 												<td><c:out value="${thread.createdTime}" /></td>
 												<td><c:out value="${thread.modifiedTime}" /></td>
+												<td><c:out value="${thread.numberOfView}" /></td>
 												<td><a
 													href="saveUndoDeletedThread.html?thread_id=${thread.threadId}"><scan class="fa fa-undo" title="Undo Delete"></scan></a></td>
 											</tr>

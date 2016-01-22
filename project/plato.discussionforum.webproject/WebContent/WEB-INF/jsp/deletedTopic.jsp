@@ -362,7 +362,8 @@
                 <small>Undo deleted topic</small>
               </h1>
               <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
                 <li class="active">Undo Deleted Topic</li>
               </ol>
             </section>

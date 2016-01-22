@@ -368,7 +368,8 @@
 					Approved Topics <small>Approved Topics</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
 					<li class="active">Approved Topics</li>
 				</ol>
 			</section>
@@ -400,16 +401,20 @@
 											<th>Description</th>
 											<th>Created By</th>
 											<th>Created At</th>
+											<th>Times Viewed</th>
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${approveTopics}" var="topic">
 											<tr>
-												<td><c:out value="${topic.key.topicTitle}" /></td>
+												<td><a onclick ="return increaseClick(${topic.key.topicId});" href="listThreadTopic.html?topic_id=${topic.key.topicId}">
+                                             <c:out value="${topic.key.topicTitle}" />
+                                          </a></td>
 												<td><c:out value="${topic.key.topicDescription}" /></td>
 												<td><c:out value="${topic.value}" /></td>
 												<td><c:out value="${topic.key.createdTime}" /></td>
+												<td><c:out value="${topic.key.numberOfView}" /></td>
 												<td><a
 													href="editTopic.html?topic_id=${topic.key.topicId}"><span
 														class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp; <a
@@ -707,6 +712,17 @@
 			}
 		});
 		});
+        function increaseClick(id){
+       	 $.ajax({
+                url : "increaseTopicCount.html",
+                data: "topic_id="+id,
+                type : "GET",
+                success : function(result) {
+                return true;
+                }
+                });	
+       	// return true;
+        }
 	</script>
 </body>
 </html>
