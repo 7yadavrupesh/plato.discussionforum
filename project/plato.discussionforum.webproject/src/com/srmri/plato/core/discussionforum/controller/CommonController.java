@@ -59,7 +59,6 @@ import com.srmri.plato.core.discussionforum.service.DfTopicService;
 //import main.java.com.srmri.plato.core.login.bean.UserBean;
 
 @Controller
-@SessionAttributes({"user"})
 public class CommonController {
 	
 	@Autowired
@@ -98,6 +97,7 @@ public class CommonController {
 	public CommonController(){
 		usersListMap.put(10L, "Rupesh");
 		usersListMap.put(11L, "Hitesh");
+		usersListMap.put(16L, "Awasthi");
 		usersListMap.put(101L, "Bhupendra");
 		usersListMap.put(102L, "Sagar");
 		admin.add(101L);
@@ -1400,5 +1400,18 @@ public class CommonController {
 		inputStream.close();
 		outStream.close();
 		return "redirect:viewThread.html?thread_id="+thread_id;
+	}
+	@RequestMapping(value = "/listModerator", method = RequestMethod.GET)
+	public String listModerator(Model model) {	
+
+		List<Long> distinctModerators = moderatorAssignedService.dfSGetAllDistinctModeratorsId();
+		List<DfModeratorAssigned> moderatorList = new ArrayList<DfModeratorAssigned>();
+		for(Long mod : distinctModerators){
+			System.out.println(moderatorAssignedService.dfSGetModerator(mod).getAssignedToUserid());
+			moderatorList.add(moderatorAssignedService.dfSGetModerator(mod));
+		}
+		model.addAttribute("moderatorList", moderatorList);
+		model.addAttribute("usersListMap", usersListMap);
+		return "listModerators";
 	}
 }

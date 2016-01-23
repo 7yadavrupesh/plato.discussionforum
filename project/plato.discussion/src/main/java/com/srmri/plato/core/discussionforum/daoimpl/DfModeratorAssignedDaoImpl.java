@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -79,7 +80,7 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 	 *  Method definition
 	 *  Get Moderator List
 	 */
-	@SuppressWarnings("null")
+
 	@Override
 	public List<Long> dfDGetModeratorList(Long topicId) {
 		// TODO Auto-generated method stub
@@ -118,10 +119,29 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 		else return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DfModeratorAssigned> dfDGetAllModerators() {
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		return cri.list();
+	}
+
+	@Override
+	public List<Long> dfDGetAllDistinctModeratorsId() {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		List <Long> modList = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class)
+				.setProjection(Projections.distinct(Projections.property("assignedToUserid"))).list();
+		sessionFactory.getCurrentSession().flush();
+		return modList;
+	}
+
+	@Override
+	public DfModeratorAssigned dfDGetModerator(Long moderatorId) {
+		// TODO Auto-generated method stub
+		DfModeratorAssigned obj=  (DfModeratorAssigned) sessionFactory.getCurrentSession().load(DfModeratorAssigned.class, moderatorId);
+		sessionFactory.getCurrentSession().flush();
+		return obj;
 	}
 }

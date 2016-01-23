@@ -419,51 +419,20 @@
                               <thead>
                                  <tr>
                                     <th>Moderator</th>
-                                    <th>Topic</th>
-                                    <th>Created By</th>
+                                    <th>Topics</th>
                                  </tr>
                               </thead>
                               <tbody>
-                                 <c:forEach items="${topics}" var="topic">
+                                 <c:forEach items="${moderatorList}" var="moderator">
                                     <tr>
                                        <td>
-                                          <a onclick ="return increaseClick(${topic.key.topicId});" href="listThreadTopic.html?topic_id=${topic.key.topicId}">
-                                             <c:out value="${topic.key.topicTitle}" />
-                                          </a>
+                                             <c:out value="${usersListMap[moderator.assignedToUserid]}" />
                                        </td>
                                        <td>
-                                          <c:out value="${topic.key.createdTime}" />
+                                       <a href="getListOfToipcsUnderModerator.html?moderator_id=${moderator.moderatorId}">Topics..</a>
+                                        
                                        </td>
-                                       <td>
-                                          <c:out value="${topic.value}" />
-                                       </td>
-                                       <td>
-                                          <c:out value="${topicWiseThreadList[topic.key.topicId]}" />
-                                       </td>
-										<td>
-                                          <c:out value="${topic.key.numberOfView}" />
-                                       </td>
-                                       <td>
-                                          <c:choose>
-                                             <c:when test="${moderatorAllowMap[topic.key.topicId] == true }">
-                                                <a href="editTopic.html?topic_id=${topic.key.topicId}"><span
-                                                   class="fa fa-edit" title="edit"></span></a> &nbsp;&nbsp;
-                                                <a onclick="return deleteThis(this);" href="deleteTopic.html?topic_id=${topic.key.topicId}"><span
-                                                   class="fa fa-remove" title="delete"></span></a>
-                                             </c:when>
-                                             <c:when test="${topic.key.createdUserid == loginUserId }">
-                                                <a href="editTopic.html?topic_id=${topic.key.topicId}"><span
-                                                   class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
-                                                <a onclick="return deleteThis(this);" href="deleteTopic.html?topic_id=${topic.key.topicId}"><span
-                                                   class="fa fa-remove" title="delete"></span></a>
-                                             </c:when>
-                                             <c:otherwise>
-                                                <span class="fa fa-edit" title="edit"></span>&nbsp;&nbsp;
-                                                <span class="fa fa-remove" title="delete"></span>
-                                             </c:otherwise>
-                                          </c:choose>
-                                       </td>
-                                    </tr>
+                                      </tr>
                                  </c:forEach>
                               </tbody>
                            </table>

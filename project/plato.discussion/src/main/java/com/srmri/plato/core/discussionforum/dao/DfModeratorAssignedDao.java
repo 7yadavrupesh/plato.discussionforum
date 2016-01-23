@@ -48,4 +48,8 @@ public interface DfModeratorAssignedDao {
 
 	List<DfModeratorAssigned> dfDGetAllModerators();
 
+	List<Long> dfDGetAllDistinctModeratorsId();
+
+	DfModeratorAssigned dfDGetModerator(Long moderatorId);
+
 }

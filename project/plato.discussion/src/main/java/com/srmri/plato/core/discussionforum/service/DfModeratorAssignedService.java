@@ -45,4 +45,10 @@ public interface DfModeratorAssignedService {
 
 	List<DfModeratorAssigned> dfSGetAllModerators();
 
+	List<Long> dfSGetAllDistinctModeratorsId();
+
+	DfModeratorAssigned dfSGetModerator(Long moderatorId);
+
+	
+
 }

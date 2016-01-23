@@ -102,4 +102,17 @@ public class DfModeratorAssignedServiceImpl implements DfModeratorAssignedServic
 		// TODO Auto-generated method stub
 		return moderatorDao.dfDGetAllModerators();
 	}
+
+	@Override
+	public List<Long> dfSGetAllDistinctModeratorsId() {
+		// TODO Auto-generated method stub
+		return moderatorDao.dfDGetAllDistinctModeratorsId();
+	}
+
+	@Override
+	public DfModeratorAssigned dfSGetModerator(Long moderatorId) {
+		// TODO Auto-generated method stub
+		
+		return moderatorDao.dfDGetModerator(moderatorId);
+	}
 }

@@ -462,7 +462,7 @@
 									<div class="inner">
 										<h3>Moderators</h3>
 										<p>
-											<a href="#">List Of Moderators</a>
+											<a href="listModerator.html">List Of Moderators</a>
 										</p>
 										<p>
 											<a href="addModerator.html">Add Moderators</a>
