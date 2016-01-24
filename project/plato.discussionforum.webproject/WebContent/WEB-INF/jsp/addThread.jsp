@@ -450,6 +450,9 @@ WARNING: Respond.js doesn't work if you view the page via file://
 										<form:label path="topicId">Topic</form:label>
 										<form:select path="topicId" class="form-control select2"
 											style="width: 100%;">
+											<c:if test="${not empty selectedTopic}">
+												<form:option selected="selected" value="${selectedTopic }"/>
+											</c:if>
 											<form:option selected="selected" value=""
 												label="--- Select Topic ---" />
 											<form:options items="${topics}" />

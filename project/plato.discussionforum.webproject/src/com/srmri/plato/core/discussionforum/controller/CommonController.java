@@ -60,10 +60,10 @@ import com.srmri.plato.core.discussionforum.service.DfTopicService;
 
 @Controller
 public class CommonController {
-	
+
 	@Autowired
 	private MailSender mailSender;
-	
+
 	//@RequestMapping(value = "/mailsender")
 	void sendUserMail(String message){
 		String sender="srmtestingplato@gmail.com";//sender email id
@@ -71,11 +71,11 @@ public class CommonController {
 		sendMail(sender,receiver,"Disapprove Topic",message);
 		System.out.println("success");
 	}
-	
+
 	public void sendMail(String from, String to, String subject, String msg) {
-		 
+
 		SimpleMailMessage message = new SimpleMailMessage();
- 
+
 		message.setFrom(from);
 		message.setTo(to);
 		message.setSubject(subject);
@@ -347,6 +347,61 @@ public class CommonController {
 			model.addAttribute("approveTopics",null);
 		}
 		return "approveTopicByUser";
+	}
+
+
+
+	@RequestMapping(value = "/getListOfToipcsUnderModerator", method = RequestMethod.GET)
+	public String getListOfToipcsUnderModerator(Model model, @RequestParam(value="moderator_id", required=true) Long moderator_id){
+
+		List<DfTopic> allTopicList = new ArrayList<DfTopic>();
+		allTopicList = topicService.dfSGetTopicList(moderator_id);
+		List<DfModeratorAssigned> topicsForModerator = moderatorAssignedService.dfSGetTopicUserActModerator(moderator_id);
+		if(topicsForModerator != null){
+		for(DfModeratorAssigned mod: topicsForModerator){
+			allTopicList.add(topicService.dfSGetTopic(mod.getTopicId()));
+		}
+		}
+		
+//		Map<Long, Boolean> moderatorAllowMap = new HashMap<Long,Boolean>();
+		Map<DfTopic, String> finalTopicList = new HashMap<DfTopic,String>();
+		Map<Long, Integer> topicWiseThreadList = new HashMap<Long , Integer>();
+//		if(checkAdmin(this.loginUserId, this.roleId)){
+//			for(DfTopic topic: allTopicList){
+//				moderatorAllowMap.put(topic.getTopicId(), true);
+//			}
+//		}
+//		else{
+//			for(DfTopic topic: allTopicList){
+//				List<Long> assignedModeratorList = moderatorAssignedService.dfSGetModeratorList(topic.getTopicId());
+//				if(!assignedModeratorList.isEmpty()){
+//					for(Long moderator:assignedModeratorList){
+//						if(moderator == this.loginUserId){
+//							System.out.println("getting moderators");
+//							moderatorAllowMap.put(topic.getTopicId(), true);
+//						}
+//						else
+//							moderatorAllowMap.put(topic.getTopicId(), false);
+//					}
+//				}
+//				else if(checkAdmin(this.loginUserId, this.roleId)){
+//					moderatorAllowMap.put(topic.getTopicId(), true);
+//				}
+//				else{
+//					moderatorAllowMap.put(topic.getTopicId(), false);
+//				}
+//			}
+//		}
+		// prepare extra list 
+		for(DfTopic topic: allTopicList){
+			finalTopicList.put(topic, usersListMap.get(topic.getCreatedUserid()));
+			topicWiseThreadList.put(topic.getTopicId(), threadService.dfSGetTopicThreads(topic.getTopicId()).size());
+		}
+//		model.addAttribute("moderatorAllowMap", moderatorAllowMap);
+		model.addAttribute("topics",  finalTopicList);
+		model.addAttribute("loginUserId",  loginUserId);
+		model.addAttribute("topicWiseThreadList",  topicWiseThreadList);
+		return"getListOfToipcsUnderModerator";
 	}
 	/************************************** THREAD **************************************************/
 
@@ -1405,12 +1460,7 @@ public class CommonController {
 	public String listModerator(Model model) {	
 
 		List<Long> distinctModerators = moderatorAssignedService.dfSGetAllDistinctModeratorsId();
-		List<DfModeratorAssigned> moderatorList = new ArrayList<DfModeratorAssigned>();
-		for(Long mod : distinctModerators){
-			System.out.println(moderatorAssignedService.dfSGetModerator(mod).getAssignedToUserid());
-			moderatorList.add(moderatorAssignedService.dfSGetModerator(mod));
-		}
-		model.addAttribute("moderatorList", moderatorList);
+		model.addAttribute("moderatorList", distinctModerators);
 		model.addAttribute("usersListMap", usersListMap);
 		return "listModerators";
 	}

@@ -61,6 +61,8 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 		// TODO Auto-generated method stub
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
 		cri.add(Restrictions.eq("assignedToUserid",assignedToUserId));
+		if(cri.list() == null)
+			return null;
 		return cri.list();
 	}
 	
@@ -133,15 +135,17 @@ public class DfModeratorAssignedDaoImpl implements DfModeratorAssignedDao{
 		@SuppressWarnings("unchecked")
 		List <Long> modList = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class)
 				.setProjection(Projections.distinct(Projections.property("assignedToUserid"))).list();
-		sessionFactory.getCurrentSession().flush();
 		return modList;
 	}
 
 	@Override
 	public DfModeratorAssigned dfDGetModerator(Long moderatorId) {
 		// TODO Auto-generated method stub
-		DfModeratorAssigned obj=  (DfModeratorAssigned) sessionFactory.getCurrentSession().load(DfModeratorAssigned.class, moderatorId);
-		sessionFactory.getCurrentSession().flush();
-		return obj;
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfModeratorAssigned.class);
+		cri.add(Restrictions.eq("moderatorId", moderatorId));
+		
+		if(!cri.list().isEmpty())
+		return (DfModeratorAssigned) cri.list().get(0);
+		return null;
 	}
 }
