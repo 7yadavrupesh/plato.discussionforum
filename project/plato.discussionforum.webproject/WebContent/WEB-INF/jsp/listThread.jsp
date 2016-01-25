@@ -363,12 +363,19 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>
-					Thread List <small>Choose any thread for discussion</small>
-				</h1>
+				<c:choose>
+					<c:when test="${topic_id !=null }">
+						<h1>${topics[topic_id]} <small>Choose any thread for discussion</small></h1>
+					</c:when>
+					<c:otherwise>
+						<h1>Thread List <small>Choose any thread for discussion</small></h1>
+					</c:otherwise>
+				</c:choose>
 				<ol class="breadcrumb">
-					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i>
+							Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i
+							class="fa fa-group"></i> Discussion Forum</a></li>
 					<li class="active">Thread List</li>
 				</ol>
 			</section>
@@ -392,7 +399,8 @@
 						<div class="box">
 							<div class="box-header">
 								<h1 class="box-title">Thread List</h1>
-								&nbsp;&nbsp;&nbsp; <a href="addThread.html"><button
+								&nbsp;&nbsp;&nbsp; <a
+									href="addThread.html?topic_id=${topic_id }"><button
 										class="btn btn-primary">Add Thread</button></a>
 							</div>
 							<!-- /.box-header -->
@@ -412,7 +420,9 @@
 									<tbody>
 										<c:forEach items="${threads}" var="thread">
 											<tr>
-												<td><a onclick="return increaseClick(${thread.key.threadId});" title="${thread.key.threadTitle}"
+												<td><a
+													onclick="return increaseClick(${thread.key.threadId});"
+													title="${thread.key.threadTitle}"
 													href="viewThread.html?thread_id=${thread.key.threadId}">
 														<c:out value="${thread.key.threadTitle}" />
 												</a></td>
@@ -425,7 +435,7 @@
 												<td title="${numberOfReplies[thread.key.threadId]}"><c:out
 														value="${numberOfReplies[thread.key.threadId]}" /></td>
 												<td title="${thread.key.numberOfView}"><c:out
-												     	value="${thread.key.numberOfView}" /></td>
+														value="${thread.key.numberOfView}" /></td>
 												<td><c:choose>
 														<c:when
 															test="${moderatorAllowMap[thread.key.threadId] == true }">
@@ -680,7 +690,7 @@
                 success : function(result) {
                 return true;
                 }
-                });	
+       	 });	
         }
 	</script>
 </body>

@@ -411,10 +411,15 @@
 										</form:select>
 										<form:errors path="topicId" cssClass="text-red" />
 									</div>
-									<div class="box-footer">
-										<button type="submit" class="btn btn-primary">Add
+								</div>
+								<div class="box-footer">
+									<button type="submit" class="btn pull-right btn-primary">Add
 											Moderator</button>
-									</div>
+									<% if(request.getHeader("Referer") != null ){ %>
+									<a href=<%=request.getHeader("Referer")%> class="btn pull-left btn-default">Cancel</a>
+									<%}else{ %>
+									<a href="discussionforumDashboard.html" class="btn pull-left btn-default">Cancel</a>
+									<%} %>
 								</div>
 							</form:form>
 						</div>

@@ -407,7 +407,15 @@
 											name="topicDescription" value="${topic.topicDescription}" ></form:textarea>
 										<form:errors path="topicDescription" cssClass="text-red" />
 									</div>
-									<button type="submit" class="btn btn-primary">Add</button>
+									
+								</div>
+								<div class="box-footer">
+								<form:button type="submit" class="btn pull-right btn-primary">Add</form:button>
+									<% if(request.getHeader("Referer") != null ){ %>
+									<a href=<%=request.getHeader("Referer")%> class="btn pull-left btn-default">Cancel</a>
+									<%}else{ %>
+									<a href="listTopic.html" class="btn pull-left btn-default">Cancel</a>
+									<%} %>
 								</div>
 							</form:form>
 						</div>

@@ -416,8 +416,10 @@ WARNING: Respond.js doesn't work if you view the page via file://
 					Add Thread <small>Insert new thread</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i>
+							Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i
+							class="fa fa-group"></i> Discussion Forum</a></li>
 					<li class="active">Add Thread</li>
 				</ol>
 			</section>
@@ -450,12 +452,20 @@ WARNING: Respond.js doesn't work if you view the page via file://
 										<form:label path="topicId">Topic</form:label>
 										<form:select path="topicId" class="form-control select2"
 											style="width: 100%;">
-											<c:if test="${not empty selectedTopic}">
-												<form:option selected="selected" value="${selectedTopic }"/>
+											<c:if test="${selectedTopic == null }">
+												<form:option selected="selected" value="" label="--- Select User ---" />
 											</c:if>
-											<form:option selected="selected" value=""
-												label="--- Select Topic ---" />
-											<form:options items="${topics}" />
+											<c:forEach items="${topics}" var="topic">
+												<c:choose>
+													<c:when test="${selectedTopic == topic.key}">
+														<form:option selected="selected" value="${topic.key }" label="${topic.value }" ></form:option>	
+													</c:when>
+													<c:otherwise>
+														<form:option value="${topic.key }" label="${topic.value }" ></form:option>
+													</c:otherwise>
+													</c:choose>
+											</c:forEach>
+
 										</form:select>
 										<form:errors path="topicId" cssClass="text-red" />
 									</div>
@@ -488,8 +498,12 @@ WARNING: Respond.js doesn't work if you view the page via file://
 									</div>
 								</div>
 								<div class="box-footer">
-									<form:button type="submit" onclick="submitForm"
-										class="btn pull-right btn-primary">Add Thread</form:button>
+									<form:button type="submit" class="btn pull-right btn-primary">Add Thread</form:button>
+									<% if(request.getHeader("Referer") != null ){ %>
+									<a href=<%=request.getHeader("Referer")%> class="btn pull-left btn-default">Cancel</a>
+									<%}else{ %>
+									<a href="listThread.html" class="btn pull-left btn-default">Cancel</a>
+									<%} %>
 								</div>
 							</form:form>
 						</div>

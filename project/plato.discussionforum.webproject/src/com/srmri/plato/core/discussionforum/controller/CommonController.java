@@ -82,12 +82,6 @@ public class CommonController {
 		message.setText(msg);
 		mailSender.send(message);	
 	}
-	//	@Autowired
-	//	@Autowired
-	//	private RoleService roleService;
-	//	@Autowired
-	//	private RoleAssignmentService roleAssignmentService;
-	//	@Autowired RolePermissionsMapService rolePermissionsMapService;
 
 	long loginUserId = 101L;
 	int roleId;
@@ -514,6 +508,7 @@ public class CommonController {
 		model.addAttribute("threads",  finalThredList);
 		model.addAttribute("topics",topics);
 		model.addAttribute("loginUserId",loginUserId);
+		model.addAttribute("topic_id", topic_id);
 		model.addAttribute("numberOfReplies", numberOfReplies);
 		return "listThread";
 	}
@@ -566,6 +561,7 @@ public class CommonController {
 			topics.put(topic.getTopicId(), topic.getTopicTitle());
 		}
 		if(topic_id != null){
+			System.out.println("reached");
 			model.addAttribute("selectedTopic", topic_id);
 		}
 		model.addAttribute("thread", thread);
