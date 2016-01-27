@@ -2,12 +2,13 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Topic List</title>
+<title>Thread List</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -31,15 +32,17 @@
          folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
 	href="./resources/dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="./resources/custom/css/style.css">
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <![endif]-->
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 <style>
 .modal-header, h5, .close {
-	background-color: #8c8c8c;
+	background-color: #d73925;
 	color: white !important;
 	text-align: center;
 	font-size: 30px;
@@ -52,6 +55,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
+
 		<header class="main-header">
 			<!-- Logo -->
 			<a href="index2.html" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -78,7 +82,7 @@
 									<ul class="menu">
 										<li>
 											<!-- start message --> <a href="#">
-												<div class="pull-left">
+												<div class="pull-left rupesh">
 													<img src="./resources/dist/img/user2-160x160.jpg"
 														class="img-circle" alt="User Image">
 												</div>
@@ -319,7 +323,7 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="active treeview"><a href="listTopic.html"> <i
+					<li class="treeview"><a href="listTopic.html"> <i
 							class="fa fa-group"></i> <span>Discussion Forum</span> <i
 							class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">
@@ -334,12 +338,12 @@
 											class="fa  fa-plus-square-o"></i> Moderator</a></li>
 								</ul></li>
 						</ul>
-						<ul class=" treeview-menu">
-							<li class="active"><a href="#"><i class="fa fa-list"></i>
-									Show <i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+							<li><a href="#"><i class="fa fa-list"></i> Show <i
+									class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li class="active"><a href="listTopic.html"><i
-											class="fa fa-list-ul"></i> Topic </a></li>
+									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i>
+											Topic </a></li>
 									<li><a href="approveTopic.html"><i
 											class="fa fa-list-ul"></i> Approve Topics </a></li>
 									<li><a href="deletedTopic.html"><i
@@ -354,19 +358,25 @@
 			</section>
 			<!-- /.sidebar -->
 		</aside>
+
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>
-					Moderator List <small></small>
-				</h1>
+				<c:choose>
+					<c:when test="${topic_id !=null }">
+						<h1>${topics[topic_id]} <small>Choose any thread for discussion</small></h1>
+					</c:when>
+					<c:otherwise>
+						<h1>Your Threads <small>Choose any thread for discussion</small></h1>
+					</c:otherwise>
+				</c:choose>
 				<ol class="breadcrumb">
 					<li><a href="index.jsp"><i class="fa fa-dashboard"></i>
 							Home</a></li>
 					<li><a href="discussionforumDashboard.html"><i
 							class="fa fa-group"></i> Discussion Forum</a></li>
-					<li class="active">Moderator List</li>
+					<li class="active">Thread List</li>
 				</ol>
 			</section>
 			<!-- Display alert message -->
@@ -379,6 +389,7 @@
 					<strong>${alertMessage}</strong>
 				</div>
 			</c:if>
+
 			<!-- -----Display alert message---- -->
 			<!-- Main content -->
 			<section class="content">
@@ -387,24 +398,59 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h1 class="box-title">Moderator List</h1>
+								<h1 class="box-title">Thread List</h1>
+								&nbsp;&nbsp;&nbsp; <a
+									href="addThread.html?topic_id=${topic_id }"><button
+										class="btn btn-primary">Add Thread</button></a>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive">
-								<table id="example1" class="table table-bordered">
+								<table id="example1" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th>Moderator</th>
-											<th>Topics</th>
+											<th>Title</th>
+											<th>Topic</th>
+											<th>Created At</th>
+											<th>Created By</th>
+											<th>Replies</th>
+											<th>Times Viewed</th>
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${moderatorList}" var="moderator">
+										<c:forEach items="${threads}" var="thread">
 											<tr>
-												<td><c:out value="${usersListMap[moderator]}" /></td>
-												<td><a onclick="return getTopicList(this);"
-													href="getListOfToipcsUnderModerator.html?moderator_id=${moderator}">Topics..</a>
-												</td>
+												<td><a
+													onclick="return increaseClick(${thread.key.threadId});"
+													title="${thread.key.threadTitle}"
+													href="viewThread.html?thread_id=${thread.key.threadId}">
+														<c:out value="${thread.key.threadTitle}" />
+												</a></td>
+												<td title="${topics[thread.key.topicId]}"><c:out
+														value="${topics[thread.key.topicId]}" /></td>
+												<td title="${thread.key.createdTime}"><c:out
+														value="${thread.key.createdTime}" /></td>
+												<td title="${thread.value}"><c:out
+														value="${thread.value}" /></td>
+												<td title="${numberOfReplies[thread.key.threadId]}"><c:out
+														value="${numberOfReplies[thread.key.threadId]}" /></td>
+												<td title="${thread.key.numberOfView}"><c:out
+														value="${thread.key.numberOfView}" /></td>
+												<td><c:choose>
+														<c:when
+															test="${moderatorAllowMap[thread.key.threadId] == true }">
+															<a
+																href="editThread.html?thread_id=${thread.key.threadId}"><span
+																class="fa fa-edit" title="edit"></span></a>&nbsp;&nbsp;
+															<a onclick="return confirm_delete(this);"
+																href="deleteThread.html?thread_id=${thread.key.threadId}&frmAprThr=0"><span
+																class="fa fa-remove" title="delete"></span></a>
+														</c:when>
+														<c:otherwise>
+															<span class="fa fa-edit" title="edit"></span>&nbsp;&nbsp;
+															<span class="fa fa-remove" title="delete"></span>
+														</c:otherwise>
+													</c:choose></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -416,30 +462,8 @@
 					</div>
 					<!-- /.col -->
 				</div>
+
 			</section>
-			<!-- Modal -->
-			<div class="modal fade" id="getTopicListModal" role="dialog">
-				<div class="modal-dialog modal-bg">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4>
-								<span class="glyphicon"></span> Topic List
-							</h4>
-						</div>
-						<div class="modal-body">
-								<div id="topicList">
-								</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" id="yesDelete"
-								class="btn btn-default pull-right" data-dismiss="modal">
-								Ok</button>
-						</div>
-					</div>
-				</div>
-			</div>
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
@@ -451,6 +475,7 @@
 				href="http://almsaeedstudio.com">Almsaeed Studio</a>.
 			</strong> All rights reserved.
 		</footer>
+
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
 			<!-- Create the tabs -->
@@ -499,6 +524,7 @@
 						</a></li>
 					</ul>
 					<!-- /.control-sidebar-menu -->
+
 					<h3 class="control-sidebar-heading">Tasks Progress</h3>
 					<ul class="control-sidebar-menu">
 						<li><a href="javascript::;">
@@ -541,6 +567,7 @@
 						</a></li>
 					</ul>
 					<!-- /.control-sidebar-menu -->
+
 				</div>
 				<!-- /.tab-pane -->
 				<!-- Stats tab content -->
@@ -558,6 +585,7 @@
 							<p>Some information about this general settings option</p>
 						</div>
 						<!-- /.form-group -->
+
 						<div class="form-group">
 							<label class="control-sidebar-subheading"> Allow mail
 								redirect <input type="checkbox" class="pull-right" checked>
@@ -565,6 +593,7 @@
 							<p>Other sets of options are available</p>
 						</div>
 						<!-- /.form-group -->
+
 						<div class="form-group">
 							<label class="control-sidebar-subheading"> Expose author
 								name in posts <input type="checkbox" class="pull-right" checked>
@@ -572,19 +601,23 @@
 							<p>Allow the user to show his name in blog posts</p>
 						</div>
 						<!-- /.form-group -->
+
 						<h3 class="control-sidebar-heading">Chat Settings</h3>
+
 						<div class="form-group">
 							<label class="control-sidebar-subheading"> Show me as
 								online <input type="checkbox" class="pull-right" checked>
 							</label>
 						</div>
 						<!-- /.form-group -->
+
 						<div class="form-group">
 							<label class="control-sidebar-subheading"> Turn off
 								notifications <input type="checkbox" class="pull-right">
 							</label>
 						</div>
 						<!-- /.form-group -->
+
 						<div class="form-group">
 							<label class="control-sidebar-subheading"> Delete chat
 								history <a href="javascript::;" class="text-red pull-right"><i
@@ -599,10 +632,13 @@
 		</aside>
 		<!-- /.control-sidebar -->
 		<!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
+      immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<!-- ./wrapper -->
+
+	<!-- jQuery 2.1.4 -->
+
 	<!-- Bootstrap 3.3.5 -->
 	<script src="./resources/bootstrap/js/bootstrap.min.js"></script>
 	<!-- DataTables -->
@@ -617,53 +653,45 @@
 	<script src="./resources/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="./resources/dist/js/demo.js"></script>
-	<script src="./resources/custom/js/custom.js"></script>
+
 	<!-- page script -->
 	<script>
-         $(function () {
-        	 $('#example1').dataTable( {
-        		    "order": [1,'desc']
-        		} );
-           $('#example2').DataTable({
-             "paging": true,
-             "lengthChange": false,
-             "searching": false,
-             "ordering": true,
-             "info": true,
-             "autoWidth": false
-           });
-         });
-         var deleteUrl = 0;
-         var redirectUrl = 0;
-         function getTopicList(node) {
-         redirectUrl = node.baseURI;
-         deleteUrl = node.href;
-    	 $.ajax({
-             url : node.href,
-             data: "",
-             type : "GET",
-             success : function(result) {
-            	 console.log($(result).find('#topicListTable'));
-            	 $('#topicList').html($(result).find('#topicListTable'));
-            	 $('#topicListTable').dataTable();
-             return true;
-             }
-             });
-         $("#getTopicListModal").modal();
-         
-         return false;
-         }
-         function increaseClick(id){
-        	 $.ajax({
-                 url : "increaseTopicCount.html",
-                 data: "topic_id="+id,
-                 type : "GET",
-                 success : function(result) {
-                 return true;
-                 }
-                 });	
-        	// return true;
-         }
-      </script>
+		$(function() {
+       	 $('#example1').dataTable( {
+ 		    "order": [2,'desc']
+ 		} );
+			$('#example2').DataTable({
+				"paging" : true,
+				"lengthChange" : false,
+				"searching" : false,
+				"ordering" : true,
+				"info" : true,
+				"autoWidth" : false
+			});
+		});
+		function confirm_delete(node) {
+			if (!confirm("Are you sure for delete"))
+				return false;
+			$.ajax({
+				url : node.href,
+				//data : "thread_id",
+				type : "GET",
+				success : function(result) {
+					location.reload();
+				}
+			});
+			return false;
+		}
+		function increaseClick(id){
+       	 $.ajax({
+                url : "increaseThreadCount.html",
+                data: "thread_id="+id,
+                type : "GET",
+                success : function(result) {
+                return true;
+                }
+       	 });	
+        }
+	</script>
 </body>
 </html>

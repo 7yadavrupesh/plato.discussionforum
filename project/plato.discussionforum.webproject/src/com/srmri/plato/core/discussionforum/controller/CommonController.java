@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,8 @@ import com.srmri.plato.core.rbac.service.RbacRoleLevelService;
 import com.srmri.plato.core.rbac.service.RbacRoleService;
 
 import main.java.com.srmri.plato.core.login.bean.UserBean;
+import main.java.com.srmri.plato.core.usermanagement.model.UmUserDetails;
+import main.java.com.srmri.plato.core.usermanagement.service.UmUserDetailsService;
 
 //import main.java.com.srmri.plato.core.login.bean.UserBean;
 
@@ -93,9 +96,9 @@ public class CommonController {
 	long loginUserId = 101L;
 	int roleId;
 	List<Long> admin = new ArrayList<Long>();
-	Map<Long,String> usersListMap = new HashMap<Long,String>();
+	//Map<Long,String> usersListMap = new HashMap<Long,String>();
 
-	public CommonController(){
+/*	public CommonController(){
 		usersListMap.put(10L, "Rupesh");
 		usersListMap.put(11L, "Hitesh");
 		usersListMap.put(16L, "Awasthi");
@@ -103,7 +106,7 @@ public class CommonController {
 		usersListMap.put(102L, "Sagar");
 		admin.add(101L);
 		admin.add(102L);
-	}
+	}*/
 
 	@Autowired
 	private RbacRoleLevelService roleLevelService;
@@ -126,6 +129,8 @@ public class CommonController {
 	private DfThreadFileMapService threadFileMapService;
 	@Autowired
 	private DfThreadReplyFileMapService threadReplyFileMapService;
+	@Autowired
+	private UmUserDetailsService umUserDetailsService;
 
 
 //	Boolean checkAdmin(long userId, int roleId)
@@ -212,6 +217,12 @@ public class CommonController {
 				}
 			}
 		}
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		// prepare extra list 
 		for(DfTopic topic: allTopicList){
 			finalTopicList.put(topic, usersListMap.get(topic.getCreatedUserid()));
@@ -265,6 +276,12 @@ public class CommonController {
 				}
 			}
 		}
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		// prepare extra list 
 		for(DfTopic topic: allTopicList){
 			finalTopicList.put(topic, usersListMap.get(topic.getCreatedUserid()));
@@ -274,7 +291,7 @@ public class CommonController {
 		model.addAttribute("topics",  finalTopicList);
 		model.addAttribute("loginUserId",  loginUserId);
 		model.addAttribute("topicWiseThreadList",  topicWiseThreadList);
-		return"listTopic";
+		return"listTopicUserCreated";
 	}
 	
 	@RequestMapping(value = "/addTopic", method = RequestMethod.GET)
@@ -292,13 +309,21 @@ public class CommonController {
 			model.addAttribute("topic", topic);
 			return"addTopic";
 		}
-		redirectAttributes.addFlashAttribute("alertMessage", "New topic inserted and waiting for approval");
+		if(checkAdmin(loginUserId, roleId)){
+			topic.setApprovedFlag(true);
+			redirectAttributes.addFlashAttribute("alertMessage", "New topic inserted");
+		}
+		else{
+			topic.setApprovedFlag(false);
+			redirectAttributes.addFlashAttribute("alertMessage", "New topic inserted and waiting for approval");
+		}
+		
 		redirectAttributes.addFlashAttribute("css", "success");
 		java.sql.Timestamp curTime = new java.sql.Timestamp(new java.util.Date().getTime());
 		topic.setCreatedTime(curTime);
 		topic.setCreatedUserid(loginUserId);
 		topic.setDeletedFlag(false);
-		topic.setApprovedFlag(false);
+		
 		topicService.dfSInsertTopic(topic);
 
 		return "redirect:listTopic.html";
@@ -376,6 +401,12 @@ public class CommonController {
 
 		loginUserId = userBean.getUserId();
 		roleId = userBean.getRoleId();
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		Map<DfTopic, String> approveTopicList = new HashMap<DfTopic, String>();
 		if(checkAdmin(loginUserId, roleId)){
 			for(DfTopic topic: topicService.dfSGetAllUnApprovedTopics()){
@@ -420,7 +451,12 @@ public class CommonController {
 		roleId = userBean.getRoleId();
 		Long userId = Long.parseLong(request.getParameter("userId"));
 		Map<DfTopic, String> approveTopicList = new HashMap<DfTopic, String>();
-
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		if(checkAdmin(loginUserId, roleId)){
 			List<DfTopic> topicsApprovedByUser = topicService.dfSGetAllTopicsApprovedByUser(userId);
 			for(DfTopic topic: topicsApprovedByUser){
@@ -476,6 +512,12 @@ public class CommonController {
 //				}
 //			}
 //		}
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		// prepare extra list 
 		for(DfTopic topic: allTopicList){
 			finalTopicList.put(topic, usersListMap.get(topic.getCreatedUserid()));
@@ -529,6 +571,12 @@ public class CommonController {
 		}
 		Map<DfThread, String> finalThredList = new HashMap<DfThread,String>();
 		Map<Long, Integer> numberOfReplies = new HashMap<Long, Integer>();
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		for(DfThread thread: threadList){
 			finalThredList.put(thread, usersListMap.get(thread.getCreatedUserid()));
 			numberOfReplies.put(thread.getThreadId(), threadReplyService.dfSGetThreadReplyList(thread.getThreadId()).size());
@@ -591,6 +639,12 @@ public class CommonController {
 		}
 		Map<DfThread, String> finalThredList = new HashMap<DfThread,String>();
 		Map<Long, Integer> numberOfReplies = new HashMap<Long, Integer>();
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		for(DfThread thread: threadList){
 			finalThredList.put(thread, usersListMap.get(thread.getCreatedUserid()));
 			numberOfReplies.put(thread.getThreadId(), threadReplyService.dfSGetThreadReplyList(thread.getThreadId()).size());
@@ -626,6 +680,12 @@ public class CommonController {
 		}
 		Map<DfThread, String> finalThredList = new HashMap<DfThread,String>();
 		Map<Long, Integer> numberOfReplies = new HashMap<Long, Integer>();
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		for(DfThread thread: threadList){
 			finalThredList.put(thread, usersListMap.get(thread.getCreatedUserid()));
 			numberOfReplies.put(thread.getThreadId(), threadReplyService.dfSGetThreadReplyList(thread.getThreadId()).size());
@@ -635,7 +695,7 @@ public class CommonController {
 		model.addAttribute("topics",topics);
 		model.addAttribute("loginUserId",loginUserId);
 		model.addAttribute("numberOfReplies", numberOfReplies);
-		return "listThread";
+		return "listThreadUserCreated";
 	}
 
 	@RequestMapping(value = "/addThread", method = RequestMethod.GET)
@@ -669,14 +729,22 @@ public class CommonController {
 			model = prepareAddThreadModel(model, thread,thread.getTopicId());
 			return "addThread";
 		}
-		redirectAttributes.addFlashAttribute("alertMessage", "New thread inserted");
+		if(checkAdmin(loginUserId, roleId)){
+			thread.setApproved(true);
+			redirectAttributes.addFlashAttribute("alertMessage", "New thread inserted");
+		}
+		else{
+			thread.setApproved(false);
+			redirectAttributes.addFlashAttribute("alertMessage", "New thread inserted waiting for approval");
+		}
+		
 		redirectAttributes.addFlashAttribute("css", "success");
 		java.sql.Timestamp curTime = new java.sql.Timestamp(System.currentTimeMillis());
 		thread.setCreatedTime(curTime);
 		thread.setModifiedTime(curTime);
 		thread.setCreatedUserid(loginUserId);
 		thread.setDeletedFlag(false);
-		thread.setApproved(false);
+
 		threadService.dfSAddThread(thread);
 		threadSubscriptionService.dfSAddThreadSubscription(thread.getThreadId(), loginUserId);
 
@@ -1012,7 +1080,7 @@ public class CommonController {
 		}
 		Long topic_id = threadService.dfSGetThread(thread_id).getTopicId();
 		threadService.dfSDeleteThread(thread_id);
-		return "listThread";
+		return "redirect:listThreadTopic.html?topic_id="+topic_id;
 	}
 
 	@RequestMapping(value = "/saveApproveThread", method = RequestMethod.GET)
@@ -1057,7 +1125,12 @@ public class CommonController {
 				}
 			}
 		}
-
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		Map<DfThread, String> finalApprovalList = new HashMap<DfThread,String>();
 		for(DfThread thread: approvalList){
 			finalApprovalList.put(thread, usersListMap.get(thread.getCreatedUserid()));
@@ -1102,6 +1175,12 @@ public class CommonController {
 			}
 		}
 		 */
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		Map<DfThread, String> finalApprovalList = new HashMap<DfThread,String>();
 		for(DfThread thread: approvalList){
 			finalApprovalList.put(thread, usersListMap.get(thread.getCreatedUserid()));
@@ -1370,6 +1449,7 @@ public class CommonController {
 		List<DfTopic> topicListUserActAsModerator = new ArrayList<DfTopic>();
 		loginUserId = userBean.getUserId();
 		roleId = userBean.getRoleId();
+		
 		if(checkAdmin(loginUserId, roleId)){
 			topicListUserActAsModerator = topicService.dfSGetAllTopicList();
 		}else{
@@ -1388,6 +1468,15 @@ public class CommonController {
 			for(DfTopic topic: topicListUserActAsModerator){
 				topicListMap.put(topic.getTopicId(), topic.getTopicTitle());
 			}
+		}
+		
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			if(usr.getUserId() == loginUserId)
+				continue;
+			usersListMap.put(usr.getUserId(), usr.getUserName());
 		}
 		model.addAttribute("moderator", moderator);
 		model.addAttribute("usersList",usersListMap);
@@ -1549,7 +1638,12 @@ public class CommonController {
 	}
 	@RequestMapping(value = "/listModerator", method = RequestMethod.GET)
 	public String listModerator(Model model) {	
-
+		List<UmUserDetails> usersList = umUserDetailsService.blListUsers();
+		ListIterator<UmUserDetails> iter = usersList.listIterator();
+		Map<Long,String> usersListMap = new HashMap<Long,String>();
+		for(UmUserDetails usr: usersList){
+			usersListMap.put(usr.getUserId(), usr.getUserName());
+		}
 		List<Long> distinctModerators = moderatorAssignedService.dfSGetAllDistinctModeratorsId();
 		model.addAttribute("moderatorList", distinctModerators);
 		model.addAttribute("usersListMap", usersListMap);
