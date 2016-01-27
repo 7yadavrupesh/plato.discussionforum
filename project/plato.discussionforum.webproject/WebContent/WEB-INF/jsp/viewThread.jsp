@@ -400,8 +400,9 @@
 					Discussion Forum <small>Discuss this question</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Discussion Forum</li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
+					<li class="active">View Thread</li>
 				</ol>
 			</section>
 									<!-- Display alert message -->
@@ -500,8 +501,7 @@
 											</span> <br>
 											<!-- /.username -->
 											<c:out value="${threadReply.key.replyText}" />
-											<c:if
-												test="${loginUserId == threadReply.key.submittedUserid  || loginUserId == topicUserId || admin == true}">
+											
 												<br>
 												<br>
 												<c:if test="${not empty threadReply.value}">
@@ -513,6 +513,9 @@
 														<br>
 													</c:forEach>
 												</c:if>
+												<%-- <c:if
+												test="${loginUserId == threadReply.key.submittedUserid  || loginUserId == topicUserId || admin == true}"> --%>
+												<c:if test="${threadEditAllowed == true || threadReply.key.submittedUserId == loginUserId }">
 												<div class="pull-right">
 													<a onclick="return confirm_delete(this);"
 														href="deleteThreadReply.html?reply_id=${threadReply.key.replyId}"><span
@@ -558,7 +561,7 @@
 										<form:errors path="replyText" class="text-red" />
 									</div>
 									<div id="fileUpload" class="form-group">
-										<label for="file">Select Files</label> <input type="file"
+										<label for="file">Select Files</label> <input type="file" class="fileUploadSizeLimit"
 											name="file" size=50 multiple /><br>
 									</div>
 									<a id="addMoreFiles" class="btn btn-default btn-xs">Add

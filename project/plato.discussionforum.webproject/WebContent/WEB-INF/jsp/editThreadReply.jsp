@@ -447,7 +447,7 @@
 												</div>
 												
 												<div id="fileUpload" class="form-group">
-													<label for="file">Select Files</label> <input type="file"
+													<label for="file">Select Files</label> <input type="file" class="fileUploadSizeLimit"
 														name="file" size=50 multiple /><br>
 												</div>
 												<a id="addMoreFiles" class="btn btn-small">Add More

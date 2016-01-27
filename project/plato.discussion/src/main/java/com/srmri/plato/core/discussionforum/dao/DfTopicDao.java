@@ -63,4 +63,6 @@ public interface DfTopicDao {
 	List<DfTopic> dfDGetTopicList();
 
 	List<DfTopic> dfDGetAllTopicsApprovedByUser(Long userId);
+
+	List<DfTopic> dfSGetAllApprovedNonApprovedTopicListByUser(Long userId);
 }

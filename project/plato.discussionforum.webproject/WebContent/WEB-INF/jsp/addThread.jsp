@@ -486,7 +486,7 @@ WARNING: Respond.js doesn't work if you view the page via file://
 									<div class="form-group">
 										<div id="fileUpload">
 											<div id="fileUpload1">
-												<label for="file">Select Files</label> <input type="file"
+												<label for="file">Select Files</label> <input type="file" class="fileUploadSizeLimit"
 													name="file" class="filestyle" data-buttonText="Find file"
 													size=50 multiple /><br>
 											</div>
@@ -734,6 +734,7 @@ WARNING: Respond.js doesn't work if you view the page via file://
 			$("#success-alert").alert('close');
 		});
 		$(".select2").select2();
+
 	</script>
 </body>
 </html>

@@ -52,4 +52,5 @@ public interface DfTopicService {
 	void dfSApproveTopic(Long topic_id);
 	List<DfTopic> dfSGetTopicList();
 	List<DfTopic> dfSGetAllTopicsApprovedByUser(Long userId);
+	List<DfTopic> dfSGetAllApprovedNonApprovedTopicListByUser(Long createdUserid);
 }

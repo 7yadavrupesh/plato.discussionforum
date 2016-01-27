@@ -199,4 +199,11 @@ public class DfTopicServiceImpl implements DfTopicService{
 		// TODO Auto-generated method stub
 		return topicDao.dfDGetAllTopicsApprovedByUser(userId);
 	}
+
+	@Override
+	public List<DfTopic> dfSGetAllApprovedNonApprovedTopicListByUser(Long createdUserid) {
+		// TODO Auto-generated method stub
+		
+		return topicDao.dfSGetAllApprovedNonApprovedTopicListByUser(createdUserid);
+	}
 }

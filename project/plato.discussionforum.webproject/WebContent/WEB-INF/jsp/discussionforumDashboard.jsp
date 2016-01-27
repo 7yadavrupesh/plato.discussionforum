@@ -395,7 +395,7 @@
 					Discussion Forum<small></small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="discussionforumDashboard.html"><i
+					<li><a href="index.jsp"><i
 							class="fa fa-dashboard"></i> Home</a></li>
 					<li class="active"><i
 							class="fa fa-group"></i> Discussion Forum</li>
@@ -488,7 +488,7 @@
 										<h3>My Activities</h3>
 										<!-- /.box-header -->
 										<p>
-											<a href="listTopic.html?userId=${userId}">Topics Created</a>
+											<a href="listTopicUser.html?userId=${userId}">Topics Created</a>
 										</p>
 										<p>
 											<a href="listThreadUser.html?userId=${userId}">Threads Created</a>

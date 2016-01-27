@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.srmri.plato" />
-
+<context:component-scan base-package="main.java.com.srmri.plato" />
 	<tx:annotation-driven transaction-manager="hibernateTransactionManager" />
 
 	<context:property-placeholder location="resources/database.properties" />
@@ -34,7 +34,16 @@
 
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="packagesToScan" value="com.srmri.plato.core.discussionforum.entity" />
+		<!-- <property name="packagesToScan" value="com.srmri.plato.core.discussionforum.entity" 
+			/> -->
+		<property name="packagesToScan">
+			<list>
+				<value>com.srmri.plato.core.discussionforum.entity</value>
+				<value>main.java.com.srmri.plato.core.usermanagement.model</value>
+				<value>com.srmri.plato.core.rbac.entity</value>
+				<value>com.srmri.plato.core.discussionforum.entity</value>
+			</list>
+		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -53,7 +62,7 @@
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="username" value="srmtestingplato@gmail.com" />
 		<property name="password" value="srm@12345" />

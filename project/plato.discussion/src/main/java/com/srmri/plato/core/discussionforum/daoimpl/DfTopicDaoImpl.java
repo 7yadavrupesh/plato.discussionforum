@@ -150,4 +150,13 @@ public class DfTopicDaoImpl implements DfTopicDao{
 		cri.add(Restrictions.eq("deletedFlag", false));
 		return cri.list();
 	}
+
+	@Override
+	public List<DfTopic> dfSGetAllApprovedNonApprovedTopicListByUser(Long createdUserId) {
+		// TODO Auto-generated method stub
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(DfTopic.class);
+		cri.add(Restrictions.eq("createdUserid", createdUserId));
+		cri.add(Restrictions.eq("deletedFlag", false));
+		return cri.list();
+	}
 }
