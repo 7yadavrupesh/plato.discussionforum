@@ -54,31 +54,34 @@
 .inner p a {
 	color: #fff !important;
 }
+
 .small-box h3 {
-    font-size: 30px;
-    font-weight: bold;
-    margin: 0 0 10px 0;
-    white-space: nowrap;
-    padding: 0;
-}
-.small-box .icon {
-    -webkit-transition: all .3s linear;
-    -o-transition: all .3s linear;
-    transition: all .3s linear;
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    z-index: 0;
-    font-size: 60px;
-    color: rgba(0,0,0,0.15);
-}
-.bg-blue {
-    background-color: #3C8DBC !important;
-}
-.bg-green {
-    background-color: #2F6B6A  !important;
+	font-size: 30px;
+	font-weight: bold;
+	margin: 0 0 10px 0;
+	white-space: nowrap;
+	padding: 0;
 }
 
+.small-box .icon {
+	-webkit-transition: all .3s linear;
+	-o-transition: all .3s linear;
+	transition: all .3s linear;
+	position: absolute;
+	top: -10px;
+	right: 10px;
+	z-index: 0;
+	font-size: 60px;
+	color: rgba(0, 0, 0, 0.15);
+}
+
+.bg-blue {
+	background-color: #3C8DBC !important;
+}
+
+.bg-green {
+	background-color: #2F6B6A !important;
+}
 </style>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -350,39 +353,11 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="active treeview"><a href="listTopic.html"> <i
+					<li class="active"><a href="discussionforumDashboard.html"> <i
 							class="fa fa-group"></i> <span>Discussion Forum</span> <i
-							class="fa fa-angle-left pull-right"></i></a>
-						<ul class="treeview-menu">
-							<li class="active"><a href="#"><i class="fa fa-plus"></i>
-									Add <i class="fa fa-angle-left pull-right"></i></a>
-								<ul class="treeview-menu">
-									<li><a href="addTopic.html"><i
-											class="fa  fa-plus-square-o"></i> Topic</a></li>
-									<li><a href="addThread.html"><i
-											class="fa  fa-plus-square-o"></i> Thread</a></li>
-									<li class="active"><a href="addModerator.html"><i
-											class="fa  fa-plus-square-o"></i> Moderator</a></li>
-								</ul></li>
-						</ul>
-						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-list"></i> Show <i
-									class="fa fa-angle-left pull-right"></i></a>
-								<ul class="treeview-menu">
-									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i>
-											Topic </a></li>
-									<li><a href="approveTopic.html"><i
-											class="fa fa-list-ul"></i> Approve Topics </a></li>
-									<li><a href="deletedTopic.html"><i
-											class="fa fa-list-ul"></i> Deleted Topics </a></li>
-									<li><a href="approveThread.html"><i
-											class="fa fa-list-ul"></i> Approve Threads </a></li>
-									<li><a href="deletedThreadList.html"><i
-											class="fa fa-list-ul"></i> Deleted Threads </a></li>
-								</ul></li>
-						</ul></li>
+							class="fa pull-right"></i></a>
+					</li>
 				</ul>
-
 			</section>
 			<!-- /.sidebar -->
 		</aside>
@@ -395,10 +370,10 @@
 					Discussion Forum<small></small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="index.jsp"><i
-							class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active"><i
-							class="fa fa-group"></i> Discussion Forum</li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i>
+							Home</a></li>
+					<li class="active"><i class="fa fa-group"></i> Discussion
+						Forum</li>
 				</ol>
 			</section>
 
@@ -412,8 +387,9 @@
 					</div>
 					<br>
 					<div class="row">
-						<div class="col-md-12">
-							<div class="col-md-4">
+						<div class="col-sm-8">
+							<div class="row">
+							<div class="col-md-6">
 								<div class="small-box bg-blue">
 									<div class="inner">
 										<h3>Topics</h3>
@@ -422,9 +398,6 @@
 										</p>
 										<p>
 											<a href="addTopic.html">Add Topics</a>
-										</p>
-										<p>
-											<a href="deletedTopic.html">Deleted Topics</a>
 										</p>
 									</div>
 									<div class="icon">
@@ -436,7 +409,7 @@
 
 								<!-- /.box -->
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="small-box bg-green">
 									<div class="inner">
 										<h3>Threads</h3>
@@ -446,9 +419,6 @@
 										<p>
 											<a href="addThread.html">Add Thread</a>
 										</p>
-										<p>
-											<a href="deletedThreadList.html">Deleted Threads</a>
-										</p>
 									</div>
 									<div class="icon">
 										<i class="ion ion-android-document"></i>
@@ -457,47 +427,20 @@
 										class="fa fa-arrow-circle-right"></i></a>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="small-box bg-blue">
-									<div class="inner">
-										<h3>Moderators</h3>
-										<p>
-											<a href="listModerator.html">List Of Moderators</a>
-										</p>
-										<p>
-											<a href="addModerator.html">Add Moderators</a>
-										</p>
-										<p>
-											<a href="removeModerator.html">Remove Moderators</a>
-										</p>
-									</div>
-									<div class="icon">
-										<i class="ion ion-person-stalker"></i>
-									</div>
-									<a href="#" class="small-box-footer">More info <i
-										class="fa fa-arrow-circle-right"></i></a>
-								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="col-md-4">
+						<div class="col-sm-4">
 								<div class="small-box bg-green">
 									<div class="inner">
 										<h3>My Activities</h3>
 										<!-- /.box-header -->
 										<p>
-											<a href="listTopicUser.html?userId=${userId}">Topics Created</a>
+											<a href="listTopicUser.html?userId=${userId}">Topics
+												Created</a>
 										</p>
 										<p>
-											<a href="listThreadUser.html?userId=${userId}">Threads Created</a>
-										</p>
-										<p>
-											<a href="approveTopicByUser.html?userId=${userId}">Topics Approved</a>
-										</p>
-										<p>
-											<a href="approvedThreadByUser.html?userId=${userId }">Threads Approved</a>
+											<a href="listThreadUser.html?userId=${userId}">Threads
+												Created</a>
 										</p>
 									</div>
 									<div class="icon">
@@ -508,27 +451,6 @@
 								</div>
 								<!-- /.box -->
 							</div>
-							<div class="col-md-4">
-								<div class="small-box bg-red">
-									<div class="inner">
-										<h3>Approval Waiting</h3>
-										<!-- /.box-header -->
-										<p>
-											<a href="approveTopic.html">Topics (${topicApproveLeft })</a>
-										</p>
-										<p>
-											<a href="approveThread.html">Threads (${threadApproveLeft })</a>
-										</p>
-									</div>
-									<div class="icon">
-										<i class="ion ion-android-unlock"></i>
-									</div>
-									<a href="#" class="small-box-footer">More info <i
-										class="fa fa-arrow-circle-right"></i></a>
-								</div>
-								<!-- /.box -->
-							</div>
-						</div>
 					</div>
 				</div>
 			</section>

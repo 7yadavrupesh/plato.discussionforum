@@ -39,8 +39,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.srmri.plato.core.rbac.entity.RbacRole;
 import com.srmri.plato.core.rbac.entity.RbacRoleAssignment;
 import com.srmri.plato.core.rbac.entity.RbacRoleLevel;
-import com.srmri.plato.core.rbac.service.RbacRoleAssignmentService;
 import com.srmri.plato.core.rbac.service.RbacRoleLevelService;
+import com.srmri.plato.core.rbac.service.RbacRoleAssignmentService;
 import com.srmri.plato.core.rbac.service.RbacRoleService;
 import main.java.com.srmri.plato.core.login.bean.FacultyBean;
 import main.java.com.srmri.plato.core.login.bean.RegisterBean;
@@ -90,7 +90,7 @@ public class UserManagementController
 		List<RbacRole> roleList = roleService.rbacBsListRoles();
 		model.put("studentList", studentList);
 		model.put("roleList", roleList);
-		return new ModelAndView("studentList", model);
+		return new ModelAndView("login/studentList", model);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class UserManagementController
 		model.put("facultyDetails", facultyDetails);
 		model.put("roleList", roleList);
 		
-		return new ModelAndView("facultyList", model);
+		return new ModelAndView("login/facultyList", model);
 	}
 	
 	
@@ -153,7 +153,7 @@ public class UserManagementController
 		model.put("email", user.getEmailId());
 		model.put("role", tokens[1]);
 
-		return new ModelAndView("profile", model);
+		return new ModelAndView("login/profile", model);
 	}
 	
 	
@@ -168,12 +168,15 @@ public class UserManagementController
 		
 		model.put("roleList",  roleList);
 		
-		return new ModelAndView("register", model);
+		return new ModelAndView("register/register", model);
 	}
 		
 	@RequestMapping(value = "/validate", method = RequestMethod.POST)
 	public String validateRegister(@ModelAttribute("register") @Valid RegisterBean regBean,BindingResult result,  RedirectAttributes attr)
 	{
+		UmUserDetails user = userService.blGetUser(regBean.getUserName());
+		UmUserDetails user1 = userService.blGetUserByEmail(regBean.getEmail());
+		
 		if (result.hasErrors())
 		{
 			System.out.println(result.getErrorCount());
@@ -189,6 +192,48 @@ public class UserManagementController
 		  attr.addFlashAttribute("register", regBean);
 		   
 		   return "redirect:register.html";
+			
+		}
+		
+		else if(user!=null && user1 !=null)
+		{
+			
+			result.rejectValue("userName", "error.regBean", "Userrname already exists");
+			result.rejectValue("emailId", "error.Bean", "Email already exists");
+			
+			System.out.println("username and email not unique");
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.register", result);
+			attr.addFlashAttribute("register", regBean);
+			   
+			   return "redirect:register.html";		
+			
+		}
+		
+		else if(user!=null)
+		{
+			
+			result.rejectValue("userName", "error.regBean", "Userrname already exists");
+
+			System.out.println("username not unique");
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.register", result);
+			attr.addFlashAttribute("register", regBean);
+			   
+			   return "redirect:register.html";		
+			
+		}
+		
+		else if(user1 !=null)
+		{
+			
+			
+			result.rejectValue("emailId", "error.Bean", "Email already exists");
+			
+			
+			System.out.println("email not unique");
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.register", result);
+			attr.addFlashAttribute("register", regBean);
+			   
+			   return "redirect:register.html";		
 			
 		}
 		
@@ -324,7 +369,7 @@ public class UserManagementController
 		}
 		else
 		model1.put("val", "failed");
-		return new ModelAndView("useradded", model1);
+		return new ModelAndView("register/useradded", model1);
 	}
 	
 			
@@ -337,7 +382,7 @@ public class UserManagementController
 			
 		model.put("designationList",  designationList);
 			
-		return new ModelAndView("addfaculty", model);
+		return new ModelAndView("register/addfaculty", model);
 		
     }
 		
@@ -357,7 +402,7 @@ public class UserManagementController
 			attr.addFlashAttribute("faculty", facultyBean);
 			
 					   
-			return "redirect:addfaculty.html";
+			return "redirect:register/addfaculty.html";
 			
 		}
 		else
@@ -410,7 +455,7 @@ public class UserManagementController
 			}
 			else
 				newModel.put("val", "failed");
-			return new ModelAndView("useradded", newModel);
+			return new ModelAndView("register/useradded", newModel);
 		
 		}
 	
@@ -419,13 +464,15 @@ public class UserManagementController
 	@RequestMapping(value = "/addstudent", method = RequestMethod.GET)
     public ModelAndView addStudent()
     {		
-		return new ModelAndView("addstudent");
+		return new ModelAndView("register/addstudent");
 			
     }
 		
 	@RequestMapping(value = "/studentadded", method = RequestMethod.POST)
 	public Object studentAdded(@ModelAttribute("register") RegisterBean regBean, @ModelAttribute("student") @Valid StudentBean studentBean, BindingResult result, RedirectAttributes attr) throws ParseException, IOException
 	{
+		UmStudent checkStudent = studentService.blGetStudent(studentBean.getStudentId());
+		
 		if (result.hasErrors())
 		{
 			System.out.println(result.getErrorCount());
@@ -438,6 +485,16 @@ public class UserManagementController
 			attr.addFlashAttribute("org.springframework.validation.BindingResult.student", result);
 			attr.addFlashAttribute("student", studentBean);
 			return "redirect:addstudent.html";
+			
+		}
+		
+		else if(checkStudent != null)
+		{	
+			result.rejectValue("studentId", "error.studentBean", "Student Id not unique");
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.student", result);
+			attr.addFlashAttribute("student", studentBean);
+			return "redirect:addstudent.html";
+			
 			
 		}
 		else
@@ -485,7 +542,7 @@ public class UserManagementController
 			}
 			else
 				newModel.put("val", "failed");
-			return new ModelAndView("useradded", newModel);
+			return new ModelAndView("register/useradded", newModel);
 						
 		}
 		

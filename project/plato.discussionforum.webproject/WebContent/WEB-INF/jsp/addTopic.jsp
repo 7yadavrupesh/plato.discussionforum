@@ -281,7 +281,8 @@
 										<a href="#" class="btn btn-default btn-flat">Profile</a>
 									</div>
 									<div class="pull-right">
-										<a href="logout.html" class="btn btn-default btn-flat">Sign out</a>
+										<a href="logout.html" class="btn btn-default btn-flat">Sign
+											out</a>
 									</div>
 								</li>
 							</ul></li>
@@ -323,39 +324,11 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="active treeview"><a href="listTopic.html"> <i
+					<li class="active"><a href="discussionforumDashboard.html"> <i
 							class="fa fa-group"></i> <span>Discussion Forum</span> <i
-							class="fa fa-angle-left pull-right"></i></a>
-						<ul class="active treeview-menu">
-							<li class="active"><a href="#"><i class="fa fa-plus"></i> Add <i
-									class="fa fa-angle-left pull-right"></i></a>
-								<ul class="treeview-menu">
-									<li class="active"><a href="addTopic.html"><i
-											class="fa  fa-plus-square-o"></i> Topic</a></li>
-									<li><a href="addThread.html"><i
-											class="fa  fa-plus-square-o"></i> Thread</a></li>
-									<li><a href="addModerator.html"><i
-											class="fa  fa-plus-square-o"></i> Moderator</a></li>
-								</ul></li>
-						</ul>
-						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-list"></i> Show <i
-									class="fa fa-angle-left pull-right"></i></a>
-								<ul class="treeview-menu">
-									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i>
-											Topic </a></li>
-									<li><a href="approveTopic.html"><i
-											class="fa fa-list-ul"></i> Approve Topics </a></li>
-									<li><a href="deletedTopic.html"><i
-											class="fa fa-list-ul"></i> Deleted Topics </a></li>
-									<li><a href="approveThread.html"><i
-											class="fa fa-list-ul"></i> Approve Threads </a></li>
-									<li><a href="deletedThreadList.html"><i
-											class="fa fa-list-ul"></i> Deleted Threads </a></li>
-								</ul></li>
-						</ul></li>
+							class="fa pull-right"></i></a>
+					</li>
 				</ul>
-
 			</section>
 			<!-- /.sidebar -->
 		</aside>
@@ -368,12 +341,14 @@
 					Add Topic <small>Insert new topic</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="index.jsp"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li><a href="discussionforumDashboard.html"><i class="fa fa-group"></i> Discussion Forum</a></li>
+					<li><a href="index.jsp"><i class="fa fa-dashboard"></i>
+							Home</a></li>
+					<li><a href="discussionforumDashboard.html"><i
+							class="fa fa-group"></i> Discussion Forum</a></li>
 					<li class="active">Add Topic</li>
 				</ol>
 			</section>
-								<!-- Display alert message -->
+			<!-- Display alert message -->
 			<c:if test="${not empty alertMessage}">
 				<div class="alert alert-${css} alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert"
@@ -394,28 +369,38 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Add Topic</h3>
 							</div>
-							<form:form method="POST" action="addTopic.html" class="form" modelAttribute="topic">
+							<form:form method="POST" action="addTopic.html" class="form"
+								modelAttribute="topic">
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="topicTitle" for="topicTitle">Topic Title:</form:label>
-										<form:input placeholder="Topic Name" path="topicTitle" class="form-control"
-											name="topicTitle" value="${topic.topicTitle}" />
+										<form:input placeholder="Topic Name" path="topicTitle"
+											class="form-control" name="topicTitle"
+											value="${topic.topicTitle}" />
 										<form:errors path="topicTitle" cssClass="text-red" />
 										<br>
 										<form:label path="topicDescription" for="topicDescription">Topic Description:</form:label>
-										<form:textarea placeholder="Topic Desciption" path="topicDescription" class="form-control"
-											name="topicDescription" value="${topic.topicDescription}" ></form:textarea>
+										<form:textarea placeholder="Topic Desciption"
+											path="topicDescription" class="form-control"
+											name="topicDescription" value="${topic.topicDescription}"></form:textarea>
 										<form:errors path="topicDescription" cssClass="text-red" />
 									</div>
-									
+
 								</div>
 								<div class="box-footer">
-								<form:button type="submit" class="btn pull-right btn-primary">Add</form:button>
-									<% if(request.getHeader("Referer") != null ){ %>
-									<a href=<%=request.getHeader("Referer")%> class="btn pull-left btn-default">Cancel</a>
-									<%}else{ %>
+									<form:button type="submit" class="btn pull-right btn-primary">Add</form:button>
+									<%
+										if (request.getHeader("Referer") != null) {
+									%>
+									<a href=<%=request.getHeader("Referer")%>
+										class="btn pull-left btn-default">Cancel</a>
+									<%
+										} else {
+									%>
 									<a href="listTopic.html" class="btn pull-left btn-default">Cancel</a>
-									<%} %>
+									<%
+										}
+									%>
 								</div>
 							</form:form>
 						</div>
@@ -611,18 +596,18 @@
 	<script src="./resources/dist/js/demo.js"></script>
 	<!-- page script -->
 	<script>
-      $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false
-        });
-      });
-      $(".js-example-basic-single").select2();
-    </script>
+		$(function() {
+			$("#example1").DataTable();
+			$('#example2').DataTable({
+				"paging" : true,
+				"lengthChange" : false,
+				"searching" : false,
+				"ordering" : true,
+				"info" : true,
+				"autoWidth" : false
+			});
+		});
+		$(".js-example-basic-single").select2();
+	</script>
 </body>
 </html>

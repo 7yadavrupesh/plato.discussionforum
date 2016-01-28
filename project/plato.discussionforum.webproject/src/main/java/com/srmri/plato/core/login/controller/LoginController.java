@@ -81,13 +81,13 @@ public class LoginController
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView welcome() 
 	{		
-		return new ModelAndView("login");
+		return new ModelAndView("login/login");
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() 
 	{		
-		return new ModelAndView("login");
+		return new ModelAndView("login/login");
 	}
 	
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
@@ -107,7 +107,7 @@ public class LoginController
 		  attr.addFlashAttribute("org.springframework.validation.BindingResult.user", result);
 		  attr.addFlashAttribute("user", userBean);
 		   
-		   return "redirect:login.html";
+		   return "redirect:login/login.html";
 			
 		}
 		
@@ -127,21 +127,16 @@ public class LoginController
 		   for(RbacRoleAssignment rlAss: rolesAss)
 		   {
 			   RbacRole role = roleService.rbacBsGetRole(rlAss.getRoleId());
-			   
 			   roles.add(role);
-			   
 		   }
-
 		   map.addAttribute("roleList", roles);
-		   return "authenticate";
-		   
-		 		   
+		   return "login/authenticate";
 		}
 		else
 		{
 			map.addAttribute("val", val);	
 		
-			return "login";
+			return "login/login";
 		}
     
 	}
@@ -167,7 +162,7 @@ public class LoginController
        
         userBean = null;
         
-		return "login";
+		return "login/login";
 	
 	}
 	
@@ -182,7 +177,7 @@ public class LoginController
 	@RequestMapping(value = "/forgotPassword",  method = RequestMethod.GET)
     public ModelAndView forgotPassword()
 	{
-		return new ModelAndView("forgotPassword");
+		return new ModelAndView("login/forgotPassword");
 	}
 	
 	@RequestMapping(value = "/resetPassword",  method = RequestMethod.POST)
@@ -202,7 +197,7 @@ public class LoginController
 		  attr.addFlashAttribute("org.springframework.validation.BindingResult.email", result);
 		  attr.addFlashAttribute("email", emailBean);
 		   
-		   return "redirect:forgotPassword.html";
+		   return "redirect:login/forgotPassword.html";
 			
 		}
 		
@@ -214,13 +209,13 @@ public class LoginController
 			
 			model.addAttribute("username", user.getUserName());
 			
-			return "resetPassword";
+			return "login/resetPassword";
 		}
 		
 		else
 		{
 			map.addAttribute("val", false);
-			return "forgotPassword";
+			return "login/forgotPassword";
 		}
 	}
 	
@@ -236,20 +231,20 @@ public class LoginController
 		{
 			
 			map.addAttribute("val", true);
-			return "redirect:login.html";
+			return "redirect:login/login.html";
 		}
 		else
 		{
 			
 			map.addAttribute("val", false);
-			return "redirect:login.html";
+			return "redirect:login/login.html";
 		}
 	}
 	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
 	public ModelAndView changePassword() 
 	{
-		return new ModelAndView("changePassword");
+		return new ModelAndView("login/changePassword");
 	}
 	
 	@RequestMapping(value = "/confirmPassword", method = RequestMethod.POST)
@@ -270,7 +265,7 @@ public class LoginController
 		  attr.addFlashAttribute("org.springframework.validation.BindingResult.change", result);
 		  attr.addFlashAttribute("change", changeBean);
 		   
-		   return "redirect:changePassword.html";
+		   return "redirect:login/changePassword.html";
 			
 		}
 		String username = changeBean.getUserName();
@@ -296,7 +291,7 @@ public class LoginController
 			System.out.println("not authenticated");
 			map.addAttribute("success", false);
 		}
-		return "changePassword";
+		return "login/changePassword";
 	}
 	/**
 	 ***********************************************************************

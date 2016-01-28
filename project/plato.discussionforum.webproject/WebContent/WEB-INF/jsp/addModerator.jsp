@@ -319,39 +319,11 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="active treeview"><a href="listTopic.html"> <i
+					<li class="active"><a href="discussionforumDashboard.html"> <i
 							class="fa fa-group"></i> <span>Discussion Forum</span> <i
-							class="fa fa-angle-left pull-right"></i></a>
-						<ul class="treeview-menu">
-							<li class="active"><a href="#"><i class="fa fa-plus"></i> Add <i
-									class="fa fa-angle-left pull-right"></i></a>
-								<ul class="treeview-menu">
-									<li><a href="addTopic.html"><i
-											class="fa  fa-plus-square-o"></i> Topic</a></li>
-									<li><a href="addThread.html"><i
-											class="fa  fa-plus-square-o"></i> Thread</a></li>
-									<li class="active"><a href="addModerator.html"><i
-											class="fa  fa-plus-square-o"></i> Moderator</a></li>
-								</ul></li>
-						</ul>
-						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-list"></i> Show <i
-									class="fa fa-angle-left pull-right"></i></a>
-								<ul class="treeview-menu">
-									<li><a href="listTopic.html"><i class="fa fa-list-ul"></i>
-											Topic </a></li>
-									<li><a href="approveTopic.html"><i
-											class="fa fa-list-ul"></i> Approve Topics </a></li>
-									<li><a href="deletedTopic.html"><i
-											class="fa fa-list-ul"></i> Deleted Topics </a></li>
-									<li><a href="approveThread.html"><i
-											class="fa fa-list-ul"></i> Approve Threads </a></li>
-									<li><a href="deletedThreadList.html"><i
-											class="fa fa-list-ul"></i> Deleted Threads </a></li>
-								</ul></li>
-						</ul></li>
+							class="fa pull-right"></i></a>
+					</li>
 				</ul>
-
 			</section>
 			<!-- /.sidebar -->
 		</aside>
@@ -396,8 +368,8 @@
 								<div class="box-body">
 									<div class="form-group">
 										<form:label path="assignedToUserid">Select User</form:label>
-										<form:select id="assignedToUserid" path="assignedToUserid"
-											class="select2 form-control">
+										<form:select  id="assignedToUserid" path="assignedToUserid"
+											class="js-example-basic-multiple form-control">
 											<form:option value="" label="--- Select User ---" />
 											<form:options items="${usersList}" />
 										</form:select>
@@ -405,7 +377,7 @@
 									</div>
 									<div class="form-group">
 										<form:label path="topicId">Select Topic</form:label>
-										<form:select id="topicId" path="topicId" class="select2 form-control">
+										<form:select id="topicId" path="topicId"  class="js-example-basic-multiple form-control">
 											<form:option value="" label="--- Select Topic ---" />
 											<form:options items="${topics}" />
 										</form:select>
@@ -645,7 +617,7 @@
 				"autoWidth" : false
 			});
 		});
-		 $(".select2").select2();
+		 $(".js-example-basic-multiple").select2();
 
 	</script>
 </body>

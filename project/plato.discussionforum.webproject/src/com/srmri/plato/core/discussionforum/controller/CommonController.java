@@ -74,7 +74,6 @@ public class CommonController {
 	@Autowired
 	private MailSender mailSender;
 
-	//@RequestMapping(value = "/mailsender")
 	void sendUserMail(String message){
 		String sender="srmtestingplato@gmail.com";//sender email id
 		String receiver="7yadavrupesh@gmail.com";//receiver email id
@@ -93,9 +92,9 @@ public class CommonController {
 		mailSender.send(message);	
 	}
 
-	long loginUserId = 101L;
+	long loginUserId;
 	int roleId;
-	List<Long> admin = new ArrayList<Long>();
+	//List<Long> admin = new ArrayList<Long>();
 	//Map<Long,String> usersListMap = new HashMap<Long,String>();
 
 /*	public CommonController(){
@@ -159,22 +158,23 @@ public class CommonController {
        
         String rlName = roleLevel.getRoleLevelName();
        
-        if(rlName.equals("Admin"))
+        if(rlName.equals("Admin") || rlName.equals("Faculty"))
             return true;
-        /*for(Long id : admin){
-            if(id ==userId)
-                return true;
-        }*/
         return false;
     }
-	
 	
 	@RequestMapping(value = "/discussionforumDashboard", method = RequestMethod.GET)
 	public String discussionforumDashboard(Model model, @ModelAttribute("user") UserBean userBean) {	         
 		model.addAttribute("userId", loginUserId);
 		model.addAttribute("threadApproveLeft", threadService.dfSGetAllUnApprovedThreadList().size());
 		model.addAttribute("topicApproveLeft", topicService.dfSGetAllUnApprovedTopics().size());
-		return"discussionforumDashboard";
+		this.loginUserId = userBean.getUserId();
+		this.roleId = userBean.getRoleId();
+		 
+		if(checkAdmin(loginUserId, roleId))
+			return"discussionforumDashboardAdmin";
+		else 
+			return "discussionforumDashboardStudent";
 	}
 
 	@RequestMapping(value = "/listTopic", method = RequestMethod.GET)
@@ -237,15 +237,11 @@ public class CommonController {
 	@RequestMapping(value = "/listTopicUser", method = RequestMethod.GET)
 	public String listTopicUser(Model model, @RequestParam(value="userId", required=true) Long createdUserid,@ModelAttribute("user") UserBean userBean){
 
-		long userId = userBean.getUserId();
-		int roleId = userBean.getRoleId();
-		this.loginUserId = userId;
-		this.roleId = roleId;
+		this.loginUserId = userBean.getUserId();
+		this.roleId = userBean.getRoleId();
 		
 		List<DfTopic> allTopicList = new ArrayList<DfTopic>();
-
-			allTopicList = topicService.dfSGetAllApprovedNonApprovedTopicListByUser(createdUserid);
-
+		allTopicList = topicService.dfSGetAllApprovedNonApprovedTopicListByUser(createdUserid);
 
 		Map<Long, Boolean> moderatorAllowMap = new HashMap<Long,Boolean>();
 		Map<DfTopic, String> finalTopicList = new HashMap<DfTopic,String>();
@@ -302,7 +298,10 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/addTopic", method = RequestMethod.POST)
-	public String saveTopic(@Validated @ModelAttribute("topic")  DfTopic topic, BindingResult result,Model model,RedirectAttributes redirectAttributes) {
+	public String saveTopic(@Validated @ModelAttribute("topic")  DfTopic topic, BindingResult result,Model model,RedirectAttributes redirectAttributes
+			,@ModelAttribute("user") UserBean userBean) {
+		loginUserId = userBean.getUserId();
+		roleId = userBean.getRoleId();
 		if(result.hasErrors()){
 			model.addAttribute("alertMessage", "Add topic failed!");
 			model.addAttribute("css", "danger");
@@ -721,8 +720,10 @@ public class CommonController {
 	}
 
 	@RequestMapping(value = "/addThread", method = RequestMethod.POST)
-	public String saveAddThread(@Validated @ModelAttribute("thread") DfThread thread, BindingResult result,@RequestParam(value = "file", required=false) List<MultipartFile> files,Model model,RedirectAttributes redirectAttributes) {
-
+	public String saveAddThread(@Validated @ModelAttribute("thread") DfThread thread, BindingResult result,@RequestParam(value = "file", required=false) List<MultipartFile> files,Model model,RedirectAttributes redirectAttributes
+			, @ModelAttribute("user") UserBean userBean) {
+		loginUserId = userBean.getUserId();
+		roleId = userBean.getRoleId();
 		if(result.hasErrors()){
 			model.addAttribute("alertMessage", "Add thread failed!");
 			model.addAttribute("css", "danger");
